@@ -1,0 +1,1157 @@
+[
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.48
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 5.18
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 19.46
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 1.28
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 8.97
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 29.36
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.85
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 6.92
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 23.75
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.31
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 5.83
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 18.11
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.98
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 9.02
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 27.81
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.62
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 7.29
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 22.31
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.34
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 5.29
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 17.27
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 1.04
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 8.62
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 27.22
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.65
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 6.77
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 21.47
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.45
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 5.6
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 18.75
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 1.06
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 8.68
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 27.6
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.71
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 6.94
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 22.52
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.32
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 5.82
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perkotaan",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 18.5
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 1.12
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 8.45
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Perdesaan",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 26.06
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.67
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 6.93
+  },
+  {
+    "dimensi": "wilayah",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 21.61
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 1
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 7.59
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 25.17
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.69
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 6.22
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 22.24
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.85
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 6.92
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 23.75
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.72
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 8.42
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 23.57
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.52
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 6.08
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 21
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.62
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 7.29
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 22.31
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.75
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 7.56
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 23.14
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.55
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 5.96
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 19.76
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.65
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 6.77
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 21.47
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.8
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 7.77
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 24.56
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.62
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 6.06
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 20.35
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.71
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 6.94
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 22.52
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.68
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 7.97
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Laki-laki",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 23.78
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.66
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 5.86
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Perempuan",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 19.34
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.67
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 6.93
+  },
+  {
+    "dimensi": "gender",
+    "kelompok": "Total",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 21.61
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 1.57
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 11.47
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 34.46
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.75
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 7.54
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 28.68
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.71
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 6.05
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 23.01
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.57
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 4.83
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 20.21
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SD",
+    "tahun": 2019,
+    "nilai": 0.38
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMP",
+    "tahun": 2019,
+    "nilai": 3.47
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMA",
+    "tahun": 2019,
+    "nilai": 12.76
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 1.07
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 12.04
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 34.6
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.57
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 7.96
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 26.11
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.49
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 6.36
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 21.14
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.48
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 5.32
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 17.93
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SD",
+    "tahun": 2020,
+    "nilai": 0.35
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMP",
+    "tahun": 2020,
+    "nilai": 3.43
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMA",
+    "tahun": 2020,
+    "nilai": 12.03
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 1.14
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 10.91
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 31.39
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.63
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 7.02
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 25.21
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.48
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 5.52
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 20.23
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.41
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 5.26
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 17.67
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SD",
+    "tahun": 2021,
+    "nilai": 0.44
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMP",
+    "tahun": 2021,
+    "nilai": 4.2
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMA",
+    "tahun": 2021,
+    "nilai": 12.43
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 1.19
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 11.5
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 33.38
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.65
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 7.3
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 25.09
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.54
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 6.16
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 21.47
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.54
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 5.05
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 18.46
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SD",
+    "tahun": 2022,
+    "nilai": 0.51
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMP",
+    "tahun": 2022,
+    "nilai": 3.86
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMA",
+    "tahun": 2022,
+    "nilai": 13.08
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 1.15
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 10.11
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 1",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 30.66
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.58
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 7.33
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 2",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 23.21
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.58
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 6.14
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 3",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 19.65
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.46
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 5.37
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 4",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 19.31
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SD",
+    "tahun": 2023,
+    "nilai": 0.38
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMP",
+    "tahun": 2023,
+    "nilai": 5.05
+  },
+  {
+    "dimensi": "ekonomi",
+    "kelompok": "Kuintil 5",
+    "jenjang": "SMA",
+    "tahun": 2023,
+    "nilai": 14.67
+  }
+]

@@ -1,0 +1,1878 @@
+{
+  "nasional": [
+    {
+      "tahun": 2015,
+      "nilai": 95.85
+    },
+    {
+      "tahun": 2016,
+      "nilai": 94.88
+    },
+    {
+      "tahun": 2017,
+      "nilai": 94.87
+    },
+    {
+      "tahun": 2018,
+      "nilai": 95.86
+    },
+    {
+      "tahun": 2019,
+      "nilai": 96.37
+    },
+    {
+      "tahun": 2020,
+      "nilai": 92.76
+    },
+    {
+      "tahun": 2021,
+      "nilai": 92.72
+    },
+    {
+      "tahun": 2022,
+      "nilai": 95.1
+    },
+    {
+      "tahun": 2023,
+      "nilai": 95.54
+    }
+  ],
+  "provinsi": [
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2015,
+      "nilai": 98.7
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2015,
+      "nilai": 95.72
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2015,
+      "nilai": 94.51
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2015,
+      "nilai": 95.13
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2015,
+      "nilai": 96.52
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2015,
+      "nilai": 97.42
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2015,
+      "nilai": 95.52
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2015,
+      "nilai": 97.63
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2015,
+      "nilai": 95.32
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2015,
+      "nilai": 94.66
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2015,
+      "nilai": 97.33
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2015,
+      "nilai": 96.68
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2015,
+      "nilai": 97.88
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2015,
+      "nilai": 98.45
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2015,
+      "nilai": 97.07
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2015,
+      "nilai": 95.2
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2015,
+      "nilai": 96.7
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2015,
+      "nilai": 97.14
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2015,
+      "nilai": 92.48
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2015,
+      "nilai": 90.86
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2015,
+      "nilai": 96.84
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2015,
+      "nilai": 96.96
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2015,
+      "nilai": 97.77
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2015,
+      "nilai": 94.68
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2015,
+      "nilai": 99.16
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2015,
+      "nilai": 93.05
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2015,
+      "nilai": 96.8
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2015,
+      "nilai": 96.49
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2015,
+      "nilai": 96.19
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2015,
+      "nilai": 90.76
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2015,
+      "nilai": 95.25
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2015,
+      "nilai": 94.36
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2015,
+      "nilai": 85.48
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2015,
+      "nilai": 60.3
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2016,
+      "nilai": 97.62
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2016,
+      "nilai": 95.78
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2016,
+      "nilai": 94.46
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2016,
+      "nilai": 95.52
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2016,
+      "nilai": 95.88
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2016,
+      "nilai": 95.4
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2016,
+      "nilai": 95.87
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2016,
+      "nilai": 95.38
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2016,
+      "nilai": 95.7
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2016,
+      "nilai": 94.46
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2016,
+      "nilai": 93.44
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2016,
+      "nilai": 94.37
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2016,
+      "nilai": 97.48
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2016,
+      "nilai": 98.66
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2016,
+      "nilai": 96.69
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2016,
+      "nilai": 95.27
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2016,
+      "nilai": 94.23
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2016,
+      "nilai": 94.88
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2016,
+      "nilai": 91.82
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2016,
+      "nilai": 92.48
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2016,
+      "nilai": 98.05
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2016,
+      "nilai": 97.52
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2016,
+      "nilai": 96.75
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2016,
+      "nilai": 95.46
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2016,
+      "nilai": 97.41
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2016,
+      "nilai": 91.11
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2016,
+      "nilai": 95.52
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2016,
+      "nilai": 97.57
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2016,
+      "nilai": 93.28
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2016,
+      "nilai": 93.18
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2016,
+      "nilai": 96.39
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2016,
+      "nilai": 92.97
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2016,
+      "nilai": 87.5
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2016,
+      "nilai": 57.96
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2017,
+      "nilai": 98.85
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2017,
+      "nilai": 95.79
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2017,
+      "nilai": 96.3
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2017,
+      "nilai": 93.79
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2017,
+      "nilai": 95.98
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2017,
+      "nilai": 98.29
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2017,
+      "nilai": 95.13
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2017,
+      "nilai": 96.27
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2017,
+      "nilai": 94.37
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2017,
+      "nilai": 95.86
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2017,
+      "nilai": 94.48
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2017,
+      "nilai": 93.69
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2017,
+      "nilai": 97.71
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2017,
+      "nilai": 98.38
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2017,
+      "nilai": 95.66
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2017,
+      "nilai": 93.94
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2017,
+      "nilai": 93.2
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2017,
+      "nilai": 94.78
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2017,
+      "nilai": 91.16
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2017,
+      "nilai": 92.59
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2017,
+      "nilai": 97.48
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2017,
+      "nilai": 97.22
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2017,
+      "nilai": 97.07
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2017,
+      "nilai": 90.94
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2017,
+      "nilai": 97.18
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2017,
+      "nilai": 94.9
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2017,
+      "nilai": 96.9
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2017,
+      "nilai": 98.16
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2017,
+      "nilai": 95.1
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2017,
+      "nilai": 89.04
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2017,
+      "nilai": 95.43
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2017,
+      "nilai": 93.47
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2017,
+      "nilai": 85.1
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2017,
+      "nilai": 62.11
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2018,
+      "nilai": 98.16
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2018,
+      "nilai": 96.85
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2018,
+      "nilai": 96.9
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2018,
+      "nilai": 93.68
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2018,
+      "nilai": 97.37
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2018,
+      "nilai": 97.9
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2018,
+      "nilai": 99.43
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2018,
+      "nilai": 98.36
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2018,
+      "nilai": 98.91
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2018,
+      "nilai": 91.5
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2018,
+      "nilai": 93.63
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2018,
+      "nilai": 94.56
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2018,
+      "nilai": 99.21
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2018,
+      "nilai": 99.67
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2018,
+      "nilai": 96.75
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2018,
+      "nilai": 95.93
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2018,
+      "nilai": 97.32
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2018,
+      "nilai": 96.96
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2018,
+      "nilai": 93.37
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2018,
+      "nilai": 95.4
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2018,
+      "nilai": 97.5
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2018,
+      "nilai": 96.52
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2018,
+      "nilai": 97.56
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2018,
+      "nilai": 87.64
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2018,
+      "nilai": 97.56
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2018,
+      "nilai": 94.76
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2018,
+      "nilai": 97.43
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2018,
+      "nilai": 98.51
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2018,
+      "nilai": 97.24
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2018,
+      "nilai": 95.65
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2018,
+      "nilai": 95.34
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2018,
+      "nilai": 95.12
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2018,
+      "nilai": 88.61
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2018,
+      "nilai": 61.51
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2019,
+      "nilai": 97.84
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2019,
+      "nilai": 96.83
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2019,
+      "nilai": 95.54
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2019,
+      "nilai": 93.68
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2019,
+      "nilai": 96.99
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2019,
+      "nilai": 97.12
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2019,
+      "nilai": 97.9
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2019,
+      "nilai": 97.57
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2019,
+      "nilai": 95.43
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2019,
+      "nilai": 93.71
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2019,
+      "nilai": 96.44
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2019,
+      "nilai": 97.05
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2019,
+      "nilai": 98.75
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2019,
+      "nilai": 100
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2019,
+      "nilai": 97.03
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2019,
+      "nilai": 96.95
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2019,
+      "nilai": 97.77
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2019,
+      "nilai": 97.67
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2019,
+      "nilai": 94.16
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2019,
+      "nilai": 93.85
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2019,
+      "nilai": 97.46
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2019,
+      "nilai": 99.31
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2019,
+      "nilai": 97.25
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2019,
+      "nilai": 94.87
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2019,
+      "nilai": 98.84
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2019,
+      "nilai": 96.03
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2019,
+      "nilai": 95.51
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2019,
+      "nilai": 98.04
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2019,
+      "nilai": 99.13
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2019,
+      "nilai": 94.55
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2019,
+      "nilai": 94.46
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2019,
+      "nilai": 94.18
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2019,
+      "nilai": 92.19
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2019,
+      "nilai": 61.69
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2020,
+      "nilai": 94.02
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2020,
+      "nilai": 92.66
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2020,
+      "nilai": 92.17
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2020,
+      "nilai": 91.44
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2020,
+      "nilai": 95.64
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2020,
+      "nilai": 97.93
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2020,
+      "nilai": 95.84
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2020,
+      "nilai": 92.9
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2020,
+      "nilai": 97.74
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2020,
+      "nilai": 90.98
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2020,
+      "nilai": 89.38
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2020,
+      "nilai": 93.93
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2020,
+      "nilai": 96.73
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2020,
+      "nilai": 99.18
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2020,
+      "nilai": 94.89
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2020,
+      "nilai": 89.26
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2020,
+      "nilai": 91.45
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2020,
+      "nilai": 90.21
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2020,
+      "nilai": 92.82
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2020,
+      "nilai": 91.39
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2020,
+      "nilai": 93.4
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2020,
+      "nilai": 91.87
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2020,
+      "nilai": 90.26
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2020,
+      "nilai": 89.82
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2020,
+      "nilai": 94.06
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2020,
+      "nilai": 93.89
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2020,
+      "nilai": 91.77
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2020,
+      "nilai": 93.12
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2020,
+      "nilai": 91.36
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2020,
+      "nilai": 93.05
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2020,
+      "nilai": 95.21
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2020,
+      "nilai": 88.47
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2020,
+      "nilai": 91.11
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2020,
+      "nilai": 52.68
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2021,
+      "nilai": 94.06
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2021,
+      "nilai": 93.72
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2021,
+      "nilai": 94.91
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2021,
+      "nilai": 90.75
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2021,
+      "nilai": 95.55
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2021,
+      "nilai": 97.38
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2021,
+      "nilai": 96.99
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2021,
+      "nilai": 95.71
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2021,
+      "nilai": 95.64
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2021,
+      "nilai": 95.63
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2021,
+      "nilai": 86.33
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2021,
+      "nilai": 92.05
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2021,
+      "nilai": 94.79
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2021,
+      "nilai": 99.51
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2021,
+      "nilai": 94.08
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2021,
+      "nilai": 95.49
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2021,
+      "nilai": 85.57
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2021,
+      "nilai": 96.53
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2021,
+      "nilai": 94.56
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2021,
+      "nilai": 93.83
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2021,
+      "nilai": 91.27
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2021,
+      "nilai": 94.75
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2021,
+      "nilai": 89.64
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2021,
+      "nilai": 80.5
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2021,
+      "nilai": 96.06
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2021,
+      "nilai": 95.74
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2021,
+      "nilai": 90.64
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2021,
+      "nilai": 90.66
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2021,
+      "nilai": 93.59
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2021,
+      "nilai": 91.55
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2021,
+      "nilai": 95.54
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2021,
+      "nilai": 93.15
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2021,
+      "nilai": 87.82
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2021,
+      "nilai": 50.19
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2022,
+      "nilai": 97.45
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2022,
+      "nilai": 96.37
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2022,
+      "nilai": 95.78
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2022,
+      "nilai": 95.41
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2022,
+      "nilai": 95.86
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2022,
+      "nilai": 95.56
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2022,
+      "nilai": 94.84
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2022,
+      "nilai": 96.31
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2022,
+      "nilai": 98.33
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2022,
+      "nilai": 87.55
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2022,
+      "nilai": 89.09
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2022,
+      "nilai": 95.4
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2022,
+      "nilai": 97.08
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2022,
+      "nilai": 99.16
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2022,
+      "nilai": 96.82
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2022,
+      "nilai": 95.23
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2022,
+      "nilai": 97.38
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2022,
+      "nilai": 95.09
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2022,
+      "nilai": 94.98
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2022,
+      "nilai": 95.49
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2022,
+      "nilai": 95.48
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2022,
+      "nilai": 96.64
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2022,
+      "nilai": 92.56
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2022,
+      "nilai": 88.18
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2022,
+      "nilai": 95.35
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2022,
+      "nilai": 95.36
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2022,
+      "nilai": 96.29
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2022,
+      "nilai": 94.65
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2022,
+      "nilai": 97.76
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2022,
+      "nilai": 94.61
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2022,
+      "nilai": 97.54
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2022,
+      "nilai": 95.84
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2022,
+      "nilai": 92.79
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2022,
+      "nilai": 60.32
+    },
+    {
+      "kode": "1100",
+      "provinsi": "Aceh",
+      "tahun": 2023,
+      "nilai": 97.4
+    },
+    {
+      "kode": "1200",
+      "provinsi": "Sumatera Utara",
+      "tahun": 2023,
+      "nilai": 96.05
+    },
+    {
+      "kode": "1300",
+      "provinsi": "Sumatera Barat",
+      "tahun": 2023,
+      "nilai": 96.68
+    },
+    {
+      "kode": "1400",
+      "provinsi": "Riau",
+      "tahun": 2023,
+      "nilai": 95.05
+    },
+    {
+      "kode": "1500",
+      "provinsi": "Jambi",
+      "tahun": 2023,
+      "nilai": 96.37
+    },
+    {
+      "kode": "1600",
+      "provinsi": "Sumatera Selatan",
+      "tahun": 2023,
+      "nilai": 98.17
+    },
+    {
+      "kode": "1700",
+      "provinsi": "Bengkulu",
+      "tahun": 2023,
+      "nilai": 98.85
+    },
+    {
+      "kode": "1800",
+      "provinsi": "Lampung",
+      "tahun": 2023,
+      "nilai": 95.86
+    },
+    {
+      "kode": "1900",
+      "provinsi": "Kep. Bangka Belitung",
+      "tahun": 2023,
+      "nilai": 96.48
+    },
+    {
+      "kode": "2100",
+      "provinsi": "Kep. Riau",
+      "tahun": 2023,
+      "nilai": 96.55
+    },
+    {
+      "kode": "3100",
+      "provinsi": "DKI Jakarta",
+      "tahun": 2023,
+      "nilai": 92.36
+    },
+    {
+      "kode": "3200",
+      "provinsi": "Jawa Barat",
+      "tahun": 2023,
+      "nilai": 95.32
+    },
+    {
+      "kode": "3300",
+      "provinsi": "Jawa Tengah",
+      "tahun": 2023,
+      "nilai": 98.18
+    },
+    {
+      "kode": "3400",
+      "provinsi": "DI Yogyakarta",
+      "tahun": 2023,
+      "nilai": 99.86
+    },
+    {
+      "kode": "3500",
+      "provinsi": "Jawa Timur",
+      "tahun": 2023,
+      "nilai": 96.49
+    },
+    {
+      "kode": "3600",
+      "provinsi": "Banten",
+      "tahun": 2023,
+      "nilai": 93.99
+    },
+    {
+      "kode": "5100",
+      "provinsi": "Bali",
+      "tahun": 2023,
+      "nilai": 96.05
+    },
+    {
+      "kode": "5200",
+      "provinsi": "Nusa Tenggara Barat",
+      "tahun": 2023,
+      "nilai": 96.94
+    },
+    {
+      "kode": "5300",
+      "provinsi": "Nusa Tenggara Timur",
+      "tahun": 2023,
+      "nilai": 95.29
+    },
+    {
+      "kode": "6100",
+      "provinsi": "Kalimantan Barat",
+      "tahun": 2023,
+      "nilai": 91.85
+    },
+    {
+      "kode": "6200",
+      "provinsi": "Kalimantan Tengah",
+      "tahun": 2023,
+      "nilai": 95.72
+    },
+    {
+      "kode": "6300",
+      "provinsi": "Kalimantan Selatan",
+      "tahun": 2023,
+      "nilai": 98.31
+    },
+    {
+      "kode": "6400",
+      "provinsi": "Kalimantan Timur",
+      "tahun": 2023,
+      "nilai": 93.3
+    },
+    {
+      "kode": "6500",
+      "provinsi": "Kalimantan Utara",
+      "tahun": 2023,
+      "nilai": 97.82
+    },
+    {
+      "kode": "7100",
+      "provinsi": "Sulawesi Utara",
+      "tahun": 2023,
+      "nilai": 95.46
+    },
+    {
+      "kode": "7200",
+      "provinsi": "Sulawesi Tengah",
+      "tahun": 2023,
+      "nilai": 95.47
+    },
+    {
+      "kode": "7300",
+      "provinsi": "Sulawesi Selatan",
+      "tahun": 2023,
+      "nilai": 95.21
+    },
+    {
+      "kode": "7400",
+      "provinsi": "Sulawesi Tenggara",
+      "tahun": 2023,
+      "nilai": 94.68
+    },
+    {
+      "kode": "7500",
+      "provinsi": "Gorontalo",
+      "tahun": 2023,
+      "nilai": 95.94
+    },
+    {
+      "kode": "7600",
+      "provinsi": "Sulawesi Barat",
+      "tahun": 2023,
+      "nilai": 94.5
+    },
+    {
+      "kode": "8100",
+      "provinsi": "Maluku",
+      "tahun": 2023,
+      "nilai": 96.16
+    },
+    {
+      "kode": "8200",
+      "provinsi": "Maluku Utara",
+      "tahun": 2023,
+      "nilai": 95.52
+    },
+    {
+      "kode": "9100",
+      "provinsi": "Papua Barat",
+      "tahun": 2023,
+      "nilai": 93.14
+    },
+    {
+      "kode": "9400",
+      "provinsi": "Papua",
+      "tahun": 2023,
+      "nilai": 62.98
+    }
+  ]
+}
