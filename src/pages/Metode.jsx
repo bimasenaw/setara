@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { downloadCsv } from '../lib/ekspor'
+import { REFERENSI } from '../lib/solusi'
 import Accordion from '../components/Accordion'
 import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal } from '../components/StatusBox'
@@ -76,64 +77,29 @@ export default function Metode() {
         />
       </div>
 
-      <nav
-        aria-label="Daftar isi"
-        className="mt-6 rounded-lg border border-garis bg-putih p-5"
-      >
-        <h2 className="text-base font-semibold text-tinta">Daftar isi</h2>
-        <ol className="mt-3 grid gap-2 text-sm text-tinta sm:grid-cols-2">
-          <li>
-            <Link to="/" className="hover:text-tinta-redup">
-              Ringkasan
-            </Link>
-          </li>
-          <li>
-            <Link to="/kesenjangan" className="hover:text-tinta-redup">
-              Kesenjangan: wilayah, ekonomi, gender
-            </Link>
-          </li>
-          <li>
-            <Link to="/provinsi" className="hover:text-tinta-redup">
-              Peringkat provinsi
-            </Link>
-          </li>
-          <li>
-            <Link to="/provinsi/1100" className="hover:text-tinta-redup">
-              Contoh profil provinsi
-            </Link>
-          </li>
-          <li>
-            <a href="#sumber" className="hover:text-tinta-redup">
-              Sumber dan pembaruan
-            </a>
-          </li>
-          <li>
-            <a href="#indikator" className="hover:text-tinta-redup">
-              Indikator yang dipakai
-            </a>
-          </li>
-          <li>
-            <a href="#istilah" className="hover:text-tinta-redup">
-              Istilah mudah
-            </a>
-          </li>
-          <li>
-            <a href="#rumus" className="hover:text-tinta-redup">
-              Rumus dan asumsi
-            </a>
-          </li>
-          <li>
-            <a href="#keterbatasan" className="hover:text-tinta-redup">
-              Keterbatasan
-            </a>
-          </li>
-          <li>
-            <a href="#sitasi" className="hover:text-tinta-redup">
-              Sitasi
-            </a>
-          </li>
-        </ol>
-      </nav>
+      <section id="pustaka" className="mt-6 rounded-lg border border-garis bg-putih p-5">
+        <h2 className="text-base font-semibold text-tinta">Daftar pustaka</h2>
+        <Accordion judul="Referensi yang dipakai">
+          <p>Referensi yang menjadi dasar solusi dan rekomendasi pada aplikasi ini.</p>
+          <ol className="space-y-3">
+            {REFERENSI.map((r) => (
+              <li key={r.id}>
+                <p className="break-words leading-relaxed">{r.referensi}</p>
+                {r.url && (
+                  <a
+                    href={r.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="break-all text-xs underline decoration-garis underline-offset-2 hover:text-tinta"
+                  >
+                    {r.url}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ol>
+        </Accordion>
+      </section>
 
       <section id="sumber" className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Sumber dan pembaruan</h2>
