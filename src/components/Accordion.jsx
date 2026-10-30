@@ -1,4 +1,4 @@
-export default function Accordion({ judul = 'Apa artinya?', children, className = '' }) {
+export default function Accordion({ judul = 'Apa maknanya?', children, className = '' }) {
   return (
     <details className={`mt-3 rounded-lg border border-garis bg-kertas p-3 ${className}`}>
       <summary className="cursor-pointer text-sm font-semibold text-tinta">{judul}</summary>

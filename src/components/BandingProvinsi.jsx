@@ -99,7 +99,7 @@ export default function BandingProvinsi({ rows, provinsiList, defaultA, defaultB
           </tbody>
         </table>
       </div>
-      <Accordion judul="Cara membaca perbandingan ini">
+      <Accordion judul="Apa makna perbandingan ini?">
         <p>
           Tabel ini membandingkan dua provinsi pada indikator terbaru yang tersedia. Selisih dihitung
           dari nilai provinsi A dikurangi provinsi B.
