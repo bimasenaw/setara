@@ -1,5 +1,6 @@
 import { useMeasure } from '../lib/useMeasure'
 import { formatAngka } from '../lib/format'
+import DataTable from './DataTable'
 
 function niceMax(v) {
   if (v <= 0) return 10
@@ -12,7 +13,7 @@ const TINTA = '#18212C'
 const TINTA_REDUP = '#5A6676'
 const GARIS = '#DCE1E7'
 
-export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan = '%' }) {
+export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan = '%', ringkasan }) {
   const [ref, width] = useMeasure()
 
   const nilai = items.flatMap((it) => [it.pembanding, it.tertinggal]).filter((n) => n !== null)
@@ -20,11 +21,10 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
 
   const rowH = 60
   const axisH = 28
-  const keyH = 24
   const plotLeft = 46
   const plotRightPad = 88
 
-  const height = items.length * rowH + axisH + keyH
+  const height = items.length * rowH + axisH
 
   const plotRight = Math.max(plotLeft + 60, width - plotRightPad)
   const plotWidth = plotRight - plotLeft
@@ -36,11 +36,15 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
   return (
     <div ref={ref} className="w-full">
       {width > 0 && (
+        <>
         <svg
           width={width}
           height={height}
           role="img"
-          aria-label={`Grafik dumbbell ${pembandingNama} dan ${tertinggalNama}.`}
+          aria-label={
+            ringkasan ||
+            `Grafik dumbbell ${pembandingNama} dan ${tertinggalNama}. Angka di kanan adalah selisih dalam poin persentase.`
+          }
         >
           {items.map((it, i) => {
             const y = i * rowH + rowH / 2
@@ -55,7 +59,7 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
                   y={y}
                   textAnchor="end"
                   dominantBaseline="middle"
-                  fontSize={15}
+                  fontSize="0.9375rem"
                   fontWeight={600}
                   fill={TINTA}
                 >
@@ -83,11 +87,11 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
                     y={y}
                     textAnchor="start"
                     dominantBaseline="middle"
-                    fontSize={14}
+                    fontSize="0.875rem"
                     fontWeight={700}
                     fill={TINTA}
                   >
-                    {`+${formatAngka(gap, 1)} poin`}
+                    {`${gap >= 0 ? '+' : '−'}${formatAngka(Math.abs(gap), 1)} poin`}
                   </text>
                 )}
               </g>
@@ -106,7 +110,7 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
                   x={tx}
                   y={items.length * rowH + 16}
                   textAnchor={isLast ? 'end' : t === 0 ? 'start' : 'middle'}
-                  fontSize={12}
+                  fontSize="0.75rem"
                   fill={TINTA_REDUP}
                 >
                   {`${formatAngka(t, 0)}${satuan}`}
@@ -114,18 +118,48 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
               </g>
             )
           })}
-
-          <g transform={`translate(${plotLeft}, ${items.length * rowH + axisH + 6})`}>
-            <circle cx={7} cy={9} r={6} fill={BIRU} />
-            <text x={18} y={13} fontSize={13} fill={TINTA} dominantBaseline="middle">
-              {pembandingNama}
-            </text>
-            <rect x={54} y={3} width={12} height={12} fill={MERAH} />
-            <text x={72} y={13} fontSize={13} fill={TINTA} dominantBaseline="middle">
-              {tertinggalNama}
-            </text>
-          </g>
         </svg>
+        <div className="mt-2 space-y-1 text-sm leading-relaxed text-tinta-redup">
+          <p>Angka di kanan tiap jenjang adalah selisih antara kedua kelompok dalam poin persentase.</p>
+          <p className="flex items-start gap-2">
+            <span className="mt-1 inline-block h-3 w-3 shrink-0 bg-merah" aria-hidden="true" />
+            <span>
+              {tertinggalNama} (kelompok yang lebih tertinggal).
+            </span>
+          </p>
+          <p className="flex items-start gap-2">
+            <span
+              className="mt-1 inline-block h-3 w-3 shrink-0 rounded-full bg-biru"
+              aria-hidden="true"
+            />
+            <span>
+              {pembandingNama} (pembanding).
+            </span>
+          </p>
+        </div>
+        <DataTable
+          judul="Lihat data dumbbell"
+          namaFile="setara-dumbbell.csv"
+          baris={items.map((it) => ({
+            jenjang: it.label,
+            pembanding: it.pembanding,
+            tertinggal: it.tertinggal,
+            selisih:
+              it.pembanding !== null && it.tertinggal !== null
+                ? `${it.tertinggal - it.pembanding >= 0 ? '+' : '−'}${formatAngka(
+                    Math.abs(it.tertinggal - it.pembanding),
+                    2,
+                  )} poin`
+                : null,
+          }))}
+          kolom={[
+            { key: 'jenjang', label: 'Jenjang' },
+            { key: 'pembanding', label: pembandingNama },
+            { key: 'tertinggal', label: tertinggalNama },
+            { key: 'selisih', label: 'Selisih' },
+          ]}
+        />
+        </>
       )}
     </div>
   )

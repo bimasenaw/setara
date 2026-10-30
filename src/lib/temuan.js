@@ -10,6 +10,8 @@ export const KELOMPOK_AWAM = {
   Perempuan: 'perempuan',
 }
 
+export const DIMENSI_TEMUAN = ['wilayah', 'ekonomi', 'gender']
+
 function fraseRasio(r) {
   if (r === null) return null
   if (r < 1.1) return 'hampir sama'
@@ -29,14 +31,12 @@ export function tahunTerakhir(data) {
   return data.reduce((m, d) => Math.max(m, d.tahun), -Infinity)
 }
 
-export function kalimatRingkasanUtama(data) {
-  const tahun = tahunTerakhir(data)
-  const jenjang = 'SMA'
+export function kalimatRingkasanUtama(data, jenjang = 'SMA', tahun = tahunTerakhir(data)) {
   const p = perbandingan(data, 'ekonomi', jenjang, tahun)
   if (p.tertinggal === null || p.pembanding === null) return null
   const a = formatPersen(p.tertinggal, 1)
   const r = fraseRasio(p.rasio)
-  return `Di SMA, ${a} anak dari keluarga termiskin tidak sekolah, ${r} kuintil terkaya.`
+  return `Di ${jenjang}, ${a} anak dari keluarga termiskin tidak sekolah, ${r} dibanding kuintil terkaya.`
 }
 
 export function kalimatDimensi(data, dimensi, jenjang, tahun) {
@@ -47,8 +47,29 @@ export function kalimatDimensi(data, dimensi, jenjang, tahun) {
   const a = formatPersen(p.tertinggal, 1)
   const poin = formatPoin(p.selisih, 1)
   const t = KELOMPOK_AWAM[tertinggal]
-  const b = KELOMPOK_AWAM[pembanding].replace(/^dari /, '')
-  return `Di ${jenjang}, ${a} anak ${t} tidak sekolah, ${poin} lebih tinggi dari ${b}.`
+  const b = KELOMPOK_AWAM[pembanding].replace(/^dari /, '').replace(/^di /, '')
+  return `Di ${jenjang}, ${a} anak ${t} tidak sekolah, ${poin} lebih tinggi dibanding ${b}.`
+}
+
+export function temuanTigaDimensi(data, tahun, jenjang = null) {
+  return DIMENSI_TEMUAN.map((dimensi) => {
+    const kandidat = jenjang
+      ? [jenjang]
+      : ['SD', 'SMP', 'SMA']
+    let terbaik = null
+    for (const j of kandidat) {
+      const p = perbandingan(data, dimensi, j, tahun)
+      if (p.selisih === null) continue
+      if (!terbaik || p.selisih > terbaik.selisih) {
+        terbaik = { dimensi, jenjang: j, ...p }
+      }
+    }
+    if (!terbaik) return null
+    return {
+      ...terbaik,
+      kalimat: kalimatDimensi(data, dimensi, terbaik.jenjang, tahun),
+    }
+  }).filter(Boolean)
 }
 
 export function kalimatAwam(data, dimensi, kelompok, jenjang, tahun) {
@@ -76,6 +97,16 @@ export function kalimatProvinsi(nama, nilai, nilaiNasional) {
   const s = formatAngka(Math.abs(selisih), 2)
   const arah = selisih >= 0 ? 'di atas' : 'di bawah'
   return `${nama} ${formatAngka(nilai, 2)}%, ${s} poin ${arah} rata-rata nasional (${formatAngka(nilaiNasional, 2)}%).`
+}
+
+export function kalimatApsProvinsi(nama, nilai, nilaiNasional, jenjang = 'SMA') {
+  if (nilai === null || nilaiNasional === null) return null
+  const selisih = nilai - nilaiNasional
+  const arah = selisih >= 0 ? 'di atas' : 'di bawah'
+  return `Partisipasi sekolah usia ${jenjang} di ${nama} ${formatAngka(nilai, 2)}%, ${formatPoin(
+    Math.abs(selisih),
+    2,
+  )} ${arah} nasional (${formatAngka(nilaiNasional, 2)}%).`
 }
 
 export { fraseRasio }

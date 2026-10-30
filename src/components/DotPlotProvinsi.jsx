@@ -1,5 +1,6 @@
 import { useMeasure } from '../lib/useMeasure'
 import { formatAngka } from '../lib/format'
+import DataTable from './DataTable'
 
 const BIRU = '#6F8CAB'
 const MERAH = '#C2372D'
@@ -38,7 +39,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
           width={width}
           height={height}
           role="img"
-          aria-label="Peringkat partisipasi pendidikan usia dini per provinsi."
+          aria-label={`Peringkat partisipasi pendidikan usia dini per provinsi. Nilai nasional ${formatAngka(nilaiNasional, 2)}%. Lima provinsi terendah ditandai merah.`}
         >
           {provinsi.map((p, i) => {
             const y = headH + i * rowH + rowH / 2
@@ -50,7 +51,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
                   y={y}
                   textAnchor="end"
                   dominantBaseline="middle"
-                  fontSize={13}
+                  fontSize="0.8125rem"
                   fill={isPrioritas ? TINTA : TINTA_REDUP}
                   fontWeight={isPrioritas ? 600 : 400}
                 >
@@ -69,7 +70,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
                       y={y}
                       textAnchor="start"
                       dominantBaseline="middle"
-                      fontSize={13}
+                      fontSize="0.8125rem"
                       fill={isPrioritas ? TINTA : TINTA_REDUP}
                       fontWeight={isPrioritas ? 700 : 400}
                     >
@@ -84,7 +85,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
                     y={y}
                     textAnchor="start"
                     dominantBaseline="middle"
-                    fontSize={12}
+                    fontSize="0.75rem"
                     fill={TINTA_REDUP}
                   >
                     Data belum tersedia
@@ -103,7 +104,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
                 x={x(t)}
                 y={headH + 16}
                 textAnchor={t === MIN ? 'start' : t === MAX ? 'end' : 'middle'}
-                fontSize={12}
+                fontSize="0.75rem"
                 fill={TINTA_REDUP}
               >
                 {t}
@@ -126,7 +127,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
                 x={x(nilaiNasional)}
                 y={14}
                 textAnchor="middle"
-                fontSize={12}
+                fontSize="0.75rem"
                 fontWeight={700}
                 fill={TINTA}
               >
@@ -136,6 +137,25 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
           )}
         </svg>
       )}
+      <DataTable
+        judul="Lihat data peringkat provinsi"
+        namaFile="setara-peringkat-provinsi.csv"
+        baris={provinsi.map((p) => ({
+          provinsi: p.provinsi,
+          nilai: p.nilai === null ? 'Data belum tersedia' : formatAngka(p.nilai, 2),
+          selisih:
+            p.selisih === null || p.selisih === undefined
+              ? '—'
+              : `${p.selisih >= 0 ? '+' : '−'}${formatAngka(Math.abs(p.selisih), 2)} poin`,
+          status: prioritas.includes(p.kode) ? 'Prioritas' : '',
+        }))}
+        kolom={[
+          { key: 'provinsi', label: 'Provinsi' },
+          { key: 'nilai', label: 'Nilai (%)' },
+          { key: 'selisih', label: 'Selisih dari nasional' },
+          { key: 'status', label: 'Status' },
+        ]}
+      />
     </div>
   )
 }
