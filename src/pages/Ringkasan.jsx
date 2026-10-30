@@ -4,6 +4,7 @@ import { JENJANG, perbandingan, nasional } from '../lib/metrik'
 import { kalimatDimensi, kalimatRingkasanUtama, tahunTerakhir, temuanTigaDimensi } from '../lib/temuan'
 import { validJenjang, validTahun, tulisParam, tautanKesenjangan } from '../lib/params'
 import { dampakEkonomi, dampakGender } from '../lib/dampak'
+import { fotoJenjang } from '../lib/foto'
 import { formatAngka, formatJumlahOrang, formatPoin } from '../lib/format'
 import TahunSelect from '../components/TahunSelect'
 import SegmentedControl from '../components/SegmentedControl'
@@ -50,7 +51,8 @@ export default function Ringkasan() {
   const kalimatUtama =
     kalimatRingkasanUtama(tidakSekolah, jenjang, tahun) ||
     kalimatDimensi(tidakSekolah, 'ekonomi', jenjang, tahun)
-  const temuan = temuanTigaDimensi(tidakSekolah, tahun)
+  const temuan = temuanTigaDimensi(tidakSekolah, tahun, jenjang)
+  const foto = fotoJenjang(jenjang)
 
   const wilayah = perbandingan(tidakSekolah, 'wilayah', jenjang, tahun)
   const ekonomi = perbandingan(tidakSekolah, 'ekonomi', jenjang, tahun)
@@ -71,8 +73,8 @@ export default function Ringkasan() {
       <HeroBanner
         judul="SETARA"
         deskripsi="Melihat kesenjangan pendidikan lewat data BPS. Aplikasi ini menunjukkan siapa yang paling tertinggal, seberapa jauh, dan apa yang bisa dilakukan."
-        gambar="/images/foto-kelas.svg"
-        alt="Ilustrasi suasana kelas"
+        gambar={foto.src}
+        alt={foto.alt}
       />
 
       <div className="mt-6 flex flex-wrap items-center gap-3">

@@ -5,6 +5,7 @@ import { JENJANG, PAIRS, perbandingan } from '../lib/metrik'
 import { kalimatDimensi, kalimatAwam, kalimatUmumKesenjangan } from '../lib/temuan'
 import { DIMS, validDim, validJenjang, validTahun, tulisParam, labelKelompok } from '../lib/params'
 import { dampakEkonomi, dampakGender } from '../lib/dampak'
+import { fotoJenjang } from '../lib/foto'
 import { sdgUntuk } from '../lib/sdg'
 import { buatSitasi, copyText, downloadCsv, shareTeks } from '../lib/ekspor'
 import { formatAngka, formatJumlahOrang, formatPoin } from '../lib/format'
@@ -178,6 +179,7 @@ export default function Kesenjangan() {
 
   const solusiList = SOLUSI_MATRIX[dim]?.[kategori] || []
   const sdg = sdgUntuk(dim)
+  const foto = fotoJenjang(kategori)
 
   const salin = async () => {
     const teks = `${judulUtama || `Kesenjangan ${dimLabel}`} Sumber: BPS, Susenas ${tahun}.`
@@ -203,8 +205,8 @@ export default function Kesenjangan() {
             ? 'Halaman ini menunjukkan siapa yang tertinggal di semua jenjang, seberapa besar selisihnya, dan apa yang bisa dilakukan.'
             : `Halaman ini menunjukkan kesenjangan pada jenjang ${kategori}, seberapa besar selisihnya, dan apa yang bisa dilakukan.`
         }
-        gambar="/images/foto-data.svg"
-        alt="Ilustrasi data pendidikan"
+        gambar={foto.src}
+        alt={foto.alt}
       />
 
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -283,7 +285,7 @@ export default function Kesenjangan() {
         </button>
         <Link
           to="/metode"
-          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
+          className="inline-flex min-h-11 items-center justify-center rounded-lg border border-garis bg-putih px-3 text-center text-tinta hover:bg-kertas"
         >
           Metode
         </Link>
