@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { JENJANG, PAIRS, perbandingan } from '../lib/metrik'
-import { kalimatDimensi, kalimatAwam } from '../lib/temuan'
-import { DIMS, validDim, validJenjang, validTahun, tulisParam } from '../lib/params'
+import { kalimatDimensi, kalimatAwam, kalimatUmumKesenjangan } from '../lib/temuan'
+import { DIMS, validDim, validJenjang, validTahun, tulisParam, labelKelompok } from '../lib/params'
 import { dampakEkonomi, dampakGender } from '../lib/dampak'
 import { sdgUntuk } from '../lib/sdg'
 import { buatSitasi, copyText, downloadCsv, shareTeks } from '../lib/ekspor'
@@ -15,6 +15,7 @@ import SegmentedControl from '../components/SegmentedControl'
 import Dumbbell from '../components/Dumbbell'
 import TrenMultiGaris from '../components/TrenMultiGaris'
 import KonteksNasional from '../components/KonteksNasional'
+import Accordion from '../components/Accordion'
 import { Muat, Gagal, BelumTersedia } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -48,7 +49,7 @@ export default function Kesenjangan() {
   )
 
   useDocumentMeta({
-    judul: `Kesenjangan ${DIMS.find((d) => d.value === dim)?.label || ''} — SETARA`,
+    judul: `Kesenjangan ${DIMS.find((d) => d.value === dim)?.label || ''} | SETARA`,
     deskripsi:
       'Kesenjangan pendidikan Indonesia menurut wilayah, ekonomi, dan gender. Data BPS Susenas, dengan tabel, tren, dan solusi berbasis studi.',
   })
@@ -77,19 +78,21 @@ export default function Kesenjangan() {
     ...perbandingan(tidakSekolah, dim, j, tahun),
   }))
 
-  const validPerJenjang = perJenjang.filter((p) => p.selisih !== null)
-  const terbesar = validPerJenjang.reduce(
-    (m, p) => (p.selisih > (m ? m.selisih : -1) ? p : m),
-    null,
-  )
-  const jenjangFokus = jenjang || terbesar?.jenjang || null
+  const pairLabel = {
+    pembanding: labelKelompok(pair.pembanding),
+    tertinggal: labelKelompok(pair.tertinggal),
+  }
 
-  const judulUtama = jenjangFokus
-    ? kalimatDimensi(tidakSekolah, dim, jenjangFokus, tahun)
-    : null
-  const catatanAwam = jenjangFokus
-    ? kalimatAwam(tidakSekolah, dim, pair.tertinggal, jenjangFokus, tahun)
-    : null
+  const judulUtama =
+    kategori === 'Umum'
+      ? kalimatUmumKesenjangan(tidakSekolah, dim, tahun)
+      : jenjang
+        ? kalimatDimensi(tidakSekolah, dim, jenjang, tahun)
+        : null
+  const catatanAwam =
+    kategori === 'Umum' || !jenjang
+      ? null
+      : kalimatAwam(tidakSekolah, dim, pair.tertinggal, jenjang, tahun)
 
   const items = perJenjang.map((p) => ({
     label: p.jenjang,
@@ -118,12 +121,12 @@ export default function Kesenjangan() {
 
   const trendData = jenjang ? trendSpesifik : trendUmum
   const trendTitle = jenjang
-    ? `Tren ${pair.pembanding} vs ${pair.tertinggal} · ${kategori}`
-    : `Tren selisih ${pair.tertinggal}–${pair.pembanding} per jenjang`
+    ? `Tren ${pairLabel.pembanding} dan ${pairLabel.tertinggal} · ${kategori}`
+    : 'Tren selisih antarkelompok per jenjang'
   const trendLines = jenjang
     ? [
-        { key: 'pembanding', label: pair.pembanding, color: '#6F8CAB' },
-        { key: 'tertinggal', label: pair.tertinggal, color: '#C2372D' },
+        { key: 'pembanding', label: pairLabel.pembanding, color: '#6F8CAB' },
+        { key: 'tertinggal', label: pairLabel.tertinggal, color: '#C2372D' },
       ]
     : JENJANG.map((j) => ({ key: j, label: j, color: WARNA_JENJANG[j] }))
 
@@ -136,7 +139,7 @@ export default function Kesenjangan() {
       const gapB = b.pembanding !== null && b.tertinggal !== null ? b.tertinggal - b.pembanding : null
       if (gapA === null || gapB === null) return null
       const arah = gapB > gapA ? 'melebar' : gapB < gapA ? 'menyempit' : 'stabil'
-      return `Selisih ${pair.tertinggal}–${pair.pembanding} di jenjang ${jenjang} ${arah}: ${formatPoin(
+      return `Selisih antara ${pairLabel.tertinggal} dan ${pairLabel.pembanding} di jenjang ${jenjang} ${arah}: ${formatPoin(
         Math.abs(gapA),
         1,
       )} (${a.tahun}) menjadi ${formatPoin(Math.abs(gapB), 1)} (${b.tahun}).`
@@ -144,28 +147,24 @@ export default function Kesenjangan() {
 
     if (trendUmum.length < 2) return null
     const akhir = trendUmum[trendUmum.length - 1]
-    const jenjangTerbesar = JENJANG.reduce((m, j) => {
-      if (akhir[j] === null) return m
-      return m === null || akhir[j] > akhir[m] ? j : m
-    }, null)
-    if (!jenjangTerbesar) return null
-    const seri = trendUmum.filter((d) => d[jenjangTerbesar] !== null)
-    if (seri.length < 2) return null
-    const awal = seri[0]
-    const delta = akhir[jenjangTerbesar] - awal[jenjangTerbesar]
-    const arah = delta > 0 ? 'melebar' : delta < 0 ? 'menyempit' : 'stabil'
-    return `Selisih terbesar ada di ${jenjangTerbesar}: ${formatPoin(
-      akhir[jenjangTerbesar],
+    const nilaiAkhir = JENJANG.map((j) => akhir[j]).filter((n) => typeof n === 'number')
+    if (nilaiAkhir.length < 2) return null
+    const terkecil = Math.min(...nilaiAkhir)
+    const terbesar = Math.max(...nilaiAkhir)
+    return `Pada ${akhir.tahun}, selisih antarkelompok berkisar ${formatPoin(
+      terkecil,
       1,
-    )} (${akhir.tahun}), ${arah} ${formatPoin(Math.abs(delta), 1)} sejak ${awal.tahun}.`
+    )} sampai ${formatPoin(terbesar, 1)}. Pilih SD, SMP, atau SMA untuk melihat arah perubahan tiap jenjang.`
   })()
 
   const dampak =
-    dim === 'ekonomi'
-      ? dampakEkonomi(tidakSekolah, indikator, jenjangFokus, tahun)
-      : dim === 'gender'
-        ? dampakGender(tidakSekolah, indikator, jenjangFokus, tahun)
-        : null
+    kategori === 'Umum'
+      ? null
+      : dim === 'ekonomi'
+        ? dampakEkonomi(tidakSekolah, indikator, jenjang, tahun)
+        : dim === 'gender'
+          ? dampakGender(tidakSekolah, indikator, jenjang, tahun)
+          : null
 
   const solusiList = SOLUSI_MATRIX[dim]?.[kategori] || []
   const sdg = sdgUntuk(dim)
@@ -178,7 +177,7 @@ export default function Kesenjangan() {
 
   const bagikan = async () => {
     const ok = await shareTeks({
-      title: 'SETARA — Kesenjangan pendidikan',
+      title: 'SETARA | Kesenjangan pendidikan',
       text: judulUtama || `Kesenjangan ${dimLabel}`,
       url: window.location.href,
     })
@@ -190,6 +189,15 @@ export default function Kesenjangan() {
       <h1 className="max-w-[26ch] font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
         {judulUtama || `Kesenjangan ${dimLabel}`}
       </h1>
+
+      <div className="mt-4 overflow-hidden rounded-lg border border-garis">
+        <img
+          src="/images/foto-data.svg"
+          alt="Ilustrasi data pendidikan"
+          className="h-40 w-full object-cover md:h-56"
+          loading="lazy"
+        />
+      </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
         <TabBar
@@ -240,8 +248,8 @@ export default function Kesenjangan() {
               })),
               [
                 { key: 'jenjang', label: 'Jenjang' },
-                { key: 'pembanding', label: pair.pembanding },
-                { key: 'tertinggal', label: pair.tertinggal },
+                { key: 'pembanding', label: pairLabel.pembanding },
+                { key: 'tertinggal', label: pairLabel.tertinggal },
                 { key: 'selisih', label: 'Selisih (poin)' },
                 { key: 'rasio', label: 'Rasio' },
               ],
@@ -274,6 +282,17 @@ export default function Kesenjangan() {
       </div>
       {salinan && <p className="mt-2 text-sm text-tinta-redup">{salinan}</p>}
 
+      <Accordion judul="Apa arti kategori Umum, SD, SMP, dan SMA?">
+        <p>
+          Umum berarti semua jenjang dilihat bersama, bukan hanya satu jenjang. Pilih SD, SMP, atau
+          SMA jika ingin fokus pada satu jenjang saja.
+        </p>
+        <p>
+          Grafik dan solusi di halaman ini mengikuti kategori yang dipilih. Untuk pembaca yang baru
+          pertama melihat data, mulai dari kategori Umum.
+        </p>
+      </Accordion>
+
       <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="font-serif text-[1.25rem] leading-snug text-tinta">
           {judulUtama || 'Angka anak tidak sekolah per jenjang'}
@@ -283,8 +302,8 @@ export default function Kesenjangan() {
             <div className="mt-4">
               <Dumbbell
                 items={items}
-                pembandingNama={pair.pembanding}
-                tertinggalNama={pair.tertinggal}
+                pembandingNama={pairLabel.pembanding}
+                tertinggalNama={pairLabel.tertinggal}
                 ringkasan={judulUtama || undefined}
               />
             </div>
@@ -296,19 +315,39 @@ export default function Kesenjangan() {
           </div>
         )}
         <Sumber tahun={tahun} />
+        <Accordion judul="Cara membaca grafik ini">
+          <p>
+            Setiap baris adalah satu jenjang pendidikan. Titik biru menunjukkan{' '}
+            {pairLabel.pembanding}, sedangkan kotak merah menunjukkan {pairLabel.tertinggal}.
+          </p>
+          <p>
+            Panjang garis menunjukkan besar selisih. Angka di ujung kanan adalah selisih dalam poin.
+            Semakin panjang garisnya, semakin besar kesenjangan antara kedua kelompok.
+          </p>
+          <p>
+            Kategori Umum menampilkan semua jenjang. Pilih SD, SMP, atau SMA untuk menyorot satu
+            jenjang di tabel.
+          </p>
+        </Accordion>
       </section>
 
       {dampak && (
         <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
           <h2 className="text-base font-semibold text-tinta">
-            Skala dampak · {jenjangFokus} {tahun}
+            Skala dampak · {jenjang} {tahun}
           </h2>
           <p className="mt-1 text-sm font-semibold text-tinta">
-            Sekitar {formatJumlahOrang(dampak.estimasi)} anak usia {jenjangFokus} berpotensi kembali
+            Sekitar {formatJumlahOrang(dampak.estimasi)} anak usia {jenjang} berpotensi kembali
             bersekolah jika kelompok tertinggal setara kelompok pembanding.
           </p>
-          <p className="mt-1 text-sm leading-relaxed text-tinta-redup">{dampak.metode}</p>
-          <p className="mt-1 text-xs text-tinta-redup">Asumsi: {dampak.asumsi}</p>
+          <Accordion judul="Bagaimana angka ini dihitung?">
+            <p>{dampak.metode}</p>
+            <p>Asumsi: {dampak.asumsi}</p>
+            <p>
+              Angka ini adalah perkiraan, bukan hasil sensus. Gunakan sebagai gambaran skala, bukan
+              angka resmi.
+            </p>
+          </Accordion>
         </section>
       )}
 
@@ -335,22 +374,43 @@ export default function Kesenjangan() {
             <BelumTersedia alasan="tidak ada data tren" />
           )}
           <Sumber tahun="2019–2023" />
+          <Accordion judul="Cara membaca tren">
+            {kategori === 'Umum' ? (
+              <>
+                <p>
+                  Garis merah adalah SD, garis biru adalah SMP, dan garis abu-abu adalah SMA. Setiap
+                  garis menunjukkan besar selisih antarkelompok pada jenjang tersebut.
+                </p>
+                <p>
+                  Garis yang naik berarti kesenjangan melebar. Garis yang turun berarti kesenjangan
+                  menyempit.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  Garis biru menunjukkan {pairLabel.pembanding}. Garis merah menunjukkan{' '}
+                  {pairLabel.tertinggal}.
+                </p>
+                <p>
+                  Semakin jauh jarak kedua garis, semakin besar kesenjangan antara kedua kelompok.
+                  Angka pada tabel di bawah grafik menunjukkan nilai aslinya.
+                </p>
+              </>
+            )}
+          </Accordion>
         </div>
       </section>
 
       <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Metrik kesenjangan per jenjang</h2>
-        <p className="mt-1 text-sm text-tinta-redup">
-          Selisih absolut = nilai tertinggi dikurangi terendah (poin persentase). Rasio = nilai
-          tertinggi dibagi terendah.
-        </p>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[520px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-garis text-tinta-redup">
                 <th className="py-2 pr-4 font-medium">Jenjang</th>
-                <th className="py-2 pr-4 font-medium">{pair.pembanding}</th>
-                <th className="py-2 pr-4 font-medium">{pair.tertinggal}</th>
+                <th className="py-2 pr-4 font-medium">{pairLabel.pembanding}</th>
+                <th className="py-2 pr-4 font-medium">{pairLabel.tertinggal}</th>
                 <th className="py-2 pr-4 font-medium">Selisih (poin)</th>
                 <th className="py-2 font-medium">Rasio</th>
               </tr>
@@ -365,16 +425,16 @@ export default function Kesenjangan() {
                 >
                   <td className="py-2 pr-4 font-semibold text-tinta">{r.jenjang}</td>
                   <td className="py-2 pr-4 text-tinta">
-                    {r.pembanding !== null ? formatAngka(r.pembanding, 2) : '—'}
+                    {r.pembanding !== null ? formatAngka(r.pembanding, 2) : '-'}
                   </td>
                   <td className="py-2 pr-4 text-tinta">
-                    {r.tertinggal !== null ? formatAngka(r.tertinggal, 2) : '—'}
+                    {r.tertinggal !== null ? formatAngka(r.tertinggal, 2) : '-'}
                   </td>
                   <td className="py-2 pr-4 text-tinta">
-                    {r.selisih !== null ? `+${formatAngka(r.selisih, 2)}` : '—'}
+                    {r.selisih !== null ? `+${formatAngka(r.selisih, 2)}` : '-'}
                   </td>
                   <td className="py-2 text-tinta">
-                    {r.rasio !== null ? `${formatAngka(r.rasio, 1)}×` : '—'}
+                    {r.rasio !== null ? `${formatAngka(r.rasio, 1)}×` : '-'}
                   </td>
                 </tr>
               ))}
@@ -387,6 +447,19 @@ export default function Kesenjangan() {
             : `Baris disorot: ${kategori}.`}{' '}
           Satuan nilai: persen. Sumber: BPS, Susenas {tahun}.
         </p>
+        <Accordion judul="Apa arti selisih dan rasio?">
+          <p>
+            Selisih adalah angka tertinggi dikurangi angka terendah. Contoh: jika kelompok tertinggal
+            30% dan kelompok pembanding 15%, selisihnya 15 poin.
+          </p>
+          <p>
+            Rasio adalah angka tertinggi dibagi angka terendah. Contoh: 30 dibagi 15 sama dengan 2,
+            artinya kelompok tertinggal dua kali lipat kelompok pembanding.
+          </p>
+          <p>
+            Poin berbeda dengan persen. Selisih 15 poin tidak sama dengan 15% lebih tinggi.
+          </p>
+        </Accordion>
       </section>
 
       <KonteksNasional rows={indikator} dimensi={dim} />
@@ -401,10 +474,16 @@ export default function Kesenjangan() {
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-xs text-tinta-redup">
-            Pemetaan ini menunjukkan relevansi temuan, bukan klaim bahwa aplikasi mengukur target SDG
-            secara resmi.
-          </p>
+          <Accordion judul="Apa hubungannya dengan SDGs?">
+            <p>
+              Temuan di halaman ini berkaitan dengan tujuan pembangunan berkelanjutan, terutama
+              pendidikan yang merata dan pengurangan ketimpangan.
+            </p>
+            <p>
+              Pemetaan ini menunjukkan relevansi temuan, bukan klaim bahwa aplikasi mengukur target
+              SDG secara resmi.
+            </p>
+          </Accordion>
         </section>
       )}
 
@@ -448,10 +527,16 @@ export default function Kesenjangan() {
         ) : (
           <p className="mt-3 text-sm text-tinta-redup">Belum ada solusi untuk kombinasi ini.</p>
         )}
-        <p className="mt-3 text-xs text-tinta-redup">
-          Temuan di atas dihitung dari data BPS. Solusi berasal dari studi literatur; hubungannya
-          indikatif, bukan klaim sebab-akibat.
-        </p>
+        <Accordion judul="Dari mana solusi ini?">
+          <p>
+            Temuan dihitung dari data BPS. Solusi diambil dari studi dan artikel yang sumbernya bisa
+            dibuka pada tiap poin.
+          </p>
+          <p>
+            Hubungan antara temuan dan solusi bersifat indikatif. Aplikasi ini tidak mengklaim bahwa
+            satu kebijakan pasti menyebabkan satu hasil.
+          </p>
+        </Accordion>
       </section>
     </main>
   )

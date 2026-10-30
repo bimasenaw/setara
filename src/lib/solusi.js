@@ -197,7 +197,7 @@ export const SOLUSI_MATRIX = {
     ],
     SD: [
       {
-        temuan: 'Desa 1,12% vs kota 0,32% — selisih sudah muncul sejak SD.',
+        temuan: 'Desa 1,12% vs kota 0,32%, selisih sudah muncul sejak SD.',
         solusi:
           'Pastikan keterjangkauan SD di perdesaan; faktor demografi seperti usia dan jumlah anak turut menentukan risiko anak mengulang kelas.',
         sumber: ['duflo2001', 'samosir2021'],
@@ -211,7 +211,7 @@ export const SOLUSI_MATRIX = {
     ],
     SMP: [
       {
-        temuan: 'Desa 8,45% vs kota 5,82% — selisih melebar di SMP.',
+        temuan: 'Desa 8,45% vs kota 5,82%, selisih melebar di SMP.',
         solusi:
           'Amankan transisi SD→SMP di desa lewat bantuan biaya operasional (BOS) yang terbukti menaikkan partisipasi sekolah.',
         sumber: ['sulistyaningrum2016', 'petrosino2012'],
@@ -225,7 +225,7 @@ export const SOLUSI_MATRIX = {
     ],
     SMA: [
       {
-        temuan: 'Desa 26,06% vs kota 18,50% — selisih terlebar di SMA.',
+        temuan: 'Desa 26,06% vs kota 18,50%, selisih terlebar di SMA.',
         solusi:
           'Perluas akses sekolah menengah atas di desa. Sekolah baru menaikkan partisipasi, dan enrolmen SMA ditentukan faktor biaya serta kinerja pendidikan.',
         sumber: ['duflo2001', 'sugiharti2017', 'kartasasmita2021'],
@@ -241,7 +241,7 @@ export const SOLUSI_MATRIX = {
   ekonomi: {
     Umum: [
       {
-        temuan: 'Di SMA, kuintil 1 (30,66%) vs kuintil 5 (14,67%) — kesenjangan ekonomi paling tajam.',
+        temuan: 'Di SMA, kelompok termiskin (30,66%) vs kelompok terkaya (14,67%), kesenjangan ekonomi paling tajam.',
         solusi:
           'Perluas dan pertajam bantuan tunai bersyarat (PKH) sebagai jaring pengaman lintas jenjang; uji acak menunjukkan efek kumulatifnya terhadap partisipasi sekolah.',
         sumber: ['cahyadi2020', 'hudang2024'],
@@ -255,7 +255,7 @@ export const SOLUSI_MATRIX = {
     ],
     SD: [
       {
-        temuan: 'Kuintil 1 (1,15%) vs kuintil 5 (0,38%) — tiga kali lipat sejak SD.',
+        temuan: 'Kelompok termiskin (1,15%) vs kelompok terkaya (0,38%), tiga kali lipat sejak SD.',
         solusi:
           'Berikan bantuan tunai sejak dini agar keluarga termiskin tidak melepas anak dari SD; kondisi rumah tangga menentukan partisipasi sekolah anak.',
         sumber: ['cahyadi2020', 'purnastuti2012'],
@@ -269,7 +269,7 @@ export const SOLUSI_MATRIX = {
     ],
     SMP: [
       {
-        temuan: 'Kuintil 1 (10,11%) vs kuintil 5 (5,05%) — dua kali lipat di SMP.',
+        temuan: 'Kelompok termiskin (10,11%) vs kelompok terkaya (5,05%), dua kali lipat di SMP.',
         solusi:
           'Syaratkan PKH pada partisipasi SMP untuk menahan anak keluarga termiskin tetap bersekolah.',
         sumber: ['cahyadi2020', 'hudang2024'],
@@ -283,9 +283,9 @@ export const SOLUSI_MATRIX = {
     ],
     SMA: [
       {
-        temuan: 'Kuintil 1 (30,66%) vs kuintil 5 (14,67%) — biaya kesempatan bekerja tertinggi di SMA.',
+        temuan: 'Kelompok termiskin (30,66%) vs kelompok terkaya (14,67%), biaya kesempatan bekerja tertinggi di SMA.',
         solusi:
-          'Perluas beasiswa dan bantuan tunai bagi kuintil termiskin; bantuan tunai pendidikan terbukti menaikkan angka masuk SMA.',
+          'Perluas beasiswa dan bantuan tunai bagi kelompok termiskin; bantuan tunai pendidikan terbukti menaikkan angka masuk SMA.',
         sumber: ['cahyadi2020', 'caniago2021'],
       },
       {
@@ -327,7 +327,7 @@ export const SOLUSI_MATRIX = {
     ],
     SMP: [
       {
-        temuan: 'Laki-laki 7,97% vs perempuan 5,86% — celah mulai muncul di SMP.',
+        temuan: 'Laki-laki 7,97% vs perempuan 5,86%, celah mulai muncul di SMP.',
         solusi:
           'Beri dukungan khusus anak laki-laki di SMP; di Indonesia pilihan jenis sekolah juga berbeda menurut gender.',
         sumber: ['himaz2021', 'asadullah2018'],
@@ -341,7 +341,7 @@ export const SOLUSI_MATRIX = {
     ],
     SMA: [
       {
-        temuan: 'Laki-laki 23,78% vs perempuan 19,34% — celah terlebar di SMA.',
+        temuan: 'Laki-laki 23,78% vs perempuan 19,34%, celah terlebar di SMA.',
         solusi:
           'Tahan anak laki-laki tetap sekolah di SMA lewat bantuan biaya, karena putus sekolah menghambat transisi menuju dewasa.',
         sumber: ['himaz2021', 'utomo2014'],

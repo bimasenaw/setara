@@ -8,6 +8,7 @@ import { formatAngka, formatJumlahOrang, formatPoin } from '../lib/format'
 import TahunSelect from '../components/TahunSelect'
 import SegmentedControl from '../components/SegmentedControl'
 import StatRow from '../components/StatRow'
+import Accordion from '../components/Accordion'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -24,7 +25,7 @@ export default function Ringkasan() {
   const jenjang = validJenjang(params.get('jenjang'), JENJANG)
 
   useDocumentMeta({
-    judul: 'SETARA — Ringkasan kesenjangan pendidikan',
+    judul: 'SETARA | Ringkasan kesenjangan pendidikan',
     deskripsi:
       'Ringkasan kesenjangan pendidikan Indonesia: wilayah, ekonomi, gender, dan prioritas provinsi dari data BPS.',
   })
@@ -59,17 +60,29 @@ export default function Ringkasan() {
 
   return (
     <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-      <h1 className="font-serif text-[1.75rem] font-semibold leading-tight text-tinta md:text-[2.5rem]">
-        SETARA
-      </h1>
-      <p className="mt-1 text-base text-tinta-redup">Melihat kesenjangan pendidikan lewat data BPS.</p>
-      <p className="mt-4 max-w-[68ch] text-base leading-relaxed text-tinta">
-        SETARA — Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses — menunjukkan siapa yang
-        paling tertinggal dalam pendidikan Indonesia. Dari data BPS (Susenas), aplikasi ini memetakan
-        angka anak tidak sekolah lewat tiga sudut — wilayah (desa vs kota), ekonomi (kuintil
-        pengeluaran), dan gender — serta peringkat partisipasi pendidikan usia dini per provinsi,
-        lalu menerjemahkan setiap temuan menjadi solusi yang didukung studi literatur.
-      </p>
+      <div className="mt-4 grid gap-6 md:grid-cols-[1fr_320px] md:items-start">
+        <div>
+          <h1 className="font-serif text-[1.75rem] font-semibold leading-tight text-tinta md:text-[2.5rem]">
+            SETARA
+          </h1>
+          <p className="mt-1 text-base text-tinta-redup">
+            Melihat kesenjangan pendidikan lewat data BPS.
+          </p>
+          <p className="mt-4 max-w-[68ch] text-base leading-relaxed text-tinta">
+            SETARA (Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses) menunjukkan siapa yang
+            paling tertinggal dalam pendidikan Indonesia. Dari data BPS (Susenas), aplikasi ini
+            memetakan angka anak tidak sekolah lewat tiga sudut: wilayah (desa dan kota), ekonomi
+            (kelompok pengeluaran), dan gender, serta peringkat partisipasi pendidikan usia dini per
+            provinsi. Setiap temuan diarahkan menjadi solusi yang didukung studi literatur.
+          </p>
+        </div>
+        <img
+          src="/images/foto-kelas.svg"
+          alt="Ilustrasi suasana kelas"
+          className="h-52 w-full rounded-lg border border-garis object-cover md:h-full"
+          loading="lazy"
+        />
+      </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <SegmentedControl
@@ -104,6 +117,16 @@ export default function Ringkasan() {
         <p className="max-w-[30ch] font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
           {kalimatUtama || 'Kesenjangan pendidikan paling tajam terlihat di tingkat ekonomi.'}
         </p>
+        <Accordion judul="Apa maksud temuan ini?">
+          <p>
+            Angka pada kalimat di atas adalah persentase anak usia sekolah yang tidak sedang
+            bersekolah. Semakin tinggi angkanya, semakin banyak anak yang tertinggal.
+          </p>
+          <p>
+            Perbedaan antara dua kelompok disebut selisih poin. Contohnya, selisih 10 poin berarti
+            satu kelompok 10 poin lebih tinggi daripada kelompok lain.
+          </p>
+        </Accordion>
       </section>
 
       <section className="mt-10">
@@ -125,6 +148,16 @@ export default function Ringkasan() {
             </Link>
           ))}
         </div>
+        <Accordion judul="Dari mana temuan ini?">
+          <p>
+            Temuan dihitung otomatis dari data BPS. Setiap kotak bisa dibuka untuk melihat rincian
+            wilayah, ekonomi, atau gender pada jenjang yang disebut.
+          </p>
+          <p>
+            Angka di kalimat temuan selalu sama dengan angka di halaman detail. Jika data berubah,
+            kalimatnya ikut berubah.
+          </p>
+        </Accordion>
       </section>
 
       <section className="mt-10">
@@ -135,19 +168,19 @@ export default function Ringkasan() {
             a={{ label: 'Anak tidak sekolah', value: angkaNasional }}
           />
           <StatRow
-            label="Selisih kota–desa"
-            a={{ label: 'Perkotaan', value: wilayah.pembanding }}
-            b={{ label: 'Perdesaan', value: wilayah.tertinggal }}
+            label="Selisih kota dan desa"
+            a={{ label: 'Kota', value: wilayah.pembanding }}
+            b={{ label: 'Desa', value: wilayah.tertinggal }}
             selisih={wilayah.selisih}
           />
           <StatRow
-            label="Selisih kuintil 1–5"
-            a={{ label: 'Kuintil 1', value: ekonomi.tertinggal }}
-            b={{ label: 'Kuintil 5', value: ekonomi.pembanding }}
+            label="Selisih kelompok termiskin dan terkaya"
+            a={{ label: 'Termiskin (20%)', value: ekonomi.tertinggal }}
+            b={{ label: 'Terkaya (20%)', value: ekonomi.pembanding }}
             selisih={ekonomi.selisih}
           />
           <StatRow
-            label="Selisih laki-laki–perempuan"
+            label="Selisih laki-laki dan perempuan"
             a={{ label: 'Laki-laki', value: gender.tertinggal }}
             b={{ label: 'Perempuan', value: gender.pembanding }}
             selisih={gender.selisih}
@@ -155,25 +188,40 @@ export default function Ringkasan() {
           <p className="mt-3 text-xs text-tinta-redup">
             Selisih dihitung dalam poin persentase. Satuan nilai: persen. Sumber: BPS, Susenas {tahun}.
           </p>
+          <Accordion judul="Apa arti empat angka ini?">
+            <p>
+              Nasional adalah angka rata-rata seluruh Indonesia. Selisih kota dan desa menunjukkan
+              perbedaan antara anak di kota dan anak di desa.
+            </p>
+            <p>
+              Kelompok termiskin adalah 20% keluarga dengan pengeluaran terendah. Kelompok terkaya
+              adalah 20% keluarga dengan pengeluaran tertinggi.
+            </p>
+            <p>
+              Selisih laki-laki dan perempuan menunjukkan perbedaan angka anak tidak sekolah antara
+              kedua kelompok. Semua selisih ditulis dalam poin, bukan persen.
+            </p>
+          </Accordion>
         </div>
       </section>
 
       {(dampakEko || dampakGen) && (
         <section className="mt-10 rounded-lg border border-garis bg-putih p-5">
-          <h2 className="text-base font-semibold text-tinta">Skala dampak (estimasi)</h2>
+          <h2 className="text-base font-semibold text-tinta">Perkiraan jumlah anak</h2>
           <p className="mt-1 text-sm text-tinta-redup">
-            Mengubah persentase menjadi perkiraan jumlah anak. Angka ini indikatif dan memakai asumsi
-            yang dijelaskan di bawah.
+            Angka ini mengubah persentase menjadi perkiraan jumlah anak. Sifatnya indikatif, bukan
+            angka sensus.
           </p>
           <div className="mt-3 space-y-3">
             {dampakEko && (
               <div className="border-b border-garis pb-3 last:border-0 last:pb-0">
                 <p className="text-sm font-semibold text-tinta">
-                  Ekonomi · {jenjang}: sekitar {formatJumlahOrang(dampakEko.estimasi)} usia {jenjang}{' '}
-                  berpotensi kembali bersekolah jika kuintil 1 setara kuintil 5.
+                  Ekonomi · {jenjang}: sekitar {formatJumlahOrang(dampakEko.estimasi)} anak usia{' '}
+                  {jenjang} berpotensi kembali bersekolah jika kelompok termiskin setara kelompok
+                  terkaya.
                 </p>
                 <p className="mt-1 text-sm text-tinta-redup">
-                  Selisih {formatAngka(dampakEko.gap, 1)} poin. {dampakEko.metode}
+                  Selisih {formatAngka(dampakEko.gap, 1)} poin.
                 </p>
               </div>
             )}
@@ -185,15 +233,19 @@ export default function Ringkasan() {
                   setara kelompok pembanding.
                 </p>
                 <p className="mt-1 text-sm text-tinta-redup">
-                  Selisih {formatAngka(dampakGen.gap, 2)} poin. {dampakGen.metode}
+                  Selisih {formatAngka(dampakGen.gap, 2)} poin.
                 </p>
               </div>
             )}
           </div>
-          <p className="mt-3 text-xs text-tinta-redup">
-            Batasan: estimasi memakai proyeksi populasi dan asumsi distribusi kelompok; bukan angka
-            sensus. Lihat halaman Metode untuk rumus lengkap.
-          </p>
+          <Accordion judul="Bagaimana perkiraan ini dihitung?">
+            {dampakEko && <p>{dampakEko.metode}</p>}
+            {dampakGen && <p>{dampakGen.metode}</p>}
+            <p>
+              Perhitungan memakai proyeksi populasi dan asumsi pembagian kelompok. Angka ini bukan
+              hasil sensus. Rumus lengkap ada di halaman Metode.
+            </p>
+          </Accordion>
         </section>
       )}
     </main>

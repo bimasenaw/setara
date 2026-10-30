@@ -1,4 +1,4 @@
-# Solusi Berbasis Studi Literatur — SETARA
+# Solusi Berbasis Studi Literatur: SETARA
 
 Dokumen pendamping untuk esai. Angka temuan diambil dari data BPS (Susenas) 2023 yang ditampilkan
 di aplikasi SETARA. Setiap solusi didukung referensi jurnal (open-access, dapat diverifikasi lewat
@@ -6,7 +6,7 @@ DOI).
 
 ---
 
-## Bagian A — Solusi per masalah
+## Bagian A: Solusi per masalah
 
 ### 1. Tidak sekolah naik tajam seiring jenjang
 
@@ -43,14 +43,14 @@ DOI).
 
 ### 5. Partisipasi PAUD Papua jauh di bawah nasional
 
-- **Temuan utama:** Papua 62,98% melawan nasional 95,54% — selisih 32,56 poin (2023).
+- **Temuan utama:** Papua 62,98% melawan nasional 95,54%, selisih 32,56 poin (2023).
 - **Solusi:** Perluas layanan PAUD di daerah tertinggal (Brinkman et al., 2017); di Papua,
   pembelajaran jarak jauh PAUD dapat menjangkau daerah terpencil (Pratiwi & Hasbullah, 2021).
 - **Sumber:** Brinkman et al. (2017); Pratiwi & Hasbullah (2021).
 
 ---
 
-## Bagian B — Solusi per jenjang (3 solusi per kategori)
+## Bagian B: Solusi per jenjang (3 solusi per kategori)
 
 ### Semua
 

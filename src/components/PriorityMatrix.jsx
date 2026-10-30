@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { formatAngka, formatPoin } from '../lib/format'
 import { labelKategori } from '../lib/prioritas'
 import { tautanProvinsi } from '../lib/params'
+import Accordion from './Accordion'
 
 const URUTAN = ['Mendesak', 'Membaik', 'Pantau', 'Berhasil']
 
@@ -10,10 +11,6 @@ export default function PriorityMatrix({ data, tahun }) {
   return (
     <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
       <h2 className="text-base font-semibold text-tinta">Matriks prioritas provinsi</h2>
-      <p className="mt-1 text-sm text-tinta-redup">
-        Berdasarkan level partisipasi usia SMA dan perubahan sejak 2019. Kuadran dibagi memakai median
-        provinsi; ini alat bantu prioritas, bukan penilaian kinerja resmi.
-      </p>
       <div className="mt-4 grid gap-4 md:grid-cols-2">
         {URUTAN.map((kategori) => {
           const items = data.filter((d) => d.kategori === kategori)
@@ -43,6 +40,19 @@ export default function PriorityMatrix({ data, tahun }) {
           )
         })}
       </div>
+      <Accordion judul="Cara membaca kuadran ini">
+        <p>
+          Setiap provinsi ditempatkan berdasarkan dua hal: tingkat partisipasi SMA saat ini dan
+          perubahannya sejak 2019.
+        </p>
+        <p>
+          Perlu intervensi mendesak berarti partisipasinya rendah dan cenderung turun. Berhasil
+          berarti partisipasinya sudah tinggi dan terus membaik.
+        </p>
+        <p>
+          Kuadran ini alat bantu prioritas. Bukan penilaian resmi terhadap kinerja provinsi.
+        </p>
+      </Accordion>
     </section>
   )
 }

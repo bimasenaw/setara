@@ -50,7 +50,7 @@ export async function shareTeks({ title, text, url }) {
 
 export function buatSitasi({ judul, tahun, url }) {
   const lokasi = url || (typeof window !== 'undefined' ? window.location.href : '')
-  return `${judul} (${tahun}). SETARA — Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. BPS, Susenas. ${lokasi}`
+  return `${judul} (${tahun}). SETARA: Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. BPS, Susenas. ${lokasi}`
 }
 
 export function downloadSvgPng(svg, filename, skala = 2) {

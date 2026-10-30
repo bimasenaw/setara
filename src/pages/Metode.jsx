@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { downloadCsv } from '../lib/ekspor'
+import Accordion from '../components/Accordion'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -23,7 +24,7 @@ const RUMUS = [
   },
   {
     judul: 'Estimasi jumlah anak',
-    teks: 'Persentase selisih dikalikan populasi usia sekolah. Untuk kuintil, dipakai asumsi 20% anak per kuintil. Populasi provinsi memakai distribusi umur SP2020 yang diskalakan ke total penduduk 2025. Angka ini indikatif, bukan sensus.',
+    teks: 'Persentase selisih dikalikan populasi usia sekolah. Untuk kelompok pengeluaran, dipakai asumsi 20% anak per kelompok pengeluaran. Populasi provinsi memakai distribusi umur SP2020 yang diskalakan ke total penduduk 2025. Angka ini indikatif, bukan sensus.',
   },
   {
     judul: 'Kuadran prioritas',
@@ -35,7 +36,7 @@ export default function Metode() {
   const { status, meta, error, reload } = useData()
 
   useDocumentMeta({
-    judul: 'Metode dan sumber — SETARA',
+    judul: 'Metode dan sumber | SETARA',
     deskripsi:
       'Sumber data BPS, definisi indikator, rumus, asumsi, dan keterbatasan aplikasi SETARA.',
   })
@@ -70,11 +71,78 @@ export default function Metode() {
       </h1>
       <p className="mt-3 max-w-[68ch] text-base leading-relaxed text-tinta">
         SETARA memakai data BPS yang diambil lewat WebAPI dan disimpan sebagai berkas statis. Aplikasi
-        ini deskriptif: ia menunjukkan siapa yang tertinggal dan seberapa jauh, bukan mengklaim
-        penyebab.
+        ini menunjukkan siapa yang tertinggal dan seberapa jauh, bukan mengklaim penyebab.
       </p>
 
-      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
+      <div className="mt-4 overflow-hidden rounded-lg border border-garis">
+        <img
+          src="/images/foto-data.svg"
+          alt="Ilustrasi data pendidikan"
+          className="h-40 w-full object-cover md:h-52"
+          loading="lazy"
+        />
+      </div>
+
+      <nav
+        aria-label="Daftar isi"
+        className="mt-6 rounded-lg border border-garis bg-putih p-5"
+      >
+        <h2 className="text-base font-semibold text-tinta">Daftar isi</h2>
+        <ol className="mt-3 grid gap-2 text-sm text-tinta sm:grid-cols-2">
+          <li>
+            <Link to="/" className="hover:text-tinta-redup">
+              Ringkasan
+            </Link>
+          </li>
+          <li>
+            <Link to="/kesenjangan" className="hover:text-tinta-redup">
+              Kesenjangan: wilayah, ekonomi, gender
+            </Link>
+          </li>
+          <li>
+            <Link to="/provinsi" className="hover:text-tinta-redup">
+              Peringkat provinsi
+            </Link>
+          </li>
+          <li>
+            <Link to="/provinsi/1100" className="hover:text-tinta-redup">
+              Contoh profil provinsi
+            </Link>
+          </li>
+          <li>
+            <a href="#sumber" className="hover:text-tinta-redup">
+              Sumber dan pembaruan
+            </a>
+          </li>
+          <li>
+            <a href="#indikator" className="hover:text-tinta-redup">
+              Indikator yang dipakai
+            </a>
+          </li>
+          <li>
+            <a href="#istilah" className="hover:text-tinta-redup">
+              Istilah mudah
+            </a>
+          </li>
+          <li>
+            <a href="#rumus" className="hover:text-tinta-redup">
+              Rumus dan asumsi
+            </a>
+          </li>
+          <li>
+            <a href="#keterbatasan" className="hover:text-tinta-redup">
+              Keterbatasan
+            </a>
+          </li>
+          <li>
+            <a href="#sitasi" className="hover:text-tinta-redup">
+              Sitasi
+            </a>
+          </li>
+        </ol>
+      </nav>
+
+      <section id="sumber" className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Sumber dan pembaruan</h2>
         <dl className="mt-3 space-y-1 text-sm text-tinta">
           <div className="flex flex-wrap gap-x-2">
@@ -93,12 +161,12 @@ export default function Metode() {
                     dateStyle: 'long',
                     timeStyle: 'short',
                   })
-                : '—'}
+                : '-'}
             </dd>
           </div>
           <div className="flex flex-wrap gap-x-2">
             <dt className="font-semibold">Catatan:</dt>
-            <dd className="max-w-[68ch]">{meta?.catatan || '—'}</dd>
+            <dd className="max-w-[68ch]">{meta?.catatan || '-'}</dd>
           </div>
         </dl>
         <div className="mt-4 flex flex-wrap gap-2">
@@ -144,7 +212,7 @@ export default function Metode() {
         </div>
       </section>
 
-      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
+      <section id="indikator" className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Indikator yang dipakai</h2>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[620px] border-collapse text-left text-sm">
@@ -172,43 +240,90 @@ export default function Metode() {
         </div>
       </section>
 
-      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Rumus dan asumsi</h2>
-        <dl className="mt-3 space-y-3 text-sm leading-relaxed text-tinta">
-          {RUMUS.map((r) => (
-            <div key={r.judul}>
-              <dt className="font-semibold">{r.judul}</dt>
-              <dd className="text-tinta-redup">{r.teks}</dd>
+      <section id="istilah" className="mt-8 rounded-lg border border-garis bg-putih p-5">
+        <h2 className="text-base font-semibold text-tinta">Istilah mudah</h2>
+        <Accordion judul="Buka daftar istilah">
+          <dl className="space-y-2">
+            <div>
+              <dt className="font-semibold text-tinta">Anak tidak sekolah</dt>
+              <dd>Anak usia sekolah yang tidak sedang mengikuti pendidikan formal atau nonformal.</dd>
             </div>
-          ))}
-        </dl>
+            <div>
+              <dt className="font-semibold text-tinta">Poin</dt>
+              <dd>Satuan untuk selisih antara dua persentase. Selisih 10 poin berbeda dengan 10%.</dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-tinta">Kelompok termiskin dan terkaya</dt>
+              <dd>
+                Penduduk dibagi menjadi lima kelompok berdasarkan pengeluaran. Kelompok termiskin
+                adalah 20% dengan pengeluaran terendah.
+              </dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-tinta">APK dan APS</dt>
+              <dd>
+                APK adalah angka partisipasi kasar. APS adalah angka partisipasi sekolah. Keduanya
+                mengukur partisipasi, bukan angka anak tidak sekolah.
+              </dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-tinta">PAUD</dt>
+              <dd>Pendidikan anak usia dini untuk anak usia 3-6 tahun.</dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-tinta">IPM</dt>
+              <dd>
+                Indeks Pembangunan Manusia, ringkasan kesehatan, pendidikan, dan pendapatan. Semakin
+                tinggi, semakin baik.
+              </dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-tinta">Estimasi</dt>
+              <dd>Perkiraan yang dihitung dari data, bukan angka sensus atau angka resmi.</dd>
+            </div>
+          </dl>
+        </Accordion>
       </section>
 
-      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
+      <section id="rumus" className="mt-8 rounded-lg border border-garis bg-putih p-5">
+        <h2 className="text-base font-semibold text-tinta">Rumus dan asumsi</h2>
+        <div className="mt-3">
+          {RUMUS.map((r) => (
+            <Accordion key={r.judul} judul={r.judul}>
+              <p>{r.teks}</p>
+            </Accordion>
+          ))}
+        </div>
+      </section>
+
+      <section id="keterbatasan" className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Keterbatasan</h2>
-        <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-tinta-redup">
-          {(meta?.keterbatasan || []).map((k) => (
-            <li key={k}>{k}</li>
-          ))}
-          <li>
-            Angka anak tidak sekolah (var 1984/1986/1988) tersedia sampai 2023; indikator partisipasi
-            yang lebih baru tidak dicampur dalam grafik yang sama.
-          </li>
-          <li>
-            Estimasi jumlah anak memakai proyeksi populasi dan asumsi distribusi; angka ini bukan
-            hasil sensus dan tidak boleh dikutip sebagai angka resmi.
-          </li>
-          <li>
-            Beberapa provinsi baru Papua memiliki data terbatas atau RSE tinggi pada indikator
-            tertentu; aplikasi menampilkan data yang tersedia dan tidak mengisi kekosongan dengan nol.
-          </li>
-        </ul>
+        <Accordion judul="Baca keterbatasan data">
+          <ul className="list-disc space-y-1 pl-5">
+            {(meta?.keterbatasan || []).map((k) => (
+              <li key={k}>{k}</li>
+            ))}
+            <li>
+              Angka anak tidak sekolah (var 1984/1986/1988) tersedia sampai 2023. Indikator
+              partisipasi yang lebih baru tidak dicampur dalam grafik yang sama.
+            </li>
+            <li>
+              Estimasi jumlah anak memakai proyeksi populasi dan asumsi distribusi. Angka ini bukan
+              hasil sensus dan tidak boleh dikutip sebagai angka resmi.
+            </li>
+            <li>
+              Beberapa provinsi baru Papua memiliki data terbatas atau RSE tinggi pada indikator
+              tertentu. Aplikasi menampilkan data yang tersedia dan tidak mengisi kekosongan dengan
+              nol.
+            </li>
+          </ul>
+        </Accordion>
       </section>
 
-      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
+      <section id="sitasi" className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Sitasi</h2>
         <p className="mt-2 max-w-[68ch] break-words text-sm leading-relaxed text-tinta">
-          SETARA — Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. (2026). Data BPS
+          SETARA | Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. (2026). Data BPS
           (Susenas). Diakses dari {typeof window !== 'undefined' ? window.location.origin : 'situs SETARA'}.
         </p>
         <p className="mt-2 text-xs text-tinta-redup">
