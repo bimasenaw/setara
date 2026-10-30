@@ -1,14 +1,11 @@
 import { refs } from '../lib/solusi'
+import Accordion from './Accordion'
 
 export default function RekomendasiList({ items, judul = 'Rekomendasi kontekstual' }) {
   if (!items || !items.length) return null
   return (
     <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
       <h2 className="text-base font-semibold text-tinta">{judul}</h2>
-      <p className="mt-1 text-sm text-tinta-redup">
-        Rekomendasi disusun dari aturan indikator provinsi, bukan model prediktif. Setiap poin
-        disertai sumber studi.
-      </p>
       <ol className="mt-4 space-y-4">
         {items.map((item, i) => (
           <li key={`${item.judul}-${i}`} className="border-b border-garis pb-4 last:border-0 last:pb-0">
@@ -39,6 +36,16 @@ export default function RekomendasiList({ items, judul = 'Rekomendasi kontekstua
           </li>
         ))}
       </ol>
+      <Accordion judul="Bagaimana rekomendasi ini disusun?">
+        <p>
+          Rekomendasi mengikuti aturan sederhana dari data provinsi. Contohnya, jika partisipasi PAUD
+          rendah dan kemiskinan tinggi, prioritas diarahkan ke perluasan PAUD dan bantuan biaya.
+        </p>
+        <p>
+          Setiap poin menyertakan studi pendukung. Ini bukan model prediksi dan tidak menjamin hasil
+          tertentu. Rekomendasi sebaiknya dibaca bersama konteks daerah.
+        </p>
+      </Accordion>
     </section>
   )
 }

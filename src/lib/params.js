@@ -46,3 +46,17 @@ export function tautanProvinsi(kode, tahun) {
   const q = params.toString()
   return q ? `/provinsi/${kode}?${q}` : `/provinsi/${kode}`
 }
+
+export const LABEL_KELOMPOK = {
+  Perkotaan: 'Kota',
+  Perdesaan: 'Desa',
+  'Kuintil 1': 'Kelompok termiskin (20%)',
+  'Kuintil 5': 'Kelompok terkaya (20%)',
+  'Laki-laki': 'Laki-laki',
+  Perempuan: 'Perempuan',
+}
+
+export function labelKelompok(value) {
+  return LABEL_KELOMPOK[value] || value
+}
+

@@ -1,5 +1,6 @@
 import { formatAngka, formatPoin } from '../lib/format'
 import { tahunTerbaru } from '../lib/indikator'
+import Accordion from './Accordion'
 
 const MAP = {
   wilayah: {
@@ -44,10 +45,14 @@ export default function KonteksNasional({ rows, dimensi }) {
   if (!conf) return null
 
   const blok = [
-    { id: conf.sma, judul: 'APK SMA/sederajat', catatan: 'APK bukan angka anak tidak sekolah.' },
+    {
+      id: conf.sma,
+      judul: 'Partisipasi SMA (APK)',
+      catatan: 'APK bukan angka anak tidak sekolah.',
+    },
     {
       id: conf.paud,
-      judul: 'APK PAUD 3–6 tahun',
+      judul: 'Partisipasi PAUD 3–6 tahun (APK)',
       catatan: 'Angka partisipasi kasar, bukan angka tidak sekolah.',
     },
   ]
@@ -55,10 +60,6 @@ export default function KonteksNasional({ rows, dimensi }) {
   return (
     <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
       <h2 className="text-base font-semibold text-tinta">Konteks nasional · {conf.label}</h2>
-      <p className="mt-1 text-sm text-tinta-redup">
-        Indikator pembanding dari BPS. APK mengukur partisipasi, bukan angka anak tidak sekolah,
-        sehingga tidak dicampur dalam grafik utama.
-      </p>
       <div className="mt-4 space-y-4">
         {blok.map((b) => {
           const tahun = tahunTerbaru(rows, { indikator: b.id })
@@ -96,6 +97,20 @@ export default function KonteksNasional({ rows, dimensi }) {
           )
         })}
       </div>
+      <Accordion judul="Apa arti angka partisipasi ini?">
+        <p>
+          APK adalah angka partisipasi kasar. Angka ini membandingkan jumlah anak yang mengikuti
+          pendidikan dengan jumlah anak usia sekolah.
+        </p>
+        <p>
+          APK bisa di atas 100% jika ada anak di luar usia resmi yang ikut sekolah. Karena itu, APK
+          tidak sama dengan angka anak tidak sekolah dan tidak dicampur dalam grafik utama.
+        </p>
+        <p>
+          Gunakan bagian ini sebagai konteks tambahan, bukan sebagai pengganti angka anak tidak
+          sekolah.
+        </p>
+      </Accordion>
     </section>
   )
 }

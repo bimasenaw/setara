@@ -36,7 +36,7 @@ export function kalimatRingkasanUtama(data, jenjang = 'SMA', tahun = tahunTerakh
   if (p.tertinggal === null || p.pembanding === null) return null
   const a = formatPersen(p.tertinggal, 1)
   const r = fraseRasio(p.rasio)
-  return `Di ${jenjang}, ${a} anak dari keluarga termiskin tidak sekolah, ${r} dibanding kuintil terkaya.`
+  return `Di ${jenjang}, ${a} anak dari keluarga termiskin tidak sekolah, ${r} dibanding keluarga terkaya.`
 }
 
 export function kalimatDimensi(data, dimensi, jenjang, tahun) {
@@ -70,6 +70,24 @@ export function temuanTigaDimensi(data, tahun, jenjang = null) {
       kalimat: kalimatDimensi(data, dimensi, terbaik.jenjang, tahun),
     }
   }).filter(Boolean)
+}
+
+export function kalimatUmumKesenjangan(data, dimensi, tahun) {
+  const hasil = ['SD', 'SMP', 'SMA']
+    .map((jenjang) => ({ jenjang, ...perbandingan(data, dimensi, jenjang, tahun) }))
+    .filter((item) => item.selisih !== null)
+  if (!hasil.length) return null
+  const terkecil = hasil.reduce((a, b) => (a.selisih < b.selisih ? a : b))
+  const terbesar = hasil.reduce((a, b) => (a.selisih > b.selisih ? a : b))
+  const nama = {
+    wilayah: 'antarwilayah',
+    ekonomi: 'ekonomi',
+    gender: 'gender',
+  }[dimensi] || dimensi
+  return `Kesenjangan ${nama} muncul di semua jenjang, dengan selisih ${formatPoin(
+    terkecil.selisih,
+    1,
+  )} sampai ${formatPoin(terbesar.selisih, 1)} pada ${tahun}.`
 }
 
 export function kalimatAwam(data, dimensi, kelompok, jenjang, tahun) {

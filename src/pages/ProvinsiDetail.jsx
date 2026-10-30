@@ -12,21 +12,22 @@ import ProvinsiTrend from '../components/ProvinsiTrend'
 import KonteksGrid from '../components/KonteksGrid'
 import RekomendasiList from '../components/RekomendasiList'
 import SegmentedControl from '../components/SegmentedControl'
+import Accordion from '../components/Accordion'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
 const TREN_OPTIONS = [
   { value: 'aps', label: 'Partisipasi SMA' },
-  { value: 'paud', label: 'APK PAUD' },
+  { value: 'paud', label: 'Partisipasi PAUD' },
 ]
 
 function konteksItems(rows, kode) {
   const defs = [
     { label: 'Partisipasi usia SMA', indikator: 'aps', jenjang: 'SMA', satuan: '%' },
-    { label: 'APK PAUD 3–6', indikator: 'apk_paud', kelompok: 'Total', satuan: '%' },
+    { label: 'Partisipasi PAUD 3-6 tahun', indikator: 'apk_paud', kelompok: 'Total', satuan: '%' },
     { label: 'Rata-rata lama sekolah', indikator: 'lama_sekolah', kelompok: '15+', satuan: ' tahun' },
     { label: 'Penduduk miskin', indikator: 'kemiskinan', kelompok: 'Jumlah', satuan: '%' },
-    { label: 'IPM', indikator: 'ipm', kelompok: 'Total', satuan: '' },
+    { label: 'Indeks Pembangunan Manusia (IPM)', indikator: 'ipm', kelompok: 'Total', satuan: '' },
     { label: 'Indeks ketimpangan gender', indikator: 'ikg', kelompok: 'Total', satuan: '' },
     { label: 'Rasio APM gender SMA', indikator: 'rasio_apm_gender', jenjang: 'SMA', satuan: '' },
   ]
@@ -62,7 +63,7 @@ export default function ProvinsiDetail() {
   const tahun = Number(params.get('tahun')) || tahunTerbaru(indikator, { indikator: 'aps' }) || 2025
 
   useDocumentMeta({
-    judul: `${provinsi?.provinsi || 'Provinsi'} — SETARA`,
+    judul: `${provinsi?.provinsi || 'Provinsi'} | SETARA`,
     deskripsi: `Profil pendidikan ${provinsi?.provinsi || 'provinsi'}: tren partisipasi, APK PAUD, konteks, dan rekomendasi.`,
   })
 
@@ -139,7 +140,7 @@ export default function ProvinsiDetail() {
 
   const bagikan = async () => {
     const ok = await shareTeks({
-      title: `SETARA — ${provinsi.provinsi}`,
+      title: `SETARA | ${provinsi.provinsi}`,
       text: `Profil pendidikan ${provinsi.provinsi}`,
       url: window.location.href,
     })
@@ -156,6 +157,15 @@ export default function ProvinsiDetail() {
       <h1 className="mt-2 font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
         {provinsi.provinsi}
       </h1>
+
+      <div className="mt-4 overflow-hidden rounded-lg border border-garis">
+        <img
+          src="/images/foto-provinsi.svg"
+          alt="Ilustrasi wilayah Indonesia"
+          className="h-40 w-full object-cover md:h-52"
+          loading="lazy"
+        />
+      </div>
 
       <div className="mt-4 flex flex-wrap gap-2 text-sm">
         <button
@@ -216,26 +226,36 @@ export default function ProvinsiDetail() {
             {skor ? `${formatAngka(skor.skor, 1)}/100` : 'Data belum tersedia'}
           </p>
           <p className="mt-1 text-xs text-tinta-redup">
-            {skor ? `Peringkat ${skor.peringkat} dari ${prioritas.daftar.length}` : '—'}
+            {skor ? `Peringkat ${skor.peringkat} dari ${prioritas.daftar.length}` : '-'}
           </p>
         </div>
         <div className="rounded-lg border border-garis bg-putih p-4">
           <p className="text-xs text-tinta-redup">Kuadran prioritas</p>
           <p className="mt-1 text-sm font-semibold text-tinta">{kategori?.kategori || 'Belum tersedia'}</p>
           <p className="mt-1 text-xs text-tinta-redup">
-            Level {kategori ? `${formatAngka(kategori.level, 1)}%` : '—'} · tren{' '}
-            {kategori ? formatPoin(kategori.tren, 1) : '—'}
+            Level {kategori ? `${formatAngka(kategori.level, 1)}%` : '-'} · tren{' '}
+            {kategori ? formatPoin(kategori.tren, 1) : '-'}
           </p>
         </div>
         <div className="rounded-lg border border-garis bg-putih p-4">
           <p className="text-xs text-tinta-redup">Cakupan indikator</p>
           <p className="mt-1 font-serif text-[1.75rem] text-tinta">
-            {skor ? `${skor.cakupan}/6` : '—'}
+            {skor ? `${skor.cakupan}/6` : '-'}
           </p>
           <p className="mt-1 text-xs text-tinta-redup">
             Indikator yang tersedia untuk provinsi ini.
           </p>
         </div>
+        <Accordion judul="Apa arti tiga angka di atas?">
+          <p>
+            Indeks prioritas menunjukkan seberapa besar kebutuhan provinsi ini untuk diprioritaskan.
+            Skor 0 sampai 100; semakin tinggi, semakin prioritas.
+          </p>
+          <p>
+            Kuadran prioritas membandingkan tingkat partisipasi dengan perubahannya. Cakupan indikator
+            menunjukkan berapa banyak data yang tersedia untuk provinsi ini.
+          </p>
+        </Accordion>
       </section>
 
       <section className="mt-8">
@@ -256,8 +276,8 @@ export default function ProvinsiDetail() {
                 {peringkat && (
                   <>
                     {' '}
-                    Peringkat {awal ? peringkat.awal.peringkat : '—'} →{' '}
-                    {akhir ? peringkat.akhir.peringkat : '—'} dari {peringkat.akhir?.total || '—'}{' '}
+                    Peringkat {awal ? peringkat.awal.peringkat : '-'} →{' '}
+                    {akhir ? peringkat.akhir.peringkat : '-'} dari {peringkat.akhir?.total || '-'}{' '}
                     provinsi (selisih peringkat {peringkat.deltaPeringkat >= 0 ? '+' : ''}
                     {peringkat.deltaPeringkat}).
                   </>
@@ -276,18 +296,34 @@ export default function ProvinsiDetail() {
             <p className="text-tinta-redup">Data tren belum tersedia.</p>
           )}
           <p className="mt-3 text-xs text-tinta-redup">Sumber: BPS, Susenas.</p>
+          <Accordion judul="Cara membaca tren provinsi">
+            <p>
+              Garis merah menunjukkan angka provinsi. Garis biru menunjukkan rata-rata nasional.
+              Semakin dekat garis merah ke garis biru, semakin dekat provinsi ini dengan rata-rata
+              nasional.
+            </p>
+            <p>
+              Perubahan dan peringkat dihitung dari tahun awal yang tersedia sampai tahun terakhir.
+              Angka ini bukan proyeksi.
+            </p>
+          </Accordion>
         </div>
       </section>
 
       {dampak && (
         <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-          <h2 className="text-base font-semibold text-tinta">Skala dampak PAUD (estimasi)</h2>
+          <h2 className="text-base font-semibold text-tinta">Perkiraan jumlah anak PAUD</h2>
           <p className="mt-1 text-sm font-semibold text-tinta">
             Sekitar {formatJumlahOrang(dampak.estimasi)} anak usia 3–6 tahun berpotensi mendapat
-            layanan PAUD tambahan jika APK menyamai nasional.
+            layanan PAUD tambahan jika partisipasi menyamai nasional.
           </p>
-          <p className="mt-1 text-sm text-tinta-redup">{dampak.metode}</p>
-          <p className="mt-1 text-xs text-tinta-redup">Asumsi: {dampak.asumsi}</p>
+          <Accordion judul="Bagaimana angka ini dihitung?">
+            <p>{dampak.metode}</p>
+            <p>Asumsi: {dampak.asumsi}</p>
+            <p>
+              Angka ini adalah perkiraan, bukan hasil sensus. Gunakan sebagai gambaran skala.
+            </p>
+          </Accordion>
         </section>
       )}
 
@@ -297,11 +333,16 @@ export default function ProvinsiDetail() {
 
       <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Cara membaca</h2>
-        <p className="mt-1 text-sm leading-relaxed text-tinta-redup">
-          Indeks prioritas adalah skor keputusan transparan, bukan penilaian resmi. APK/APS mengukur
-          partisipasi, sedangkan angka anak tidak sekolah memakai indikator terpisah. Korelasi antar
-          indikator tidak membuktikan sebab-akibat. Lihat halaman Metode untuk definisi dan rumus.
-        </p>
+        <Accordion judul="Catatan penting">
+          <p>
+            Indeks prioritas adalah skor bantu, bukan penilaian resmi. Partisipasi sekolah dan angka
+            anak tidak sekolah adalah dua hal berbeda.
+          </p>
+          <p>
+            Hubungan antarindikator tidak membuktikan sebab-akibat. Lihat halaman Metode untuk
+            definisi dan rumus.
+          </p>
+        </Accordion>
         <Link
           to="/metode"
           className="mt-3 inline-block min-h-11 rounded-lg border border-garis bg-putih px-3 py-2 text-sm text-tinta hover:bg-kertas"

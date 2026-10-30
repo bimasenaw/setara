@@ -145,7 +145,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
           nilai: p.nilai === null ? 'Data belum tersedia' : formatAngka(p.nilai, 2),
           selisih:
             p.selisih === null || p.selisih === undefined
-              ? '—'
+              ? '-'
               : `${p.selisih >= 0 ? '+' : '−'}${formatAngka(Math.abs(p.selisih), 2)} poin`,
           status: prioritas.includes(p.kode) ? 'Prioritas' : '',
         }))}

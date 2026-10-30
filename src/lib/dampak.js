@@ -82,8 +82,8 @@ export function dampakEkonomi(tidakSekolah, indikator, jenjang, tahun) {
     k1,
     k5,
     metode:
-      'Populasi usia sekolah (proyeksi 2025) × asumsi 20% anak per kuintil × selisih angka tidak sekolah kuintil 1 dan 5.',
-    asumsi: 'Kuintil pengeluaran dianggap terbagi merata 20% terhadap populasi anak usia sekolah.',
+      'Populasi usia sekolah (proyeksi 2025) × asumsi 20% anak per kelompok pengeluaran × selisih angka tidak sekolah kelompok termiskin dan terkaya.',
+    asumsi: 'Kelompok pengeluaran dianggap terbagi merata 20% terhadap populasi anak usia sekolah.',
   }
 }
 

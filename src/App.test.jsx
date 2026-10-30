@@ -101,6 +101,6 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.getByRole('heading', { name: 'Metode dan sumber' })).toBeInTheDocument()
     })
-    expect(screen.getByText('Indikator yang dipakai')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Indikator yang dipakai' })).toBeInTheDocument()
   })
 })

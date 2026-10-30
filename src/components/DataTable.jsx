@@ -29,7 +29,7 @@ export default function DataTable({ judul = 'Lihat data (tabel)', kolom, baris, 
               <tr key={i} className="border-b border-garis last:border-0">
                 {kolom.map((k) => (
                   <td key={k.key} className="py-2 pr-4 text-tinta">
-                    {row[k.key] ?? '—'}
+                    {row[k.key] ?? '-'}
                   </td>
                 ))}
               </tr>

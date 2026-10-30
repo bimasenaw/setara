@@ -4,11 +4,11 @@ SETARA (Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses) adalah aplik
 
 ## Halaman
 
-- `/` — Ringkasan: tiga temuan utama, empat perbandingan, dumbbell ekonomi, dan estimasi skala dampak.
-- `/kesenjangan` — Wilayah, ekonomi, gender: dumbbell, tren 2019–2023, metrik, konteks, solusi berbasis studi.
-- `/provinsi` — Peringkat partisipasi usia dini, indeks prioritas, matriks prioritas, tren provinsi.
-- `/provinsi/:kode` — Profil provinsi: tren, konteks, estimasi dampak PAUD, rekomendasi kontekstual.
-- `/metode` — Sumber, indikator, rumus, asumsi, keterbatasan, dan sitasi.
+- `/`: Ringkasan: tiga temuan utama, empat perbandingan, dumbbell ekonomi, dan estimasi skala dampak.
+- `/kesenjangan`: Wilayah, ekonomi, gender: dumbbell, tren 2019–2023, metrik, konteks, solusi berbasis studi.
+- `/provinsi`: Peringkat partisipasi usia dini, indeks prioritas, matriks prioritas, tren provinsi.
+- `/provinsi/:kode`: Profil provinsi: tren, konteks, estimasi dampak PAUD, rekomendasi kontekstual.
+- `/metode`: Sumber, indikator, rumus, asumsi, keterbatasan, dan sitasi.
 
 ## Menjalankan
 
@@ -36,10 +36,10 @@ npm run validate:data
 
 Berkas utama:
 
-- `public/data/tidak_sekolah.json` — angka anak tidak sekolah.
-- `public/data/provinsi.json` — partisipasi pembelajaran satu tahun sebelum SD.
-- `public/data/indikator.json` — indikator baru yang dinormalisasi.
-- `public/data/meta.json` — sumber, tahun, jumlah baris, dan keterbatasan.
+- `public/data/tidak_sekolah.json`: angka anak tidak sekolah.
+- `public/data/provinsi.json`: partisipasi pembelajaran satu tahun sebelum SD.
+- `public/data/indikator.json`: indikator baru yang dinormalisasi.
+- `public/data/meta.json`: sumber, tahun, jumlah baris, dan keterbatasan.
 
 Catatan: var `1984/1986/1988/1990` tersedia sampai 2023. Indikator partisipasi yang lebih baru (`2211`, `1439`, `1429`, `192`, `413`, `2196`, dan lain-lain) tidak dicampur dalam grafik yang sama dengan angka anak tidak sekolah.
 
