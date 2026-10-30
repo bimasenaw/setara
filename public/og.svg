@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F5F6F8"/>
+  <rect x="72" y="72" width="1056" height="486" rx="20" fill="#FFFFFF" stroke="#DCE1E7"/>
+  <text x="120" y="190" font-family="Georgia, serif" font-size="64" font-weight="600" fill="#18212C">SETARA</text>
+  <text x="120" y="252" font-family="Arial, sans-serif" font-size="28" fill="#5A6676">Melihat kesenjangan pendidikan lewat data BPS.</text>
+  <line x1="120" y1="300" x2="1080" y2="300" stroke="#DCE1E7"/>
+  <text x="120" y="372" font-family="Georgia, serif" font-size="40" fill="#18212C">Siapa yang tertinggal,</text>
+  <text x="120" y="424" font-family="Georgia, serif" font-size="40" fill="#18212C">seberapa jauh, dan apa yang perlu dilakukan.</text>
+  <circle cx="120" cy="490" r="8" fill="#6F8CAB"/>
+  <text x="140" y="497" font-family="Arial, sans-serif" font-size="20" fill="#5A6676">Pembanding</text>
+  <rect x="290" y="482" width="16" height="16" fill="#C2372D"/>
+  <text x="318" y="497" font-family="Arial, sans-serif" font-size="20" fill="#5A6676">Kelompok tertinggal</text>
+  <text x="120" y="550" font-family="Arial, sans-serif" font-size="18" fill="#5A6676">Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses</text>
+</svg>

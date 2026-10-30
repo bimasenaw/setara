@@ -1,0 +1,291 @@
+{
+  "generatedAt": "2026-10-30T07:08:20.238Z",
+  "source": "BPS WebAPI",
+  "domain": "0000",
+  "catatan": "Angka anak tidak sekolah (var 1984/1986/1988) dan partisipasi pembelajaran satu tahun sebelum SD (var 1990) tetap memakai data 2015-2023. Indikator baru memakai tahun terbaru yang tersedia di API.",
+  "indikator": [
+    {
+      "indikator": "aps",
+      "var_id": 2211,
+      "judul": "Angka Partisipasi Sekolah (APS) menurut provinsi dan kelompok umur",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019,
+        2018,
+        2017,
+        2016
+      ],
+      "baris": 1432
+    },
+    {
+      "indikator": "aps",
+      "var_id": 301,
+      "judul": "Angka Partisipasi Sekolah (APS) menurut provinsi (seri lama)",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2015
+      ],
+      "baris": 140
+    },
+    {
+      "indikator": "apk_paud",
+      "var_id": 1439,
+      "judul": "Angka Partisipasi Kasar (APK) PAUD 3-6 tahun menurut provinsi",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019,
+        2018,
+        2017,
+        2016
+      ],
+      "baris": 358
+    },
+    {
+      "indikator": "apk_paud_wilayah",
+      "var_id": 1440,
+      "judul": "APK PAUD menurut klasifikasi desa",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2023,
+        2019
+      ],
+      "baris": 9
+    },
+    {
+      "indikator": "apk_paud_gender",
+      "var_id": 1441,
+      "judul": "APK PAUD menurut jenis kelamin",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2023,
+        2019
+      ],
+      "baris": 9
+    },
+    {
+      "indikator": "apk_paud_ekonomi",
+      "var_id": 1442,
+      "judul": "APK PAUD menurut kuintil pengeluaran",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2023,
+        2019
+      ],
+      "baris": 15
+    },
+    {
+      "indikator": "apk_sma_gender",
+      "var_id": 1339,
+      "judul": "APK SMA/sederajat menurut jenis kelamin",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2023,
+        2019
+      ],
+      "baris": 6
+    },
+    {
+      "indikator": "apk_sma_wilayah",
+      "var_id": 1342,
+      "judul": "APK SMA/sederajat menurut klasifikasi desa",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2023,
+        2019
+      ],
+      "baris": 8
+    },
+    {
+      "indikator": "apk_sma_ekonomi",
+      "var_id": 1343,
+      "judul": "APK SMA/sederajat menurut kuintil pengeluaran",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2023,
+        2019
+      ],
+      "baris": 15
+    },
+    {
+      "indikator": "lama_sekolah",
+      "var_id": 1429,
+      "judul": "Rata-rata lama sekolah penduduk 15 tahun ke atas menurut provinsi",
+      "satuan": "tahun",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019,
+        2018,
+        2017,
+        2016
+      ],
+      "baris": 358
+    },
+    {
+      "indikator": "rasio_apm_gender",
+      "var_id": 1455,
+      "judul": "Rasio APM perempuan/laki-laki menurut provinsi dan jenjang",
+      "satuan": "indeks",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2025,
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019,
+        2018,
+        2017,
+        2016
+      ],
+      "baris": 1257
+    },
+    {
+      "indikator": "kemiskinan",
+      "var_id": 192,
+      "judul": "Persentase penduduk miskin (P0) menurut provinsi",
+      "satuan": "persen",
+      "sumber": "BPS, Susenas",
+      "tahun": [
+        2026,
+        2025,
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019
+      ],
+      "baris": 1516
+    },
+    {
+      "indikator": "ipm",
+      "var_id": 413,
+      "judul": "Indeks Pembangunan Manusia (metode baru) menurut provinsi",
+      "satuan": "indeks",
+      "sumber": "BPS",
+      "tahun": [
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019
+      ],
+      "baris": 3358
+    },
+    {
+      "indikator": "ikg",
+      "var_id": 2196,
+      "judul": "Indeks Ketimpangan Gender menurut provinsi",
+      "satuan": "indeks",
+      "sumber": "BPS",
+      "tahun": [
+        2025,
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019
+      ],
+      "baris": 3851
+    },
+    {
+      "indikator": "fasilitas_sekolah",
+      "var_id": 205,
+      "judul": "Jumlah desa yang memiliki fasilitas sekolah menurut provinsi dan jenjang",
+      "satuan": "desa",
+      "sumber": "BPS, Potensi Desa",
+      "tahun": [
+        2025,
+        2024,
+        2021
+      ],
+      "baris": 565
+    },
+    {
+      "indikator": "populasi_provinsi",
+      "var_id": 2781,
+      "judul": "Jumlah penduduk menurut provinsi dan jenis kelamin",
+      "satuan": "orang",
+      "sumber": "BPS",
+      "tahun": [
+        2025
+      ],
+      "baris": 117
+    },
+    {
+      "indikator": "populasi_umur",
+      "var_id": 2135,
+      "judul": "Jumlah penduduk laki-laki menurut provinsi dan kelompok umur (SP2020)",
+      "satuan": "orang",
+      "sumber": "BPS, SP2020",
+      "tahun": [
+        2020
+      ],
+      "baris": 735
+    },
+    {
+      "indikator": "populasi_umur",
+      "var_id": 2137,
+      "judul": "Jumlah penduduk perempuan menurut provinsi dan kelompok umur (SP2020)",
+      "satuan": "orang",
+      "sumber": "BPS, SP2020",
+      "tahun": [
+        2020
+      ],
+      "baris": 735
+    },
+    {
+      "indikator": "populasi_umur_nasional",
+      "var_id": 2777,
+      "judul": "Jumlah penduduk menurut kelompok umur dan jenis kelamin",
+      "satuan": "orang",
+      "sumber": "BPS",
+      "tahun": [
+        2025
+      ],
+      "baris": 51
+    }
+  ],
+  "keterbatasan": [
+    "Data berasal dari survei sampel (Susenas); selisih kecil perlu ditafsirkan hati-hati.",
+    "Beberapa indikator memiliki RSE tinggi di provinsi tertentu, terutama provinsi baru Papua.",
+    "Angka APK/APS tidak boleh dicampur langsung dengan angka anak tidak sekolah dalam satu grafik.",
+    "Korelasi bukan sebab-akibat."
+  ]
+}

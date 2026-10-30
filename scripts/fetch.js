@@ -48,6 +48,7 @@ function prettyProvince(label) {
   return titleCase(label)
     .replace(/\bDki\b/g, 'DKI')
     .replace(/\bDi\b/g, 'DI')
+    .replace(/\bKep\. Riau\b/g, 'Kepulauan Riau')
 }
 
 const JENJANG = { 1672: 'SD', 1673: 'SMP', 1674: 'SMA' }

@@ -1,16 +1,17 @@
 import { NavLink } from 'react-router-dom'
+import FontSizeControl from './FontSizeControl'
 
 const LINKS = [
-  { to: '/', label: 'Ringkasan' },
   { to: '/kesenjangan', label: 'Kesenjangan' },
   { to: '/provinsi', label: 'Provinsi' },
+  { to: '/metode', label: 'Metode' },
 ]
 
 export default function Nav() {
   return (
     <header className="border-b border-garis bg-putih">
-      <div className="mx-auto flex w-full max-w-[1080px] flex-wrap items-baseline gap-x-8 gap-y-2 px-4 py-4">
-        <NavLink to="/" className="font-serif text-[20px] font-semibold leading-none text-tinta">
+      <div className="mx-auto flex w-full max-w-[1080px] flex-wrap items-center gap-x-8 gap-y-2 px-4 py-4">
+        <NavLink to="/" className="font-serif text-[1.25rem] font-semibold leading-none text-tinta">
           SETARA
         </NavLink>
         <nav aria-label="Navigasi utama" className="flex items-center gap-1">
@@ -29,6 +30,9 @@ export default function Nav() {
             </NavLink>
           ))}
         </nav>
+        <div className="ml-auto">
+          <FontSizeControl />
+        </div>
       </div>
     </header>
   )

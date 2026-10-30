@@ -1,14 +1,27 @@
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { kalimatProvinsi } from '../lib/temuan'
+import { validTahun, tulisParam, tautanProvinsi } from '../lib/params'
+import { dampakTerbaru } from '../lib/dampak'
+import { formatAngka, formatJumlahOrang, formatPoin } from '../lib/format'
+import { hitungPrioritas, matriksPrioritas } from '../lib/prioritas'
+import { provinsiPalingBerubah } from '../lib/tren'
+import { rekomendasiProvinsi } from '../lib/rekomendasi'
+import { tahunTerbaru, urutkanProvinsi } from '../lib/indikator'
+import { buatSitasi, cetak, copyText, downloadCsv, shareTeks } from '../lib/ekspor'
+import { solusiUntuk } from '../lib/solusi'
 import TahunSelect from '../components/TahunSelect'
 import DotPlotProvinsi from '../components/DotPlotProvinsi'
+import SolusiBlock from '../components/SolusiBlock'
+import PriorityMatrix from '../components/PriorityMatrix'
+import RekomendasiList from '../components/RekomendasiList'
+import BandingProvinsi from '../components/BandingProvinsi'
 import { Muat, Gagal } from '../components/StatusBox'
-import { formatAngka } from '../lib/format'
+import useDocumentMeta from '../lib/useDocumentMeta'
 
 const REKOMENDASI = [
-  'Prioritaskan intervensi pendidikan usia dini di Papua dan provinsi dengan partisipasi terendah.',
+  'Prioritaskan intervensi pendidikan usia dini di provinsi dengan partisipasi terendah.',
   'Perluas akses jenjang menengah di perdesaan dan keluarga kuintil terbawah, tempat angka anak tidak sekolah paling tinggi.',
   'Gunakan data BPS sebagai dasar target per provinsi, bukan rata-rata nasional yang menyembunyikan kesenjangan.',
 ]
@@ -19,23 +32,28 @@ function selisihNasional(nilai, nasional) {
 }
 
 export default function Provinsi() {
-  const { status, provinsi, error } = useData()
+  const { status, provinsi, indikator, error, reload } = useData()
   const [params, setParams] = useSearchParams()
-
-  const tahunTersedia = [
-    ...new Set(provinsi.provinsi.map((p) => p.tahun)),
-  ].sort((a, b) => a - b)
-
-  const tahunParam = Number(params.get('tahun'))
-  const tahun = tahunTersedia.includes(tahunParam)
-    ? tahunParam
-    : tahunTersedia[tahunTersedia.length - 1]
-
   const [sort, setSort] = useState({ key: 'nilai', dir: 'asc' })
+  const [cari, setCari] = useState('')
+  const [pesan, setPesan] = useState('')
+
+  const tahunTersedia = [...new Set(provinsi.provinsi.map((p) => p.tahun))].sort((a, b) => a - b)
+  const tahun = validTahun(
+    params.get('tahun'),
+    tahunTersedia,
+    tahunTersedia[tahunTersedia.length - 1],
+  )
+
+  useDocumentMeta({
+    judul: 'Provinsi dan prioritas — SETARA',
+    deskripsi:
+      'Peringkat partisipasi pendidikan usia dini, indeks prioritas, dan rekomendasi kontekstual per provinsi dari data BPS.',
+  })
 
   const nasional = provinsi.nasional.find((n) => n.tahun === tahun)?.nilai ?? null
 
-  const baris = useMemo(() => {
+  const semuaBaris = useMemo(() => {
     const list = provinsi.provinsi
       .filter((p) => p.tahun === tahun)
       .map((p) => ({
@@ -56,16 +74,37 @@ export default function Provinsi() {
     })
   }, [provinsi, tahun, nasional, sort])
 
-  const terendah = [...baris]
-    .filter((p) => p.nilai !== null)
-    .sort((a, b) => a.nilai - b.nilai)
-    .slice(0, 5)
+  const baris = useMemo(() => {
+    if (!cari.trim()) return semuaBaris
+    const q = cari.toLowerCase()
+    return semuaBaris.filter((p) => p.provinsi.toLowerCase().includes(q))
+  }, [semuaBaris, cari])
 
-  const setTahun = (v) => {
-    const next = new URLSearchParams(params)
-    next.set('tahun', v)
-    setParams(next, { replace: true })
-  }
+  const terendah = useMemo(
+    () =>
+      [...semuaBaris]
+        .filter((p) => p.nilai !== null)
+        .sort((a, b) => a.nilai - b.nilai)
+        .slice(0, 5),
+    [semuaBaris],
+  )
+
+  const prioritas = useMemo(() => hitungPrioritas(indikator), [indikator])
+  const matriks = useMemo(() => matriksPrioritas(indikator), [indikator])
+  const berubah = useMemo(() => provinsiPalingBerubah(indikator, 'aps', { jenjang: 'SMA' }), [indikator])
+  const tahunPaud = useMemo(() => tahunTerbaru(indikator, { indikator: 'apk_paud' }), [indikator])
+  const apkPaud = useMemo(
+    () =>
+      tahunPaud
+        ? urutkanProvinsi(indikator, 'apk_paud', tahunPaud, { kelompok: 'Total' })
+        : [],
+    [indikator, tahunPaud],
+  )
+  const terendahPaud = apkPaud.slice(0, 5)
+  const dampak = terendahPaud[0] ? dampakTerbaru(indikator, terendahPaud[0].kode) : null
+  const rekomendasi = terendahPaud[0]
+    ? rekomendasiProvinsi(indikator, terendahPaud[0].kode)
+    : []
 
   if (status === 'loading') {
     return (
@@ -78,7 +117,7 @@ export default function Provinsi() {
   if (status === 'error') {
     return (
       <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-        <Gagal message={error} onReload={() => window.location.reload()} />
+        <Gagal message={error} onReload={reload} />
       </main>
     )
   }
@@ -89,23 +128,39 @@ export default function Provinsi() {
     : null
 
   const headerSort = (key) => {
-    if (sort.key === key) {
-      setSort({ key, dir: sort.dir === 'asc' ? 'desc' : 'asc' })
-    } else {
-      setSort({ key, dir: 'asc' })
-    }
+    if (sort.key === key) setSort({ key, dir: sort.dir === 'asc' ? 'desc' : 'asc' })
+    else setSort({ key, dir: 'asc' })
   }
 
   const panah = (key) => (sort.key === key ? (sort.dir === 'asc' ? ' ↑' : ' ↓') : '')
 
+  const salin = async () => {
+    const teks = `${judul || 'Peringkat provinsi'} Sumber: BPS, Susenas ${tahun}.`
+    const ok = await copyText(teks)
+    setPesan(ok ? 'Temuan disalin.' : 'Gagal menyalin.')
+  }
+
+  const bagikan = async () => {
+    const ok = await shareTeks({
+      title: 'SETARA — Prioritas provinsi',
+      text: judul || 'Peringkat partisipasi pendidikan usia dini per provinsi',
+      url: window.location.href,
+    })
+    if (!ok) setPesan('Share tidak tersedia; tautan disalin.')
+  }
+
   return (
     <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-      <h1 className="max-w-[26ch] font-serif text-[28px] leading-snug text-tinta md:text-[40px]">
+      <h1 className="max-w-[28ch] font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
         {judul || 'Peringkat partisipasi pendidikan usia dini per provinsi'}
       </h1>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <TahunSelect options={tahunTersedia} value={tahun} onChange={setTahun} />
+        <TahunSelect
+          options={tahunTersedia}
+          value={tahun}
+          onChange={(v) => tulisParam(params, setParams, 'tahun', v)}
+        />
         <button
           type="button"
           onClick={() => setSort({ ...sort, dir: sort.dir === 'asc' ? 'desc' : 'asc' })}
@@ -113,19 +168,89 @@ export default function Provinsi() {
         >
           Urut {sort.dir === 'asc' ? 'naik' : 'turun'}
         </button>
+        <label className="flex items-center gap-2 text-sm text-tinta">
+          <span className="text-tinta-redup">Cari provinsi</span>
+          <input
+            type="search"
+            value={cari}
+            onChange={(e) => setCari(e.target.value)}
+            placeholder="mis. Papua"
+            className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-base text-tinta focus:outline-none focus:ring-2 focus:ring-biru"
+          />
+        </label>
       </div>
 
+      <div className="mt-4 flex flex-wrap gap-2 text-sm">
+        <button
+          type="button"
+          onClick={salin}
+          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
+        >
+          Salin temuan
+        </button>
+        <button
+          type="button"
+          onClick={bagikan}
+          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
+        >
+          Bagikan
+        </button>
+        <button
+          type="button"
+          onClick={() => cetak()}
+          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
+        >
+          Cetak / PDF
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            downloadCsv(
+              `setara-provinsi-${tahun}.csv`,
+              semuaBaris.map((p) => ({
+                provinsi: p.provinsi,
+                nilai: p.nilai,
+                selisih: p.selisih,
+              })),
+              [
+                { key: 'provinsi', label: 'Provinsi' },
+                { key: 'nilai', label: 'Nilai (%)' },
+                { key: 'selisih', label: 'Selisih dari nasional (poin)' },
+              ],
+            )
+          }
+          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
+        >
+          Unduh CSV
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            copyText(buatSitasi({ judul: judul || 'Peringkat provinsi', tahun })).then((ok) =>
+              setPesan(ok ? 'Sitasi disalin.' : 'Gagal menyalin sitasi.'),
+            )
+          }
+          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
+        >
+          Salin sitasi
+        </button>
+        <Link
+          to="/metode"
+          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
+        >
+          Metode
+        </Link>
+      </div>
+      {pesan && <p className="mt-2 text-sm text-tinta-redup">{pesan}</p>}
+
       <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="font-serif text-[20px] leading-snug text-tinta">
+        <h2 className="font-serif text-[1.25rem] leading-snug text-tinta">
           Peringkat partisipasi pembelajaran terorganisir satu tahun sebelum SD
         </h2>
         <p className="mt-1 text-sm text-tinta-redup">
-          Sumbu dimulai dari 50% agar selisih antar provinsi terbaca; garis putus-putus adalah
-          nilai nasional.
-        </p>
-        <p className="mt-2 text-sm text-tinta-redup">
-          Empat provinsi baru Papua (Papua Barat Daya, Papua Selatan, Papua Tengah, Papua
-          Pegunungan) belum memiliki data pada indikator ini sehingga tidak tampil di peringkat.
+          Sumbu dimulai dari 50% agar selisih antar provinsi terbaca; garis putus-putus adalah nilai
+          nasional. Empat provinsi baru Papua belum memiliki data pada indikator ini sehingga tidak
+          tampil di peringkat.
         </p>
         <div className="mt-4">
           <DotPlotProvinsi provinsi={baris} nilaiNasional={nasional} />
@@ -135,28 +260,124 @@ export default function Provinsi() {
         </p>
       </section>
 
-      {terendah.length > 0 && (
+      {terendahPaud.length > 0 && (
         <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-          <h2 className="text-base font-semibold text-tinta">Prioritas intervensi</h2>
+          <h2 className="text-base font-semibold text-tinta">
+            Prioritas APK PAUD 3–6 tahun ({tahunPaud})
+          </h2>
           <p className="mt-1 text-sm text-tinta-redup">
-            Lima provinsi dengan partisipasi terendah; {terendah[0].provinsi} jauh di bawah provinsi
-            lainnya.
+            Lima provinsi dengan APK PAUD terendah pada data terbaru. APK mengukur partisipasi kasar,
+            bukan angka anak tidak sekolah.
           </p>
-          <ul className="mt-3 space-y-1">
-            {terendah.map((p, i) => (
-              <li key={p.kode} className="text-sm text-tinta">
-                <span className="font-semibold">{i + 1}.</span> {p.provinsi} —{' '}
-                {p.nilai !== null ? `${formatAngka(p.nilai, 2)}%` : 'Data belum tersedia'}
+          <ul className="mt-3 space-y-1 text-sm text-tinta">
+            {terendahPaud.map((p, i) => (
+              <li key={p.kode}>
+                <span className="font-semibold">{i + 1}.</span>{' '}
+                <Link
+                  to={tautanProvinsi(p.kode, tahunPaud)}
+                  className="underline decoration-garis underline-offset-2 hover:text-tinta-redup"
+                >
+                  {p.provinsi}
+                </Link>{' '}
+                — {formatAngka(p.nilai, 2)}%
               </li>
             ))}
           </ul>
+          {dampak && (
+            <p className="mt-3 text-sm leading-relaxed text-tinta">
+              Jika provinsi terendah menyamai APK PAUD nasional, sekitar{' '}
+              <span className="font-semibold">{formatJumlahOrang(dampak.estimasi)}</span> usia 3–6
+              tahun berpotensi mendapat layanan PAUD tambahan. {dampak.metode}
+            </p>
+          )}
+        </section>
+      )}
+
+      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
+        <h2 className="text-base font-semibold text-tinta">Indeks prioritas SETARA</h2>
+        <p className="mt-1 text-sm text-tinta-redup">
+          Skor 0–100; makin tinggi makin prioritas. Skor adalah rata-rata peringkat enam indikator:
+          partisipasi SMA, APK PAUD, lama sekolah, kemiskinan, IPM, dan ketimpangan gender. Bobot sama;
+          provinsi dengan data tidak lengkap punya cakupan lebih kecil.
+        </p>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[560px] border-collapse text-left text-sm">
+            <thead>
+              <tr className="border-b border-garis text-tinta-redup">
+                <th className="py-2 pr-4 font-medium">Peringkat</th>
+                <th className="py-2 pr-4 font-medium">Provinsi</th>
+                <th className="py-2 pr-4 font-medium">Skor</th>
+                <th className="py-2 font-medium">Cakupan indikator</th>
+              </tr>
+            </thead>
+            <tbody>
+              {prioritas.daftar.slice(0, 10).map((p) => (
+                <tr key={p.kode} className="border-b border-garis last:border-0">
+                  <td className="py-2 pr-4 text-tinta">{p.peringkat}</td>
+                  <td className="py-2 pr-4 text-tinta">
+                    <Link
+                      to={tautanProvinsi(p.kode, tahun)}
+                      className="underline decoration-garis underline-offset-2 hover:text-tinta-redup"
+                    >
+                      {p.provinsi}
+                    </Link>
+                  </td>
+                  <td className="py-2 pr-4 font-semibold text-tinta">{formatAngka(p.skor, 1)}</td>
+                  <td className="py-2 text-tinta">{p.cakupan}/6</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-2 text-xs text-tinta-redup">
+          Klik provinsi untuk melihat tren, konteks, dan rekomendasi. Indeks ini bukan penilaian resmi.
+        </p>
+      </section>
+
+      <PriorityMatrix data={matriks.data} tahun={2025} />
+
+      <BandingProvinsi
+        rows={indikator}
+        provinsiList={prioritas.daftar.map((p) => ({ kode: p.kode, provinsi: p.provinsi }))}
+        defaultA={prioritas.daftar[0]?.kode}
+        defaultB={prioritas.daftar[prioritas.daftar.length - 1]?.kode}
+      />
+
+      {berubah.membaik.length > 0 && (
+        <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
+          <h2 className="text-base font-semibold text-tinta">Provinsi paling berubah · partisipasi SMA</h2>
+          <p className="mt-1 text-sm text-tinta-redup">
+            Perubahan poin dari tahun awal yang tersedia sampai tahun terakhir. Bukan proyeksi.
+          </p>
+          <div className="mt-3 grid gap-4 md:grid-cols-2">
+            <div>
+              <h3 className="text-sm font-semibold text-tinta">Paling membaik</h3>
+              <ul className="mt-1 space-y-1 text-sm text-tinta">
+                {berubah.membaik.map((p) => (
+                  <li key={p.kode}>
+                    {p.provinsi}: {formatPoin(p.delta, 2)} ({p.awal.tahun}–{p.akhir.tahun})
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-tinta">Paling melemah</h3>
+              <ul className="mt-1 space-y-1 text-sm text-tinta">
+                {berubah.memburuk.map((p) => (
+                  <li key={p.kode}>
+                    {p.provinsi}: {formatPoin(p.delta, 2)} ({p.awal.tahun}–{p.akhir.tahun})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </section>
       )}
 
       <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Selisih dari nilai nasional</h2>
         <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[460px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[520px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-garis text-tinta-redup">
                 <th className="py-2 pr-4 font-medium">
@@ -169,11 +390,12 @@ export default function Provinsi() {
                     Nilai{panah('nilai')}
                   </button>
                 </th>
-                <th className="py-2 font-medium">
+                <th className="py-2 pr-4 font-medium">
                   <button type="button" onClick={() => headerSort('selisih')} className="min-h-11">
                     Selisih dari nasional{panah('selisih')}
                   </button>
                 </th>
+                <th className="py-2 font-medium">Detail</th>
               </tr>
             </thead>
             <tbody>
@@ -183,10 +405,18 @@ export default function Provinsi() {
                   <td className="py-2 pr-4 text-tinta">
                     {p.nilai !== null ? formatAngka(p.nilai, 2) : 'Data belum tersedia'}
                   </td>
-                  <td className="py-2 text-tinta">
+                  <td className="py-2 pr-4 text-tinta">
                     {p.selisih !== null
-                      ? `${p.selisih >= 0 ? '+' : '−'}${formatAngka(Math.abs(p.selisih), 2)}`
+                      ? `${p.selisih >= 0 ? '+' : '−'}${formatAngka(Math.abs(p.selisih), 2)} poin`
                       : '—'}
+                  </td>
+                  <td className="py-2">
+                    <Link
+                      to={tautanProvinsi(p.kode, tahun)}
+                      className="underline decoration-garis underline-offset-2 hover:text-tinta-redup"
+                    >
+                      Lihat
+                    </Link>
                   </td>
                 </tr>
               ))}
@@ -195,8 +425,18 @@ export default function Provinsi() {
         </div>
       </section>
 
+      {rekomendasi.length > 0 && (
+        <RekomendasiList
+          items={rekomendasi}
+          judul={`Rekomendasi kontekstual · ${
+            terendahPaud[0]?.provinsi || 'provinsi prioritas'
+          }`}
+        />
+      )}
+
       <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Rekomendasi keputusan</h2>
+        <SolusiBlock solusi={solusiUntuk('provinsi')} />
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-tinta">
           {REKOMENDASI.map((r) => (
             <li key={r}>{r}</li>
