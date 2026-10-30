@@ -16,6 +16,7 @@ import Dumbbell from '../components/Dumbbell'
 import TrenMultiGaris from '../components/TrenMultiGaris'
 import KonteksNasional from '../components/KonteksNasional'
 import Accordion from '../components/Accordion'
+import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal, BelumTersedia } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -77,6 +78,15 @@ export default function Kesenjangan() {
     jenjang: j,
     ...perbandingan(tidakSekolah, dim, j, tahun),
   }))
+  const validPerJenjang = perJenjang.filter((p) => p.selisih !== null)
+  const terbesar = validPerJenjang.reduce(
+    (m, p) => (p.selisih > (m ? m.selisih : -1) ? p : m),
+    null,
+  )
+  const terkecil = validPerJenjang.reduce(
+    (m, p) => (p.selisih < (m ? m.selisih : Infinity) ? p : m),
+    null,
+  )
 
   const pairLabel = {
     pembanding: labelKelompok(pair.pembanding),
@@ -186,18 +196,16 @@ export default function Kesenjangan() {
 
   return (
     <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-      <h1 className="max-w-[26ch] font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
-        {judulUtama || `Kesenjangan ${dimLabel}`}
-      </h1>
-
-      <div className="mt-4 overflow-hidden rounded-lg border border-garis">
-        <img
-          src="/images/foto-data.svg"
-          alt="Ilustrasi data pendidikan"
-          className="h-40 w-full object-cover md:h-56"
-          loading="lazy"
-        />
-      </div>
+      <HeroBanner
+        judul={judulUtama || `Kesenjangan ${dimLabel}`}
+        deskripsi={
+          kategori === 'Umum'
+            ? 'Halaman ini menunjukkan siapa yang tertinggal di semua jenjang, seberapa besar selisihnya, dan apa yang bisa dilakukan.'
+            : `Halaman ini menunjukkan kesenjangan pada jenjang ${kategori}, seberapa besar selisihnya, dan apa yang bisa dilakukan.`
+        }
+        gambar="/images/foto-data.svg"
+        alt="Ilustrasi data pendidikan"
+      />
 
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
         <TabBar
@@ -282,14 +290,14 @@ export default function Kesenjangan() {
       </div>
       {salinan && <p className="mt-2 text-sm text-tinta-redup">{salinan}</p>}
 
-      <Accordion judul="Apa arti kategori Umum, SD, SMP, dan SMA?">
+      <Accordion judul="Apa makna kategori Umum, SD, SMP, dan SMA?">
         <p>
-          Umum berarti semua jenjang dilihat bersama, bukan hanya satu jenjang. Pilih SD, SMP, atau
-          SMA jika ingin fokus pada satu jenjang saja.
+          Kategori Umum menunjukkan pola keseluruhan, bukan hanya satu jenjang. Jika memilih SD, SMP,
+          atau SMA, grafik dan solusi akan fokus pada jenjang tersebut.
         </p>
         <p>
-          Grafik dan solusi di halaman ini mengikuti kategori yang dipilih. Untuk pembaca yang baru
-          pertama melihat data, mulai dari kategori Umum.
+          Perbedaan ini penting karena kesenjangan bisa sudah muncul sejak SD atau baru melebar di
+          jenjang yang lebih tinggi. Pilih kategori untuk melihat di mana masalahnya paling kuat.
         </p>
       </Accordion>
 
@@ -315,18 +323,23 @@ export default function Kesenjangan() {
           </div>
         )}
         <Sumber tahun={tahun} />
-        <Accordion judul="Cara membaca grafik ini">
+        <Accordion judul="Apa makna grafik ini?">
+          {terbesar && terkecil && (
+            <p>
+              Pada {tahun}, selisih terkecil ada di {terkecil.jenjang} sebesar{' '}
+              {formatPoin(terkecil.selisih, 1)}. Selisih terbesar ada di {terbesar.jenjang} sebesar{' '}
+              {formatPoin(terbesar.selisih, 1)}. Artinya, ketidaksetaraan paling lebar terjadi di
+              jenjang {terbesar.jenjang}.
+            </p>
+          )}
           <p>
-            Setiap baris adalah satu jenjang pendidikan. Titik biru menunjukkan{' '}
-            {pairLabel.pembanding}, sedangkan kotak merah menunjukkan {pairLabel.tertinggal}.
+            Garis yang lebih panjang menunjukkan jarak yang lebih jauh antara {pairLabel.tertinggal}{' '}
+            dan {pairLabel.pembanding}. Semakin panjang, semakin besar peluang anak dari kelompok
+            tertinggal untuk tidak sekolah.
           </p>
           <p>
-            Panjang garis menunjukkan besar selisih. Angka di ujung kanan adalah selisih dalam poin.
-            Semakin panjang garisnya, semakin besar kesenjangan antara kedua kelompok.
-          </p>
-          <p>
-            Kategori Umum menampilkan semua jenjang. Pilih SD, SMP, atau SMA untuk menyorot satu
-            jenjang di tabel.
+            Kategori Umum menunjukkan pola semua jenjang. Pilih SD, SMP, atau SMA untuk melihat
+            jenjang yang disorot di tabel.
           </p>
         </Accordion>
       </section>
@@ -340,7 +353,11 @@ export default function Kesenjangan() {
             Sekitar {formatJumlahOrang(dampak.estimasi)} anak usia {jenjang} berpotensi kembali
             bersekolah jika kelompok tertinggal setara kelompok pembanding.
           </p>
-          <Accordion judul="Bagaimana angka ini dihitung?">
+          <Accordion judul="Apa makna angka ini?">
+            <p>
+              Angka ini menunjukkan skala anak yang mungkin terkena dampak jika kesenjangan ditutup.
+              Artinya, masalahnya bukan hanya persentase kecil, tetapi menyangkut banyak anak.
+            </p>
             <p>{dampak.metode}</p>
             <p>Asumsi: {dampak.asumsi}</p>
             <p>
@@ -374,27 +391,29 @@ export default function Kesenjangan() {
             <BelumTersedia alasan="tidak ada data tren" />
           )}
           <Sumber tahun="2019–2023" />
-          <Accordion judul="Cara membaca tren">
+          <Accordion judul="Apa makna tren ini?">
             {kategori === 'Umum' ? (
               <>
                 <p>
-                  Garis merah adalah SD, garis biru adalah SMP, dan garis abu-abu adalah SMA. Setiap
-                  garis menunjukkan besar selisih antarkelompok pada jenjang tersebut.
+                  Garis merah adalah SD, garis biru adalah SMP, dan garis abu-abu adalah SMA. Garis
+                  yang naik berarti kesenjangan makin lebar, sedangkan garis yang turun berarti
+                  kesenjangan menyempit.
                 </p>
                 <p>
-                  Garis yang naik berarti kesenjangan melebar. Garis yang turun berarti kesenjangan
-                  menyempit.
+                  Artinya, keberhasilan menurunkan angka rata-rata belum tentu berarti kesenjangan
+                  ikut mengecil. Perhatikan arah setiap garis, bukan hanya posisinya.
                 </p>
               </>
             ) : (
               <>
                 <p>
                   Garis biru menunjukkan {pairLabel.pembanding}. Garis merah menunjukkan{' '}
-                  {pairLabel.tertinggal}.
+                  {pairLabel.tertinggal}. Jika garis merah bergerak menjauh, kelompok tertinggal makin
+                  tertinggal.
                 </p>
                 <p>
-                  Semakin jauh jarak kedua garis, semakin besar kesenjangan antara kedua kelompok.
-                  Angka pada tabel di bawah grafik menunjukkan nilai aslinya.
+                  Sebaliknya, jika kedua garis mendekat, kesenjangan menyempit. Angka pada tabel di
+                  bawah grafik menunjukkan nilai aslinya.
                 </p>
               </>
             )}
@@ -447,17 +466,18 @@ export default function Kesenjangan() {
             : `Baris disorot: ${kategori}.`}{' '}
           Satuan nilai: persen. Sumber: BPS, Susenas {tahun}.
         </p>
-        <Accordion judul="Apa arti selisih dan rasio?">
+        <Accordion judul="Apa makna selisih dan rasio?">
           <p>
-            Selisih adalah angka tertinggi dikurangi angka terendah. Contoh: jika kelompok tertinggal
-            30% dan kelompok pembanding 15%, selisihnya 15 poin.
+            Selisih menunjukkan jarak absolut antara dua kelompok. Rasio menunjukkan berapa kali
+            lipat satu kelompok dibanding kelompok lain. Keduanya menjawab pertanyaan berbeda.
           </p>
           <p>
-            Rasio adalah angka tertinggi dibagi angka terendah. Contoh: 30 dibagi 15 sama dengan 2,
-            artinya kelompok tertinggal dua kali lipat kelompok pembanding.
+            Contoh: selisih 15 poin berarti jaraknya 15 poin. Rasio 2 berarti kelompok tertinggal dua
+            kali lipat kelompok pembanding.
           </p>
           <p>
-            Poin berbeda dengan persen. Selisih 15 poin tidak sama dengan 15% lebih tinggi.
+            Selisih besar dengan rasio kecil menunjukkan masalah yang sudah menyebar. Selisih kecil
+            dengan rasio besar menunjukkan masalah yang sangat terpusat pada kelompok tertentu.
           </p>
         </Accordion>
       </section>
@@ -474,10 +494,11 @@ export default function Kesenjangan() {
               </li>
             ))}
           </ul>
-          <Accordion judul="Apa hubungannya dengan SDGs?">
+          <Accordion judul="Apa makna temuan ini bagi SDGs?">
             <p>
-              Temuan di halaman ini berkaitan dengan tujuan pembangunan berkelanjutan, terutama
-              pendidikan yang merata dan pengurangan ketimpangan.
+              Temuan ini menunjukkan bahwa tujuan pendidikan yang merata belum tercapai untuk semua
+              kelompok. Kesenjangan yang lebar berarti masih ada kelompok yang tertinggal dalam akses
+              pendidikan.
             </p>
             <p>
               Pemetaan ini menunjukkan relevansi temuan, bukan klaim bahwa aplikasi mengukur target
@@ -527,14 +548,14 @@ export default function Kesenjangan() {
         ) : (
           <p className="mt-3 text-sm text-tinta-redup">Belum ada solusi untuk kombinasi ini.</p>
         )}
-        <Accordion judul="Dari mana solusi ini?">
+        <Accordion judul="Apa makna solusi ini?">
           <p>
-            Temuan dihitung dari data BPS. Solusi diambil dari studi dan artikel yang sumbernya bisa
-            dibuka pada tiap poin.
+            Solusi ini menunjukkan langkah yang paling relevan untuk kelompok yang tertinggal pada
+            data di atas. Fokusnya adalah memperkecil jarak, bukan hanya menaikkan rata-rata.
           </p>
           <p>
-            Hubungan antara temuan dan solusi bersifat indikatif. Aplikasi ini tidak mengklaim bahwa
-            satu kebijakan pasti menyebabkan satu hasil.
+            Solusi diambil dari studi dan artikel yang sumbernya bisa dibuka pada tiap poin. Hubungan
+            antara temuan dan solusi bersifat indikatif, bukan jaminan hasil.
           </p>
         </Accordion>
       </section>

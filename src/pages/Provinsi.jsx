@@ -18,6 +18,7 @@ import PriorityMatrix from '../components/PriorityMatrix'
 import RekomendasiList from '../components/RekomendasiList'
 import BandingProvinsi from '../components/BandingProvinsi'
 import Accordion from '../components/Accordion'
+import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -152,18 +153,12 @@ export default function Provinsi() {
 
   return (
     <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-      <h1 className="max-w-[28ch] font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
-        {judul || 'Peringkat partisipasi pendidikan usia dini per provinsi'}
-      </h1>
-
-      <div className="mt-4 overflow-hidden rounded-lg border border-garis">
-        <img
-          src="/images/foto-provinsi.svg"
-          alt="Ilustrasi wilayah Indonesia"
-          className="h-40 w-full object-cover md:h-52"
-          loading="lazy"
-        />
-      </div>
+      <HeroBanner
+        judul={judul || 'Peringkat partisipasi pendidikan usia dini per provinsi'}
+        deskripsi="Halaman ini menunjukkan provinsi mana yang perlu diprioritaskan, seberapa jauh jaraknya dari nasional, dan apa yang bisa dilakukan."
+        gambar="/images/foto-provinsi.svg"
+        alt="Ilustrasi wilayah Indonesia"
+      />
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <TahunSelect
@@ -263,14 +258,17 @@ export default function Provinsi() {
         <p className="mt-3 text-xs text-tinta-redup">
           Satuan: persen. Sumber: BPS, Susenas {tahun}.
         </p>
-        <Accordion judul="Cara membaca peringkat ini">
+        <Accordion judul="Apa makna peringkat ini?">
+          {terendah[0] && (
+            <p>
+              Pada {tahun}, {terendah[0].provinsi} berada paling jauh di bawah rata-rata nasional,
+              yaitu {formatAngka(terendah[0].nilai, 2)}% berbanding {formatAngka(nasional, 2)}%.
+              Artinya, provinsi ini paling perlu dikejar partisipasi pendidikannya.
+            </p>
+          )}
           <p>
-            Setiap titik adalah satu provinsi. Titik yang semakin ke kanan berarti partisipasi
-            pendidikannya semakin tinggi.
-          </p>
-          <p>
-            Garis putus-putus adalah rata-rata nasional. Lima provinsi terendah diberi warna merah.
-            Sumbu dimulai dari 50% agar perbedaan antarprovinsi lebih mudah terlihat.
+            Titik yang makin ke kanan menunjukkan partisipasi yang makin tinggi. Garis putus-putus
+            adalah rata-rata nasional, dan lima provinsi terendah diberi warna merah.
           </p>
           <p>
             Empat provinsi baru Papua belum memiliki data pada indikator ini, sehingga tidak muncul di
@@ -309,12 +307,15 @@ export default function Provinsi() {
                 <span className="font-semibold">{formatJumlahOrang(dampak.estimasi)}</span> anak usia
                 3–6 tahun berpotensi mendapat layanan PAUD tambahan.
               </p>
-              <Accordion judul="Bagaimana angka ini dihitung?">
+              <Accordion judul="Apa makna angka ini?">
+                <p>
+                  Angka ini menunjukkan berapa banyak anak yang bisa memperoleh layanan PAUD jika
+                  provinsi terendah menyamai rata-rata nasional. Artinya, masalahnya bukan hanya skor
+                  rendah, tetapi akses anak yang belum terpenuhi.
+                </p>
                 <p>{dampak.metode}</p>
                 <p>Asumsi: {dampak.asumsi}</p>
-                <p>
-                  Angka ini adalah perkiraan, bukan hasil sensus. Gunakan sebagai gambaran skala.
-                </p>
+                <p>Angka ini adalah perkiraan, bukan hasil sensus.</p>
               </Accordion>
             </>
           )}
@@ -355,19 +356,21 @@ export default function Provinsi() {
         <p className="mt-2 text-xs text-tinta-redup">
           Klik provinsi untuk melihat tren, konteks, dan rekomendasi. Indeks ini bukan penilaian resmi.
         </p>
-        <Accordion judul="Bagaimana skor prioritas dihitung?">
+        <Accordion judul="Apa makna skor prioritas ini?">
+          {prioritas.daftar[0] && (
+            <p>
+              Provinsi dengan skor tertinggi adalah {prioritas.daftar[0].provinsi} (
+              {formatAngka(prioritas.daftar[0].skor, 1)}/100). Artinya, provinsi ini memiliki
+              kombinasi kebutuhan paling besar menurut enam ukuran yang dipakai.
+            </p>
+          )}
           <p>
-            Skor 0 sampai 100. Semakin tinggi skornya, semakin besar kebutuhan untuk diprioritaskan.
-            Skor adalah rata-rata dari enam ukuran: partisipasi SMA, partisipasi PAUD, lama sekolah,
-            kemiskinan, IPM, dan ketimpangan gender.
+            Skor 0 sampai 100 dihitung dari partisipasi SMA, partisipasi PAUD, lama sekolah,
+            kemiskinan, IPM, dan ketimpangan gender. Semua ukuran diberi bobot sama.
           </p>
           <p>
-            Semua ukuran diberi bobot yang sama. Jika satu provinsi tidak punya data lengkap, cakupan
-            indikatornya lebih kecil dan ditampilkan di tabel.
-          </p>
-          <p>
-            Indeks ini alat bantu untuk membaca prioritas, bukan penilaian resmi atau vonis terhadap
-            kinerja provinsi.
+            Skor tinggi bukan vonis terhadap kinerja provinsi. Skor ini alat bantu untuk menentukan
+            prioritas dan membaca kebutuhan data.
           </p>
         </Accordion>
       </section>
@@ -409,14 +412,17 @@ export default function Provinsi() {
               </ul>
             </div>
           </div>
-          <Accordion judul="Cara membaca perubahan ini">
+          <Accordion judul="Apa makna perubahan ini?">
+            {berubah.membaik[0] && (
+              <p>
+                Provinsi yang paling membaik adalah {berubah.membaik[0].provinsi}, naik{' '}
+                {formatPoin(berubah.membaik[0].delta, 2)}. Artinya, partisipasi di provinsi ini
+                bergerak ke arah yang lebih baik.
+              </p>
+            )}
             <p>
-              Daftar ini membandingkan angka partisipasi SMA pada tahun awal yang tersedia dengan
-              tahun terakhir. Angka positif berarti partisipasi naik, angka negatif berarti turun.
-            </p>
-            <p>
-              Perubahan ini bukan ramalan. Data hanya menunjukkan apa yang sudah terjadi pada periode
-              yang tersedia.
+              Perubahan positif berarti partisipasi naik. Perubahan negatif berarti partisipasi
+              turun. Daftar ini menunjukkan arah, bukan ramalan.
             </p>
           </Accordion>
         </section>
@@ -471,14 +477,14 @@ export default function Provinsi() {
             </tbody>
           </table>
         </div>
-        <Accordion judul="Apa arti selisih dari nasional?">
+        <Accordion judul="Apa makna selisih dari nasional?">
           <p>
-            Selisih adalah nilai provinsi dikurangi nilai nasional. Jika hasilnya positif, provinsi
-            berada di atas rata-rata nasional. Jika negatif, provinsi berada di bawah rata-rata.
+            Selisih positif berarti partisipasi provinsi lebih tinggi dari rata-rata nasional.
+            Selisih negatif berarti provinsi tertinggal dari nasional.
           </p>
           <p>
-            Selisih ditulis dalam poin, bukan persen. Selisih kecil pada survei sampel perlu dibaca
-            dengan hati-hati.
+            Semakin besar selisih negatifnya, semakin jauh provinsi itu dari capaian nasional. Selisih
+            kecil pada survei sampel perlu dibaca dengan hati-hati.
           </p>
         </Accordion>
       </section>

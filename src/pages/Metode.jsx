@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { downloadCsv } from '../lib/ekspor'
 import Accordion from '../components/Accordion'
+import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -66,20 +67,12 @@ export default function Metode() {
           ← Kembali ke ringkasan
         </Link>
       </p>
-      <h1 className="mt-2 font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
-        Metode dan sumber
-      </h1>
-      <p className="mt-3 max-w-[68ch] text-base leading-relaxed text-tinta">
-        SETARA memakai data BPS yang diambil lewat WebAPI dan disimpan sebagai berkas statis. Aplikasi
-        ini menunjukkan siapa yang tertinggal dan seberapa jauh, bukan mengklaim penyebab.
-      </p>
-
-      <div className="mt-4 overflow-hidden rounded-lg border border-garis">
-        <img
-          src="/images/foto-data.svg"
+      <div className="mt-2">
+        <HeroBanner
+          judul="Metode dan sumber"
+          deskripsi="Penjelasan data, istilah, rumus, dan keterbatasan yang dipakai SETARA. Bagian ini membantu membaca setiap grafik dengan benar."
+          gambar="/images/foto-data.svg"
           alt="Ilustrasi data pendidikan"
-          className="h-40 w-full object-cover md:h-52"
-          loading="lazy"
         />
       </div>
 
@@ -242,7 +235,7 @@ export default function Metode() {
 
       <section id="istilah" className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Istilah mudah</h2>
-        <Accordion judul="Buka daftar istilah">
+        <Accordion judul="Apa makna istilah-istilah ini?">
           <dl className="space-y-2">
             <div>
               <dt className="font-semibold text-tinta">Anak tidak sekolah</dt>
@@ -298,7 +291,7 @@ export default function Metode() {
 
       <section id="keterbatasan" className="mt-8 rounded-lg border border-garis bg-putih p-5">
         <h2 className="text-base font-semibold text-tinta">Keterbatasan</h2>
-        <Accordion judul="Baca keterbatasan data">
+        <Accordion judul="Apa makna keterbatasan ini?">
           <ul className="list-disc space-y-1 pl-5">
             {(meta?.keterbatasan || []).map((k) => (
               <li key={k}>{k}</li>

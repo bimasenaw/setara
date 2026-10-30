@@ -13,6 +13,7 @@ import KonteksGrid from '../components/KonteksGrid'
 import RekomendasiList from '../components/RekomendasiList'
 import SegmentedControl from '../components/SegmentedControl'
 import Accordion from '../components/Accordion'
+import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -154,16 +155,12 @@ export default function ProvinsiDetail() {
           ← Kembali ke peringkat provinsi
         </Link>
       </p>
-      <h1 className="mt-2 font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
-        {provinsi.provinsi}
-      </h1>
-
-      <div className="mt-4 overflow-hidden rounded-lg border border-garis">
-        <img
-          src="/images/foto-provinsi.svg"
+      <div className="mt-2">
+        <HeroBanner
+          judul={provinsi.provinsi}
+          deskripsi="Profil ini menunjukkan posisi provinsi, tren partisipasi, konteks, dan langkah yang bisa diprioritaskan."
+          gambar="/images/foto-provinsi.svg"
           alt="Ilustrasi wilayah Indonesia"
-          className="h-40 w-full object-cover md:h-52"
-          loading="lazy"
         />
       </div>
 
@@ -246,14 +243,16 @@ export default function ProvinsiDetail() {
             Indikator yang tersedia untuk provinsi ini.
           </p>
         </div>
-        <Accordion judul="Apa arti tiga angka di atas?">
+        <Accordion judul="Apa makna tiga angka di atas?">
           <p>
-            Indeks prioritas menunjukkan seberapa besar kebutuhan provinsi ini untuk diprioritaskan.
-            Skor 0 sampai 100; semakin tinggi, semakin prioritas.
+            Skor {skor ? `${formatAngka(skor.skor, 1)}/100` : 'belum tersedia'} berarti provinsi ini
+            berada pada urutan {skor ? skor.peringkat : '-'} dalam kebutuhan prioritas. Semakin tinggi
+            skornya, semakin besar kebutuhan untuk diprioritaskan.
           </p>
           <p>
-            Kuadran prioritas membandingkan tingkat partisipasi dengan perubahannya. Cakupan indikator
-            menunjukkan berapa banyak data yang tersedia untuk provinsi ini.
+            Kuadran {kategori?.kategori || 'belum tersedia'} menunjukkan arah partisipasi provinsi.
+            Cakupan {skor ? `${skor.cakupan}/6` : '-'} menunjukkan berapa banyak data yang tersedia
+            untuk membaca kondisi ini.
           </p>
         </Accordion>
       </section>
@@ -296,16 +295,18 @@ export default function ProvinsiDetail() {
             <p className="text-tinta-redup">Data tren belum tersedia.</p>
           )}
           <p className="mt-3 text-xs text-tinta-redup">Sumber: BPS, Susenas.</p>
-          <Accordion judul="Cara membaca tren provinsi">
+          <Accordion judul="Apa makna tren ini?">
             <p>
-              Garis merah menunjukkan angka provinsi. Garis biru menunjukkan rata-rata nasional.
-              Semakin dekat garis merah ke garis biru, semakin dekat provinsi ini dengan rata-rata
-              nasional.
+              Garis merah menunjukkan angka provinsi, garis biru menunjukkan rata-rata nasional. Jika
+              garis merah mendekat ke garis biru, provinsi ini sedang mengejar nasional. Jika menjauh,
+              provinsi ini makin tertinggal.
             </p>
-            <p>
-              Perubahan dan peringkat dihitung dari tahun awal yang tersedia sampai tahun terakhir.
-              Angka ini bukan proyeksi.
-            </p>
+            {deltaTren !== null && (
+              <p>
+                Perubahan {formatPoin(deltaTren, 2)} dari {awal.tahun} ke {akhir.tahun} menunjukkan
+                arah tersebut. Angka ini bukan proyeksi.
+              </p>
+            )}
           </Accordion>
         </div>
       </section>
@@ -317,12 +318,15 @@ export default function ProvinsiDetail() {
             Sekitar {formatJumlahOrang(dampak.estimasi)} anak usia 3–6 tahun berpotensi mendapat
             layanan PAUD tambahan jika partisipasi menyamai nasional.
           </p>
-          <Accordion judul="Bagaimana angka ini dihitung?">
+          <Accordion judul="Apa makna angka ini?">
+            <p>
+              Angka ini menunjukkan berapa banyak anak yang bisa memperoleh layanan PAUD jika
+              partisipasi provinsi menyamai nasional. Artinya, masalahnya bukan hanya skor rendah,
+              tetapi akses anak yang belum terpenuhi.
+            </p>
             <p>{dampak.metode}</p>
             <p>Asumsi: {dampak.asumsi}</p>
-            <p>
-              Angka ini adalah perkiraan, bukan hasil sensus. Gunakan sebagai gambaran skala.
-            </p>
+            <p>Angka ini adalah perkiraan, bukan hasil sensus.</p>
           </Accordion>
         </section>
       )}
@@ -332,15 +336,15 @@ export default function ProvinsiDetail() {
       <RekomendasiList items={rekomendasi} judul={`Rekomendasi kontekstual · ${provinsi.provinsi}`} />
 
       <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Cara membaca</h2>
-        <Accordion judul="Catatan penting">
+        <h2 className="text-base font-semibold text-tinta">Makna catatan</h2>
+        <Accordion judul="Apa makna catatan ini?">
           <p>
-            Indeks prioritas adalah skor bantu, bukan penilaian resmi. Partisipasi sekolah dan angka
-            anak tidak sekolah adalah dua hal berbeda.
+            Skor prioritas menunjukkan kebutuhan relatif, bukan penilaian resmi. Provinsi dengan skor
+            rendah bukan berarti tidak punya masalah, dan skor tinggi bukan berarti gagal.
           </p>
           <p>
-            Hubungan antarindikator tidak membuktikan sebab-akibat. Lihat halaman Metode untuk
-            definisi dan rumus.
+            Partisipasi sekolah dan angka anak tidak sekolah adalah dua hal berbeda. Hubungan
+            antarindikator tidak membuktikan sebab-akibat.
           </p>
         </Accordion>
         <Link

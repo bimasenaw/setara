@@ -40,7 +40,7 @@ export default function PriorityMatrix({ data, tahun }) {
           )
         })}
       </div>
-      <Accordion judul="Cara membaca kuadran ini">
+      <Accordion judul="Apa makna kuadran ini?">
         <p>
           Setiap provinsi ditempatkan berdasarkan dua hal: tingkat partisipasi SMA saat ini dan
           perubahannya sejak 2019.

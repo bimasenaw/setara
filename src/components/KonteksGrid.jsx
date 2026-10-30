@@ -43,7 +43,7 @@ export default function KonteksGrid({ items, judul = 'Konteks yang perlu diperik
           </tbody>
         </table>
       </div>
-      <Accordion judul="Apa arti indikator di tabel ini?">
+      <Accordion judul="Apa makna indikator ini?">
         <p>
           Partisipasi SMA adalah persentase anak usia SMA yang masih sekolah. Partisipasi PAUD
           menunjukkan seberapa banyak anak usia 3-6 tahun yang mengikuti PAUD.

@@ -36,7 +36,11 @@ export default function RekomendasiList({ items, judul = 'Rekomendasi kontekstua
           </li>
         ))}
       </ol>
-      <Accordion judul="Bagaimana rekomendasi ini disusun?">
+      <Accordion judul="Apa makna rekomendasi ini?">
+        <p>
+          Rekomendasi ini menunjukkan prioritas tindakan yang paling relevan untuk provinsi ini.
+          Artinya, jika sumber daya terbatas, langkah inilah yang perlu didahulukan.
+        </p>
         <p>
           Rekomendasi mengikuti aturan sederhana dari data provinsi. Contohnya, jika partisipasi PAUD
           rendah dan kemiskinan tinggi, prioritas diarahkan ke perluasan PAUD dan bantuan biaya.

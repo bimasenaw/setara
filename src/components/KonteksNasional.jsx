@@ -97,7 +97,7 @@ export default function KonteksNasional({ rows, dimensi }) {
           )
         })}
       </div>
-      <Accordion judul="Apa arti angka partisipasi ini?">
+      <Accordion judul="Apa makna angka partisipasi ini?">
         <p>
           APK adalah angka partisipasi kasar. Angka ini membandingkan jumlah anak yang mengikuti
           pendidikan dengan jumlah anak usia sekolah.
