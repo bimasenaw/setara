@@ -110,6 +110,9 @@ export default function ProvinsiDetail() {
   const rekomendasi = rekomendasiProvinsi(indikator, kode)
   const dampak = dampakTerbaru(indikator, kode)
   const konteks = konteksItems(indikator, kode)
+  const foto = provinsi.provinsi.includes('Papua')
+    ? { src: '/images/foto-papua.jpg', alt: 'Suasana kelas di Papua' }
+    : { src: '/images/foto-provinsi.svg', alt: 'Ilustrasi wilayah Indonesia' }
 
   const trend =
     mode === 'aps'
@@ -159,8 +162,8 @@ export default function ProvinsiDetail() {
         <HeroBanner
           judul={provinsi.provinsi}
           deskripsi="Profil ini menunjukkan posisi provinsi, tren partisipasi, konteks, dan langkah yang bisa diprioritaskan."
-          gambar="/images/foto-provinsi.svg"
-          alt="Ilustrasi wilayah Indonesia"
+          gambar={foto.src}
+          alt={foto.alt}
         />
       </div>
 
