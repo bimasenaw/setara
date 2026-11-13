@@ -84,7 +84,93 @@
   }
 }
 
-/* Header tembus pandang: satu-satunya permukaan kaca di aplikasi. */
+/* Transisi antarhalaman (View Transitions API).
+   Isi halaman bergeser pendek searah menu; header dan penanda alur diam di tempat.
+   Kurva melambat mulus tanpa memantul; halaman lama pergi lebih cepat dari halaman baru tiba. */
+.vt-kepala {
+  view-transition-name: kepala;
+}
+
+.vt-alur {
+  view-transition-name: alur;
+}
+
+::view-transition-group(kepala),
+::view-transition-group(alur) {
+  z-index: 1;
+  animation-duration: 200ms;
+}
+
+@keyframes geser-keluar-kiri {
+  to {
+    opacity: 0;
+    transform: translateX(-2.5rem);
+  }
+}
+
+@keyframes geser-keluar-kanan {
+  to {
+    opacity: 0;
+    transform: translateX(2.5rem);
+  }
+}
+
+@keyframes geser-masuk-kanan {
+  from {
+    opacity: 0;
+    transform: translateX(2.5rem);
+  }
+}
+
+@keyframes geser-masuk-kiri {
+  from {
+    opacity: 0;
+    transform: translateX(-2.5rem);
+  }
+}
+
+@keyframes pudar-keluar {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pudar-masuk {
+  from {
+    opacity: 0;
+  }
+}
+
+html[data-arah]::view-transition-old(root) {
+  animation: 200ms cubic-bezier(0.4, 0, 1, 1) both geser-keluar-kiri;
+}
+
+html[data-arah]::view-transition-new(root) {
+  animation: 300ms cubic-bezier(0.2, 0, 0, 1) both geser-masuk-kanan;
+}
+
+html[data-arah='mundur']::view-transition-old(root) {
+  animation-name: geser-keluar-kanan;
+}
+
+html[data-arah='mundur']::view-transition-new(root) {
+  animation-name: geser-masuk-kiri;
+}
+
+/* Kurangi gerakan: tanpa geser, cukup memudar. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-arah]::view-transition-old(root),
+  html[data-arah='mundur']::view-transition-old(root) {
+    animation: 150ms ease-out both pudar-keluar;
+  }
+
+  html[data-arah]::view-transition-new(root),
+  html[data-arah='mundur']::view-transition-new(root) {
+    animation: 150ms ease-out both pudar-masuk;
+  }
+}
+
+/* Permukaan kaca: header dan penanda alur yang melayang. */
 @layer components {
   .header-kaca {
     background-color: rgb(255 255 255 / 0.85);

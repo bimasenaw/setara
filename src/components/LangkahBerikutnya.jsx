@@ -1,16 +1,20 @@
 import { Link, useLocation } from 'react-router-dom'
 import { ALUR, langkahAlur, tautanAlur } from '../content/alur'
+import { useKlikGeser } from './geserHalaman'
 
 // Penutup halaman cerita: satu tautan ke pertanyaan berikutnya, filter ikut terbawa.
 export default function LangkahBerikutnya({ ke }) {
   const { search } = useLocation()
+  const klikGeser = useKlikGeser()
   const tujuan = langkahAlur(ke)
   if (!tujuan) return null
+  const to = tautanAlur(tujuan.to, search)
 
   return (
     <nav aria-label="Langkah berikutnya" className="mt-12 border-t border-garis pt-6 print:hidden">
       <Link
-        to={tautanAlur(tujuan.to, search)}
+        to={to}
+        onClick={klikGeser(to)}
         className="tekan group block max-w-[68ch] rounded-lg py-2"
       >
         <span className="teks-bantu block">

@@ -120,11 +120,36 @@ describe('App', () => {
     expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(5)
     const alur = screen.getByRole('navigation', { name: 'Alur cerita' })
     const aktif = within(alur).getByRole('link', { current: 'step' })
-    expect(aktif).toHaveTextContent('Apa tindakannya')
+    expect(aktif).toHaveTextContent('4')
+    expect(aktif).toHaveAccessibleName('Langkah 4 dari 4: Apa tindakannya')
     expect(within(alur).getByRole('link', { name: /Seberapa jauh/ })).toHaveAttribute(
       'href',
       '/kesenjangan?tahun=2023&jenjang=SMA',
     )
+  })
+
+  it('penanda alur mengikuti halaman navbar dan tersembunyi di metode', async () => {
+    const { unmount } = render(
+      <MemoryRouter initialEntries={['/provinsi/1100']}>
+        <App />
+      </MemoryRouter>,
+    )
+    const alur = screen.getByRole('navigation', { name: 'Alur cerita' })
+    expect(within(alur).getByRole('link', { current: 'step' })).toHaveTextContent('3')
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Aceh' })).toBeInTheDocument()
+    })
+    unmount()
+
+    render(
+      <MemoryRouter initialEntries={['/metode']}>
+        <App />
+      </MemoryRouter>,
+    )
+    expect(screen.queryByRole('navigation', { name: 'Alur cerita' })).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Metode dan sumber' })).toBeInTheDocument()
+    })
   })
 
   it('menampilkan halaman metode', async () => {

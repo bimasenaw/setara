@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { refs } from '../lib/solusi'
 import { REKOMENDASI_UTAMA, tautanDataRekomendasi } from '../content/rekomendasi'
-import AlurCerita from '../components/AlurCerita'
 import KepalaHalaman from '../components/KepalaHalaman'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -16,7 +15,6 @@ export default function Rekomendasi() {
 
   return (
     <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-      <AlurCerita aktif="rekomendasi" />
       <KepalaHalaman
         judul="Lima langkah untuk menutup kesenjangan, dimulai dari kelompok dan daerah yang paling tertinggal."
         konteks="Setiap langkah berangkat dari temuan di halaman sebelumnya dan didukung studi yang dapat diperiksa lewat DOI."

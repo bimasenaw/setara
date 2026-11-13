@@ -41,6 +41,14 @@ export function langkahAlur(id) {
   return ALUR.find((a) => a.id === id) || null
 }
 
+// Langkah aktif dibaca dari URL, sehingga selalu sama dengan menu navbar yang dibuka.
+// Metode adalah halaman rujukan, bukan bagian cerita: tidak punya langkah.
+export function alurDariPath(pathname = '/') {
+  const akar = pathname.split('/').filter(Boolean)[0] || ''
+  if (akar === 'metode') return null
+  return langkahAlur(akar) || ALUR[0]
+}
+
 // Filter yang ikut terbawa saat berpindah langkah. Setiap halaman memvalidasi ulang nilainya.
 const FILTER_DIBAWA = ['tahun', 'jenjang']
 
