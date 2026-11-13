@@ -8,14 +8,134 @@
   --color-garis: #dce1e7;
   --color-biru: #6f8cab;
   --color-merah: #c2372d;
+  --color-fokus: #18212c;
 
   --font-sans: 'Public Sans', system-ui, sans-serif;
   --font-serif: 'Source Serif 4', Georgia, serif;
 }
 
+/* Kontras tinggi: garis pemisah dipertegas. */
+@media (prefers-contrast: more) {
+  :root {
+    --color-garis: #5a6676;
+  }
+}
+
+/* Skala tipografi v2. Tracking dan leading mengikuti ukuran:
+   huruf besar lebih rapat, teks kecil sedikit lebih renggang. */
+@utility judul-temuan {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  @media (width >= 48rem) {
+    font-size: 2.5rem;
+  }
+}
+
+@utility judul-bagian {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+@utility subjudul {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@utility teks-bantu {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+  color: var(--color-tinta-redup);
+}
+
+@utility label-grafik {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* Umpan balik saat ditekan, untuk tautan yang tampil sebagai tombol. */
+@utility tekan {
+  transition: transform 100ms ease-out;
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Tepi pudar: tanda bahwa deretan bisa digeser, bukan terpotong. */
+@utility tepi-pudar {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent);
+}
+
+@utility tanpa-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Header tembus pandang: satu-satunya permukaan kaca di aplikasi. */
+@layer components {
+  .header-kaca {
+    background-color: rgb(255 255 255 / 0.85);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    backdrop-filter: blur(12px) saturate(1.4);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .header-kaca {
+      background-color: #ffffff;
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .header-kaca {
+      background-color: #ffffff;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  @keyframes muncul {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
 @layer base {
   html {
     font-size: 16px;
+    scroll-padding-top: 7.5rem;
+  }
+
+  @media (width >= 48rem) {
+    html {
+      scroll-padding-top: 5rem;
+    }
+  }
+
+  /* Respons instan: tombol mengecil sedikit saat ditekan, bukan setelah dilepas. */
+  button:not(:disabled):active {
+    transform: scale(0.98);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-fokus);
+    outline-offset: 2px;
   }
 
   body {

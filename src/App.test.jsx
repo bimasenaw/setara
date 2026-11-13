@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import App from './App'
 import { resetDataCache } from './lib/data'
@@ -90,6 +90,41 @@ describe('App', () => {
       expect(screen.getByRole('heading', { name: 'Aceh' })).toBeInTheDocument()
     })
     expect(screen.getByText('Indeks prioritas')).toBeInTheDocument()
+  })
+
+  it('navigasi utama memuat lima halaman', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>,
+    )
+    const nav = screen.getByRole('navigation', { name: 'Navigasi utama' })
+    const label = within(nav)
+      .getAllByRole('link')
+      .map((a) => a.textContent)
+    expect(label).toEqual(['Ringkasan', 'Kesenjangan', 'Provinsi', 'Rekomendasi', 'Metode'])
+    await waitFor(() => {
+      expect(screen.getByText('Tiga temuan utama (2023)')).toBeInTheDocument()
+    })
+  })
+
+  it('menampilkan halaman rekomendasi dengan alur langkah 4', async () => {
+    render(
+      <MemoryRouter initialEntries={['/rekomendasi?tahun=2023&jenjang=SMA']}>
+        <App />
+      </MemoryRouter>,
+    )
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Lima langkah/)
+    })
+    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(5)
+    const alur = screen.getByRole('navigation', { name: 'Alur cerita' })
+    const aktif = within(alur).getByRole('link', { current: 'step' })
+    expect(aktif).toHaveTextContent('Apa tindakannya')
+    expect(within(alur).getByRole('link', { name: /Seberapa jauh/ })).toHaveAttribute(
+      'href',
+      '/kesenjangan?tahun=2023&jenjang=SMA',
+    )
   })
 
   it('menampilkan halaman metode', async () => {
