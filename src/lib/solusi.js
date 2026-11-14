@@ -123,7 +123,7 @@ export const REFERENSI = [
     sitasi: '(Setyadi, 2022)',
     referensi:
       'Setyadi, S. (2022). Inequality of education in Indonesia by gender, socioeconomic background and government expenditure. Eko-Regional: Jurnal Pembangunan Ekonomi Wilayah, 17(1).',
-    url: 'https://doi.org/10.20884/1.erjpe.2022.17.1.2895',
+    url: 'https://doi.org/10.32424/1.erjpe.2022.17.1.2895',
   },
   {
     id: 'siddique2021',
