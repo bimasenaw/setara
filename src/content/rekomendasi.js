@@ -18,7 +18,7 @@ export const REKOMENDASI_UTAMA = [
     judul: 'Amankan perpindahan dari SD ke SMP dan dari SMP ke SMA',
     intervensi:
       'Gunakan BOS dan beasiswa untuk menahan anak tetap bersekolah pada titik transisi, karena lonjakan anak tidak sekolah terjadi saat anak berpindah jenjang.',
-    sumber: ['petrosino2012', 'sugiharti2017', 'sulistyaningrum2016'],
+    sumber: ['petrosino2012', 'sugiharti2017', 'kartasasmita2021'],
     data: { to: '/kesenjangan', tab: 'wilayah', jenjang: 'Umum' },
   },
   {
@@ -27,7 +27,7 @@ export const REKOMENDASI_UTAMA = [
     judul: 'Dekatkan sekolah menengah ke perdesaan',
     intervensi:
       'Perluas ketersediaan sekolah menengah di perdesaan agar jarak dan ongkos perjalanan tidak lagi menjadi penghalang untuk melanjutkan sekolah.',
-    sumber: ['duflo2001', 'petrosino2012'],
+    sumber: ['petrosino2012', 'sugiharti2017'],
     data: { to: '/kesenjangan', tab: 'wilayah', jenjang: 'SMA' },
   },
   {
@@ -35,7 +35,7 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Daerah tertinggal',
     judul: 'Perluas PAUD di daerah dengan partisipasi terendah',
     intervensi:
-      'Perluas layanan PAUD di daerah tertinggal dan gunakan pembelajaran jarak jauh untuk menjangkau wilayah terpencil, agar anak tidak memulai SD dengan bekal yang lebih sedikit.',
+      'Perluas layanan PAUD di daerah tertinggal, mulai dari kelompok bermain berbasis desa, agar anak tidak memulai SD dengan bekal yang lebih sedikit. Pengalaman PAUD jarak jauh di Jayapura dapat menjadi bahan rancangan layanan untuk wilayah yang sulit dijangkau.',
     sumber: ['brinkman2017', 'pratiwi2021'],
     data: { to: '/provinsi' },
   },

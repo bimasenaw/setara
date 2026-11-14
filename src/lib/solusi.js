@@ -168,8 +168,8 @@ export const SOLUSI = [
     id: 'provinsi',
     masalah: 'Partisipasi PAUD Papua jauh di bawah nasional',
     solusi:
-      'Perluas layanan pendidikan usia dini (PAUD) di daerah tertinggal seperti Papua. Perluasan akses PAUD di perdesaan meningkatkan partisipasi dan perkembangan anak; di Papua, pembelajaran jarak jauh PAUD dapat menjangkau daerah terpencil.',
-    sumber: ['brinkman2017', 'pratiwi2021', 'setyadi2022'],
+      'Perluas layanan pendidikan usia dini (PAUD) di daerah tertinggal seperti Papua. Perluasan kelompok bermain di perdesaan menaikkan partisipasi PAUD, dengan manfaat perkembangan terbesar bagi anak dari keluarga kurang mampu. Pengalaman PAUD jarak jauh di Jayapura selama pandemi (lembar kerja, WhatsApp, kunjungan rumah) dapat menjadi bahan rancangan layanan untuk wilayah yang sulit dijangkau.',
+    sumber: ['brinkman2017', 'pratiwi2021'],
   },
 ]
 
@@ -185,39 +185,39 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Selisih desa-kota melebar dari 0,80% (SD) menjadi 7,56% (SMA).',
         solusi:
-          'Perluas ketersediaan sekolah di perdesaan. Program pembangunan sekolah (INPRES) menaikkan partisipasi dan pendapatan; intervensi sisi penawaran ini termasuk yang paling efektif dalam ulasan lintas negara.',
-        sumber: ['duflo2001', 'petrosino2012'],
+          'Perluas ketersediaan sekolah di perdesaan. Dalam ulasan lintas negara, pembangunan sekolah baru dan infrastruktur memberi efek terbesar pada partisipasi; di Indonesia, pembangunan SD INPRES menaikkan jumlah anak yang menamatkan SD.',
+        sumber: ['petrosino2012', 'duflo2001'],
       },
       {
-        temuan: 'Partisipasi sekolah di desa sangat dipengaruhi karakteristik rumah tangga.',
+        temuan: 'Partisipasi sekolah sangat dipengaruhi karakteristik rumah tangga dan lokasi.',
         solusi:
-          'Sertakan dimensi desa-kota dalam penentuan target bantuan, karena determinan partisipasi sekolah berbeda antara desa dan kota.',
-        sumber: ['siddique2021', 'harahap2020'],
+          'Sertakan lokasi desa-kota dalam penentuan target bantuan: anak di perdesaan dan dari keluarga miskin lebih kecil peluangnya bersekolah di jenjang menengah, dan pendidikan kepala rumah tangga ikut menentukan.',
+        sumber: ['sugiharti2017', 'siddique2021'],
       },
     ],
     SD: [
       {
         temuan: 'Desa 1,12% vs kota 0,32%, selisih sudah muncul sejak SD.',
         solusi:
-          'Pastikan keterjangkauan SD di perdesaan; faktor demografi seperti usia dan jumlah anak turut menentukan risiko anak mengulang kelas.',
+          'Pastikan keterjangkauan SD di perdesaan. Pembangunan SD INPRES menaikkan jumlah anak yang menamatkan SD, dan secara nasional angka mengulang kelas lebih tinggi ketika pertumbuhan penduduk tidak diimbangi fasilitas dan guru.',
         sumber: ['duflo2001', 'samosir2021'],
       },
       {
-        temuan: 'Kesiapan masuk SD dipengaruhi akses PAUD di perdesaan.',
+        temuan: 'Akses PAUD di perdesaan ikut menentukan bekal anak sebelum masuk SD.',
         solusi:
-          'Perluas PAUD di perdesaan untuk memperkuat transisi ke SD, karena akses PAUD meningkatkan kesiapan dan partisipasi anak.',
-        sumber: ['brinkman2017', 'pratiwi2021'],
+          'Perluas PAUD di perdesaan untuk memperkuat transisi ke SD. Perluasan kelompok bermain di desa menaikkan partisipasi PAUD, dengan manfaat perkembangan terbesar bagi anak dari keluarga kurang mampu.',
+        sumber: ['brinkman2017'],
       },
     ],
     SMP: [
       {
         temuan: 'Desa 8,45% vs kota 5,82%, selisih melebar di SMP.',
         solusi:
-          'Amankan transisi SD→SMP di desa lewat bantuan biaya operasional (BOS) yang terbukti menaikkan partisipasi sekolah.',
-        sumber: ['sulistyaningrum2016', 'petrosino2012'],
+          'Amankan transisi SD→SMP di desa lewat bantuan biaya operasional (BOS). BOS yang diterima sekolah saat anak di SD dikaitkan dengan peluang lebih besar melanjutkan ke jenjang menengah atas, dan intervensi yang menahan anak di sekolah rata-rata berdampak positif.',
+        sumber: ['kartasasmita2021', 'petrosino2012'],
       },
       {
-        temuan: 'Enrolmen SMP ditentukan faktor biaya dan kinerja pendidikan.',
+        temuan: 'Partisipasi sekolah menengah dipengaruhi kemiskinan, pendidikan orang tua, dan lokasi desa.',
         solusi:
           'Gabungkan bantuan biaya dengan perbaikan akses sekolah menengah di desa agar transisi SD→SMP tidak terputus.',
         sumber: ['sugiharti2017', 'siddique2021'],
@@ -227,14 +227,14 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Desa 26,06% vs kota 18,50%, selisih terlebar di SMA.',
         solusi:
-          'Perluas akses sekolah menengah atas di desa. Sekolah baru menaikkan partisipasi, dan enrolmen SMA ditentukan faktor biaya serta kinerja pendidikan.',
-        sumber: ['duflo2001', 'sugiharti2017', 'kartasasmita2021'],
+          'Perluas akses sekolah menengah atas di desa. Peluang anak desa bersekolah di jenjang menengah lebih kecil dibanding anak kota, dan BOS yang diterima sekolah dikaitkan dengan peluang lebih besar melanjutkan ke SMA.',
+        sumber: ['sugiharti2017', 'kartasasmita2021'],
       },
       {
-        temuan: 'Putus sekolah di SMA berdampak jangka panjang pada pendapatan.',
+        temuan: 'Putus sekolah lebih awal berdampak panjang pada transisi menuju dewasa.',
         solusi:
-          'Tahan anak desa tetap sekolah di SMA untuk melindungi pendapatan masa depan, karena imbal hasil pendidikan tetap positif.',
-        sumber: ['utomo2014', 'purnastuti2015'],
+          'Tahan anak desa tetap sekolah di SMA. Tambahan tahun sekolah masih memberi imbal hasil upah yang positif, dan remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar.',
+        sumber: ['purnastuti2015', 'utomo2014'],
       },
     ],
   },
@@ -243,7 +243,7 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Di SMA, kelompok termiskin (30,66%) vs kelompok terkaya (14,67%), kesenjangan ekonomi paling tajam.',
         solusi:
-          'Perluas dan pertajam bantuan tunai bersyarat (PKH) sebagai jaring pengaman lintas jenjang; uji acak menunjukkan efek kumulatifnya terhadap partisipasi sekolah.',
+          'Perluas dan pertajam bantuan tunai bersyarat (PKH) sebagai jaring pengaman lintas jenjang. Uji acak enam tahun menunjukkan PKH memangkas separuh anak di bawah 15 tahun yang tidak sekolah, tetapi studi lain tidak menemukan efek signifikan pada capaian pendidikan, sehingga ketepatan sasaran perlu dipantau.',
         sumber: ['cahyadi2020', 'hudang2024'],
       },
       {
@@ -261,10 +261,10 @@ export const SOLUSI_MATRIX = {
         sumber: ['cahyadi2020', 'purnastuti2012'],
       },
       {
-        temuan: 'Bantuan tunai terbukti menyalurkan bantuan pendidikan pada kelompok terbawah.',
+        temuan: 'Program yang menahan anak di sekolah rata-rata berdampak positif pada partisipasi.',
         solusi:
           'Syaratkan bantuan tunai pada kehadiran sekolah sejak SD agar anak termiskin tertahan di sekolah.',
-        sumber: ['hudang2024', 'petrosino2012'],
+        sumber: ['cahyadi2020', 'petrosino2012'],
       },
     ],
     SMP: [
@@ -272,13 +272,13 @@ export const SOLUSI_MATRIX = {
         temuan: 'Kelompok termiskin (10,11%) vs kelompok terkaya (5,05%), dua kali lipat di SMP.',
         solusi:
           'Syaratkan PKH pada partisipasi SMP untuk menahan anak keluarga termiskin tetap bersekolah.',
-        sumber: ['cahyadi2020', 'hudang2024'],
+        sumber: ['cahyadi2020'],
       },
       {
         temuan: 'Transisi SD→SMP sangat dipengaruhi kemampuan rumah tangga membayar biaya.',
         solusi:
-          'Perkuat BOS dan bantuan tunai sekaligus untuk mengamankan transisi ke jenjang menengah.',
-        sumber: ['sulistyaningrum2016', 'caniago2021'],
+          'Perkuat BOS dan bantuan tunai sekaligus. Subsidi BOS selama ini baru menutup biaya sekolah, belum ongkos transportasi, buku, dan seragam yang ditanggung rumah tangga.',
+        sumber: ['sulistyaningrum2016', 'sugiharti2017'],
       },
     ],
     SMA: [
@@ -301,11 +301,11 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Laki-laki lebih banyak tidak sekolah: SMP 7,97% vs 5,86%; SMA 23,78% vs 19,34%.',
         solusi:
-          'Terapkan dukungan tertarget untuk anak laki-laki. Studi di negara berkembang serupa menunjukkan anak laki-laki tertinggal karena faktor rumah tangga dan pasar kerja.',
-        sumber: ['himaz2021'],
+          'Terapkan dukungan tertarget untuk anak laki-laki. Studi di Sri Lanka menunjukkan biaya kesempatan bersekolah lebih berat bagi laki-laki, dan di Indonesia anak laki-laki menghadapi tarik-menarik antara sekolah dan bekerja.',
+        sumber: ['himaz2021', 'sugiharti2017'],
       },
       {
-        temuan: 'Stereotip gender dalam buku teks turut memengaruhi partisipasi sekolah.',
+        temuan: 'Buku teks sekolah menengah di kawasan ini masih memuat stereotip gender.',
         solusi:
           'Kurangi stereotip gender dalam materi ajar dan bimbingan sekolah agar tidak membatasi anak laki-laki maupun perempuan.',
         sumber: ['islam2018'],
@@ -315,7 +315,7 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Di SD selisih hampir nol (0,68% vs 0,66%).',
         solusi:
-          'Pantau celah gender sejak dini dan kurangi stereotip gender dalam buku teks agar tidak membesar di jenjang berikutnya.',
+          'Pantau celah gender sejak dini. Buku teks masih memuat stereotip gender, dan pilihan jenis sekolah sudah berbeda menurut gender.',
         sumber: ['islam2018', 'asadullah2018'],
       },
       {
@@ -333,17 +333,17 @@ export const SOLUSI_MATRIX = {
         sumber: ['himaz2021', 'asadullah2018'],
       },
       {
-        temuan: 'Stereotip gender dan pilihan jenis sekolah memperkuat celah gender di SMP.',
+        temuan: 'Stereotip gender masih muncul di buku teks, dan pilihan jenis sekolah berbeda menurut gender.',
         solusi:
           'Kurangi stereotip gender dalam buku teks dan bimbingan konseling, serta hindari segregasi pilihan sekolah berdasarkan gender.',
-        sumber: ['islam2018'],
+        sumber: ['islam2018', 'asadullah2018'],
       },
     ],
     SMA: [
       {
         temuan: 'Laki-laki 23,78% vs perempuan 19,34%, celah terlebar di SMA.',
         solusi:
-          'Tahan anak laki-laki tetap sekolah di SMA lewat bantuan biaya, karena putus sekolah menghambat transisi menuju dewasa.',
+          'Tahan anak laki-laki tetap sekolah di SMA lewat bantuan biaya. Biaya kesempatan bersekolah lebih berat bagi laki-laki, dan remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar.',
         sumber: ['himaz2021', 'utomo2014'],
       },
       {
