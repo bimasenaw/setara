@@ -65,9 +65,13 @@ function ySekarang(el) {
   }
 }
 
+// Menjalankan fn dua bingkai lagi. Pembatalan berlaku untuk kedua bingkai, supaya kartu yang
+// ditutup tepat saat mulai membuka tidak kembali ke fase "buka".
 function bingkai(fn) {
   if (typeof requestAnimationFrame === 'function') {
-    const id = requestAnimationFrame(() => requestAnimationFrame(fn))
+    let id = requestAnimationFrame(() => {
+      id = requestAnimationFrame(fn)
+    })
     return () => cancelAnimationFrame(id)
   }
   const id = setTimeout(fn, 16)

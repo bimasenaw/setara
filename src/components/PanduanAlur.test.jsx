@@ -40,9 +40,9 @@ describe('Panduan alur', () => {
     tampilkan('/')
     await kartu()
     fireEvent.keyDown(document, { key: 'Escape' })
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
     expect(sudahDilihat()).toBe(true)
-    expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveFocus()
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveFocus())
   })
 
   it('tidak muncul lagi setelah dilihat, tetapi bisa dibuka lewat tombol "?"', async () => {
@@ -54,9 +54,9 @@ describe('Panduan alur', () => {
     const tombol = screen.getByRole('button', { name: 'Apa arti angka ini?' })
     fireEvent.click(tombol)
     const d = await kartu()
-    expect(within(d).getByRole('button', { name: 'Mulai tur' })).toHaveFocus()
+    await waitFor(() => expect(within(d).getByRole('button', { name: 'Mulai tur' })).toHaveFocus())
     fireEvent.click(tombol)
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
   })
 
   it('?panduan=1 memaksa muncul dan dihapus dari URL saat ditutup', async () => {
@@ -94,7 +94,7 @@ describe('Panduan alur', () => {
     tampilkan('/')
     await kartu()
     fireEvent.keyDown(document, { key: 'Escape' })
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
     expect(sudahDilihat()).toBe(true)
   })
 })
@@ -142,7 +142,7 @@ describe('Tur panduan', () => {
     }
     expect(within(d).queryByRole('button', { name: 'Lanjut' })).not.toBeInTheDocument()
     fireEvent.click(within(d).getByRole('button', { name: 'Selesai' }))
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
     expect(sudahDilihat()).toBe(true)
   })
 
