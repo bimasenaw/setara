@@ -5,6 +5,7 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import App from './App'
 import { resetDataCache } from './lib/data'
+import { tandaiDilihat } from './components/statusPanduan'
 
 const dataDir = join(process.cwd(), 'public', 'data')
 const files = {
@@ -30,6 +31,7 @@ function mockFetch() {
 describe('App', () => {
   beforeEach(() => {
     resetDataCache()
+    tandaiDilihat()
     mockFetch()
   })
 
