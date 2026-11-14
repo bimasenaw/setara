@@ -96,3 +96,24 @@ describe('Panduan alur', () => {
     expect(sudahDilihat()).toBe(true)
   })
 })
+
+describe('Tombol Lanjut', () => {
+  beforeEach(() => tandaiDilihat())
+
+  it('menuju langkah berikutnya dengan filter terbawa', async () => {
+    tampilkan('/kesenjangan?tahun=2023&jenjang=SMP&tab=ekonomi')
+    const lanjut = screen.getByRole('link', { name: 'Lanjut ke langkah 3: Di mana dulu' })
+    expect(lanjut).toHaveAttribute('href', '/provinsi?tahun=2023&jenjang=SMP')
+    fireEvent.click(lanjut)
+    await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent('/provinsi?tahun=2023&jenjang=SMP'))
+    expect(screen.getByRole('link', { name: 'Lanjut ke langkah 4: Apa tindakannya' })).toBeInTheDocument()
+  })
+
+  it('dari profil provinsi lanjut ke rekomendasi, dan tidak ada di langkah terakhir', () => {
+    const { unmount } = tampilkan('/provinsi/9400')
+    expect(screen.getByRole('link', { name: /^Lanjut ke langkah 4/ })).toHaveAttribute('href', '/rekomendasi')
+    unmount()
+    tampilkan('/rekomendasi')
+    expect(screen.queryByRole('link', { name: /^Lanjut/ })).not.toBeInTheDocument()
+  })
+})

@@ -53,6 +53,10 @@ export default function AlurCerita() {
 
   if (!sekarang) return null
 
+  // Tombol Lanjut: ke langkah berikutnya; di langkah terakhir tidak ditampilkan.
+  const berikutnya = ALUR.find((a) => a.langkah === sekarang.langkah + 1) || null
+  const keBerikutnya = berikutnya ? tautanAlur(berikutnya.to, search) : null
+
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20 flex flex-col items-center pb-[calc(1rem+env(safe-area-inset-bottom))] print:hidden">
       <PanduanAlur
@@ -70,59 +74,86 @@ export default function AlurCerita() {
           ringkas && !panduan.buka ? 'scale-[0.8]' : 'scale-100'
         }`}
       >
-        <ol className="flex items-center">
-          {ALUR.map((a) => {
-            const isAktif = a.id === sekarang.id
-            const to = tautanAlur(a.to, search)
-            return (
-              <li key={a.id}>
-                <Link
-                  to={to}
-                  onClick={klikGeser(to)}
-                  aria-current={isAktif ? 'step' : undefined}
-                  aria-label={`Langkah ${a.langkah} dari ${ALUR.length}: ${a.pendek}`}
-                  title={a.pendek}
-                  className="tekan group flex h-11 w-11 items-center justify-center rounded-full"
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`flex h-8 w-8 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
-                      isAktif
-                        ? 'bg-tinta text-putih'
-                        : 'text-tinta-redup group-hover:bg-kertas group-hover:text-tinta'
-                    }`}
+        <div className="flex items-center">
+          <ol className="flex items-center">
+            {ALUR.map((a) => {
+              const isAktif = a.id === sekarang.id
+              const to = tautanAlur(a.to, search)
+              return (
+                <li key={a.id}>
+                  <Link
+                    to={to}
+                    onClick={klikGeser(to)}
+                    aria-current={isAktif ? 'step' : undefined}
+                    aria-label={`Langkah ${a.langkah} dari ${ALUR.length}: ${a.pendek}`}
+                    title={a.pendek}
+                    className="tekan group flex h-11 w-11 items-center justify-center rounded-full"
                   >
-                    {a.langkah}
-                  </span>
-                </Link>
-              </li>
-            )
-          })}
-          <li aria-hidden="true" className="mx-0.5 h-6 w-px bg-garis" />
-          <li>
-            <button
-              ref={tombolRef}
-              type="button"
-              aria-label="Apa arti angka ini?"
-              aria-expanded={panduan.buka}
-              aria-controls={panduan.buka ? idPanduan : undefined}
-              title="Apa arti angka ini?"
-              onClick={() => (panduan.buka ? tutup() : setPanduan({ buka: true, otomatis: false }))}
-              className="group flex h-11 w-11 items-center justify-center rounded-full"
+                    <span
+                      aria-hidden="true"
+                      className={`flex h-8 w-8 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
+                        isAktif
+                          ? 'bg-tinta text-putih'
+                          : 'text-tinta-redup group-hover:bg-kertas group-hover:text-tinta'
+                      }`}
+                    >
+                      {a.langkah}
+                    </span>
+                  </Link>
+                </li>
+              )
+            })}
+          </ol>
+          <span aria-hidden="true" className="mx-0.5 h-6 w-px bg-garis" />
+          <button
+            ref={tombolRef}
+            type="button"
+            aria-label="Apa arti angka ini?"
+            aria-expanded={panduan.buka}
+            aria-controls={panduan.buka ? idPanduan : undefined}
+            title="Apa arti angka ini?"
+            onClick={() => (panduan.buka ? tutup() : setPanduan({ buka: true, otomatis: false }))}
+            className="group flex h-11 w-11 items-center justify-center rounded-full"
+          >
+            <span
+              aria-hidden="true"
+              className={`flex h-8 w-8 items-center justify-center rounded-full border border-dashed text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
+                panduan.buka
+                  ? 'border-tinta bg-kertas text-tinta'
+                  : 'border-tinta-redup text-tinta-redup group-hover:border-tinta group-hover:text-tinta'
+              }`}
+            >
+              ?
+            </span>
+          </button>
+          {berikutnya && (
+            <Link
+              to={keBerikutnya}
+              onClick={klikGeser(keBerikutnya)}
+              aria-label={`Lanjut ke langkah ${berikutnya.langkah}: ${berikutnya.pendek}`}
+              title={`Lanjut: ${berikutnya.pendek}`}
+              className="tekan group flex h-11 items-center rounded-full pl-0.5 pr-0.5"
             >
               <span
                 aria-hidden="true"
-                className={`flex h-8 w-8 items-center justify-center rounded-full border border-dashed text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
-                  panduan.buka
-                    ? 'border-tinta bg-kertas text-tinta'
-                    : 'border-tinta-redup text-tinta-redup group-hover:border-tinta group-hover:text-tinta'
-                }`}
+                className="flex h-8 items-center gap-1 whitespace-nowrap rounded-full bg-tinta pl-3.5 pr-2.5 text-[0.9375rem] font-semibold leading-none text-putih"
               >
-                ?
+                Lanjut
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M6 3.5L10.5 8L6 12.5" />
+                </svg>
               </span>
-            </button>
-          </li>
-        </ol>
+            </Link>
+          )}
+        </div>
       </nav>
     </div>
   )

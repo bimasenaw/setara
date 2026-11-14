@@ -261,7 +261,7 @@ export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onM
             >
               Satu cerita, empat langkah
             </p>
-            <p className="teks-bantu mt-1 text-pretty">Baca angka di bawah layar dari 1 sampai 4.</p>
+            <p className="teks-bantu mt-1 text-pretty">Baca dari 1 sampai 4. Tekan Lanjut di bawah layar untuk pindah ke langkah berikutnya.</p>
           </div>
           <button
             type="button"
