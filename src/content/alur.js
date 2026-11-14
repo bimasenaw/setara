@@ -9,6 +9,8 @@ export const ALUR = [
     pendek: 'Siapa tertinggal',
     halaman: 'Ringkasan',
     isi: 'Kelompok anak yang paling banyak tidak sekolah.',
+    panduan:
+      'Halaman ini menunjukkan kelompok anak yang paling banyak tidak sekolah. Mulai dari tiga temuan utama: wilayah, ekonomi, dan gender. Setiap kalimat temuan dihitung langsung dari data BPS.',
     pertanyaan: 'Siapa yang paling tertinggal?',
     ajakan: 'Lihat kelompok yang paling tertinggal dari tiga sudut: wilayah, ekonomi, dan gender.',
   },
@@ -19,6 +21,8 @@ export const ALUR = [
     pendek: 'Seberapa jauh',
     halaman: 'Kesenjangan',
     isi: 'Jarak desa dan kota, termiskin dan terkaya, laki-laki dan perempuan.',
+    panduan:
+      'Di sini terlihat seberapa jauh jarak antarkelompok. Pilih Wilayah, Ekonomi, atau Gender, lalu bandingkan jenjang SD, SMP, dan SMA untuk melihat di mana jaraknya paling lebar.',
     pertanyaan: 'Seberapa jauh jaraknya?',
     ajakan:
       'Lihat selisih desa dan kota, keluarga termiskin dan terkaya, serta laki-laki dan perempuan di setiap jenjang.',
@@ -30,6 +34,8 @@ export const ALUR = [
     pendek: 'Di mana dulu',
     halaman: 'Provinsi',
     isi: 'Provinsi yang perlu didahulukan menurut indeks prioritas.',
+    panduan:
+      'Indeks prioritas menggabungkan enam indikator untuk setiap provinsi. Makin tinggi skornya, makin perlu didahulukan. Pilih satu provinsi untuk melihat profil lengkapnya.',
     pertanyaan: 'Di mana harus mulai lebih dahulu?',
     ajakan: 'Lihat indeks prioritas yang menggabungkan enam indikator untuk setiap provinsi.',
   },
@@ -40,6 +46,8 @@ export const ALUR = [
     pendek: 'Apa tindakannya',
     halaman: 'Rekomendasi',
     isi: 'Lima langkah kebijakan berbasis studi.',
+    panduan:
+      'Lima langkah kebijakan, masing-masing untuk satu kelompok yang tertinggal. Setiap langkah didukung studi yang bisa diperiksa, dan tautan Lihat datanya membawa kembali ke angka pendukungnya.',
     pertanyaan: 'Apa yang harus dilakukan?',
     ajakan: 'Lihat lima rekomendasi berbasis studi dan provinsi yang perlu didahulukan.',
   },

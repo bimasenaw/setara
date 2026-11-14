@@ -43,7 +43,18 @@ function bingkai(fn) {
 
 const FOKUSABEL = 'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
 
-export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onMulai, tombolRef }) {
+export default function PanduanAlur({
+  id,
+  buka,
+  otomatis,
+  mode,
+  sekarang,
+  onTutup,
+  onMulaiTur,
+  onLanjut,
+  onKembali,
+  tombolRef,
+}) {
   const [fase, setFase] = useState(buka ? 'masuk' : 'tutup')
   const kartuRef = useRef(null)
   const judulRef = useRef(null)
@@ -108,7 +119,7 @@ export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onM
 
   function tutup(cara) {
     const fokusDiDalam = kartuRef.current?.contains(document.activeElement)
-    if (fokusDiDalam && cara !== 'mulai') tombolRef.current?.focus({ preventScroll: true })
+    if (fokusDiDalam) tombolRef.current?.focus({ preventScroll: true })
     onTutup(cara)
   }
 
@@ -228,7 +239,10 @@ export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onM
 
   if (fase === 'tutup') return null
 
-  const diLangkahPertama = sekarang?.langkah === 1
+  // Dua mode: ikhtisar (empat langkah sekaligus) dan tur (satu langkah per halaman).
+  const tur = mode === 'tur' && sekarang
+  const kunci = tur ? sekarang.id : 'ikhtisar'
+  const terakhir = tur && sekarang.langkah === ALUR.length
 
   return (
     <div
@@ -241,8 +255,12 @@ export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onM
       onKeyDown={onKeyDown}
       onBlur={onBlur}
       onTransitionEnd={onTransitionEnd}
-      className="panduan-alur pointer-events-auto mb-3 flex max-h-[calc(100dvh-11.5rem)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-garis bg-putih shadow-[0_12px_40px_rgb(24_33_44/0.18)] md:max-h-[calc(100dvh-9rem)] print:hidden"
+      className="panduan-alur vt-panduan pointer-events-auto mb-3 flex max-h-[calc(100dvh-11.5rem)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-garis bg-putih shadow-[0_12px_40px_rgb(24_33_44/0.18)] md:max-h-[calc(100dvh-9rem)] print:hidden"
     >
+      <p aria-live="polite" className="sr-only">
+        {tur ? `Langkah ${sekarang.langkah} dari ${ALUR.length}: ${sekarang.pertanyaan}` : ''}
+      </p>
+
       <div
         className="shrink-0 touch-none select-none md:touch-auto md:select-auto"
         onPointerDown={mulaiSeret}
@@ -252,16 +270,26 @@ export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onM
       >
         <div aria-hidden="true" className="mx-auto mt-2 h-1 w-9 rounded-full bg-garis md:hidden" />
         <div className="flex items-start gap-2 pl-5 pr-2 pt-3 md:pt-4">
-          <div className="min-w-0 flex-1 pt-1">
+          <div key={kunci} className="min-w-0 flex-1 animate-[muncul_200ms_ease-out] pt-1">
+            {tur && (
+              <p className="teks-bantu mb-1">
+                Langkah {sekarang.langkah} dari {ALUR.length} ·{' '}
+                <span className="font-medium text-tinta">{sekarang.halaman}</span>
+              </p>
+            )}
             <p
               id={`${id}-judul`}
               ref={judulRef}
               tabIndex={-1}
-              className="font-serif text-[1.25rem] font-semibold md:text-[1.375rem] leading-[1.2] tracking-[-0.01em] text-tinta focus:outline-none"
+              className="text-pretty font-serif text-[1.25rem] font-semibold leading-[1.2] tracking-[-0.01em] text-tinta focus:outline-none md:text-[1.375rem]"
             >
-              Satu cerita, empat langkah
+              {tur ? sekarang.pertanyaan : 'Satu cerita, empat langkah'}
             </p>
-            <p className="teks-bantu mt-1 text-pretty">Baca dari 1 sampai 4. Tekan Lanjut di bawah layar untuk pindah ke langkah berikutnya.</p>
+            {!tur && (
+              <p className="teks-bantu mt-1 text-pretty">
+                Empat pertanyaan yang dibaca berurutan. Tur singkat memandu Anda dari halaman ke halaman.
+              </p>
+            )}
           </div>
           <button
             type="button"
@@ -290,35 +318,46 @@ export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onM
         data-lebih={lebih ? 'ya' : undefined}
         className="panduan-gulir min-h-0 flex-1 overflow-y-auto overscroll-contain px-5"
       >
-        <ol className="py-1 md:py-2">
-          {ALUR.map((a) => {
-            const aktif = a.id === sekarang?.id
-            return (
-              <li key={a.id} className="flex gap-3 py-2.5">
-                <span
-                  aria-hidden="true"
-                  className={`mt-px flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none ${
-                    aktif ? 'bg-tinta text-putih' : 'bg-kertas text-tinta-redup'
-                  }`}
-                >
-                  {a.langkah}
-                </span>
-                <div className="min-w-0">
-                  <p className="subjudul text-tinta">{a.pertanyaan}</p>
-                  <p className="teks-bantu mt-0.5">
-                    <span className="font-medium text-tinta">{a.halaman}</span> · {a.isi}
-                  </p>
-                  {aktif && (
-                    <p className="label-grafik mt-1.5 inline-flex rounded-full bg-kertas px-2 py-0.5 text-tinta">
-                      Anda di sini
-                    </p>
-                  )}
-                </div>
-              </li>
-            )
-          })}
-        </ol>
-        <p className="teks-bantu pb-3 pt-1">Sumber, rumus, dan keterbatasan ada di menu Metode.</p>
+        {tur ? (
+          <p
+            key={kunci}
+            className="animate-[muncul_200ms_ease-out] pb-4 pt-2 text-base leading-relaxed text-tinta"
+          >
+            {sekarang.panduan}
+          </p>
+        ) : (
+          <>
+            <ol className="py-1 md:py-2">
+              {ALUR.map((a) => {
+                const aktif = a.id === sekarang?.id
+                return (
+                  <li key={a.id} className="flex gap-3 py-2.5">
+                    <span
+                      aria-hidden="true"
+                      className={`mt-px flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none ${
+                        aktif ? 'bg-tinta text-putih' : 'bg-kertas text-tinta-redup'
+                      }`}
+                    >
+                      {a.langkah}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="subjudul text-tinta">{a.pertanyaan}</p>
+                      <p className="teks-bantu mt-0.5">
+                        <span className="font-medium text-tinta">{a.halaman}</span> · {a.isi}
+                      </p>
+                      {aktif && (
+                        <p className="label-grafik mt-1.5 inline-flex rounded-full bg-kertas px-2 py-0.5 text-tinta">
+                          Anda di sini
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                )
+              })}
+            </ol>
+            <p className="teks-bantu pb-3 pt-1">Sumber, rumus, dan keterbatasan ada di menu Metode.</p>
+          </>
+        )}
       </div>
 
       <div className="shrink-0 border-t border-garis px-4 py-3 md:px-5">
@@ -326,17 +365,31 @@ export default function PanduanAlur({ id, buka, otomatis, sekarang, onTutup, onM
           <button
             ref={utamaRef}
             type="button"
-            onClick={() => (diLangkahPertama ? tutup('mulai') : onMulai())}
-            className="flex min-h-12 grow-[2] items-center justify-center whitespace-nowrap rounded-full bg-tinta px-5 text-base font-semibold text-putih md:min-h-11 md:grow-0"
+            onClick={() => (tur ? (terakhir ? tutup('selesai') : onLanjut()) : onMulaiTur())}
+            className="flex min-h-12 grow-[2] items-center justify-center gap-1 whitespace-nowrap rounded-full bg-tinta px-5 text-base font-semibold text-putih md:min-h-11 md:grow-0"
           >
-            {diLangkahPertama ? 'Mulai membaca' : 'Mulai dari langkah 1'}
+            {tur ? (terakhir ? 'Selesai' : 'Lanjut') : 'Mulai tur'}
+            {tur && !terakhir && (
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M6 3.5L10.5 8L6 12.5" />
+              </svg>
+            )}
           </button>
           <button
             type="button"
-            onClick={() => tutup('nanti')}
-            className="flex min-h-11 grow items-center justify-center whitespace-nowrap rounded-full px-4 text-base text-tinta-redup md:grow-0 transition-colors duration-150 hover:bg-kertas hover:text-tinta"
+            onClick={() => (tur ? onKembali() : tutup('nanti'))}
+            className="flex min-h-11 grow items-center justify-center whitespace-nowrap rounded-full px-4 text-base text-tinta-redup transition-colors duration-150 hover:bg-kertas hover:text-tinta md:grow-0"
           >
-            Nanti saja
+            {tur ? 'Kembali' : 'Nanti saja'}
           </button>
         </div>
       </div>

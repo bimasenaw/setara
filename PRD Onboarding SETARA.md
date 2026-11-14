@@ -152,3 +152,16 @@ Juri melihat website ini pertama kali saat demo. Dalam beberapa detik pertama me
 
 - Buka `setara-web.vercel.app/?panduan=1` di awal demo. Kartu menjelaskan alurnya sendiri, lalu klik "Mulai membaca".
 - Kalimat untuk juri: "Setiap angka di bawah adalah satu pertanyaan. Kita baca dari 1 sampai 4."
+
+## 9. Revisi: tur langkah demi langkah
+
+- Kartu punya dua mode:
+  - **Ikhtisar:** empat langkah sekaligus, dengan tombol "Mulai tur" dan "Nanti saja".
+  - **Tur:** satu langkah per halaman.
+- **Mode tur:**
+  - Kartu menampilkan "Langkah n dari 4 · Halaman", pertanyaan langkah itu, dan petunjuk apa yang dilihat di halaman tersebut (field `panduan` di `src/content/alur.js`).
+  - **Lanjut:** halaman di belakang kartu pindah ke langkah berikutnya dengan transisi geser. Kartu tetap di tempat (`view-transition-name: panduan`) dan isinya berganti.
+  - **Kembali:** mundur satu halaman. Di langkah 1, Kembali membuka ikhtisar lagi.
+  - **Langkah 4:** tombol utama berubah menjadi "Selesai", yang menutup kartu dan menyimpan status.
+- Isi kartu yang berubah diumumkan ke pembaca layar lewat wilayah `aria-live`. Fokus tetap di tombol Lanjut, jadi pengguna keyboard cukup menekan Enter berulang kali.
+- Tombol Lanjut di penanda alur dihapus. Navigasi bertahap kini ada di dalam tur.

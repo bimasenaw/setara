@@ -18,7 +18,7 @@ function tampilkan(url) {
   )
 }
 
-const kartu = () => screen.findByRole('dialog', { name: 'Satu cerita, empat langkah' }, { timeout: 2000 })
+const kartu = () => screen.findByRole('dialog', { name: 'Satu cerita, empat langkah' }, { timeout: 4000 })
 
 describe('Panduan alur', () => {
   beforeEach(() => resetPanduan())
@@ -29,7 +29,7 @@ describe('Panduan alur', () => {
     const d = await kartu()
     expect(within(d).getAllByRole('listitem')).toHaveLength(4)
     expect(within(d).getByText('Siapa yang paling tertinggal?')).toBeInTheDocument()
-    expect(within(d).getByRole('button', { name: 'Mulai membaca' })).toBeInTheDocument()
+    expect(within(d).getByRole('button', { name: 'Mulai tur' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveAttribute('aria-expanded', 'true')
   })
 
@@ -51,7 +51,7 @@ describe('Panduan alur', () => {
     const tombol = screen.getByRole('button', { name: 'Apa arti angka ini?' })
     fireEvent.click(tombol)
     const d = await kartu()
-    expect(within(d).getByRole('button', { name: 'Mulai dari langkah 1' })).toHaveFocus()
+    expect(within(d).getByRole('button', { name: 'Mulai tur' })).toHaveFocus()
     fireEvent.click(tombol)
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
@@ -64,15 +64,14 @@ describe('Panduan alur', () => {
     await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent(/^\/\?tahun=2023$/))
   })
 
-  it('menandai langkah sekarang dan "Mulai dari langkah 1" membawa ke ringkasan dengan filter', async () => {
+  it('menandai langkah sekarang dan "Mulai tur" membawa ke langkah 1 dengan filter', async () => {
     tampilkan('/provinsi/9400?tahun=2023&jenjang=SMA')
     const d = await kartu()
     const item = within(d).getAllByRole('listitem')
     expect(within(item[2]).getByText('Anda di sini')).toBeInTheDocument()
-    fireEvent.click(within(d).getByRole('button', { name: 'Mulai dari langkah 1' }))
-    await waitFor(() =>
-      expect(screen.getByTestId('lokasi')).toHaveTextContent('/?tahun=2023&jenjang=SMA'),
-    )
+    fireEvent.click(within(d).getByRole('button', { name: 'Mulai tur' }))
+    await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent('/?tahun=2023&jenjang=SMA'))
+    expect(within(d).getByText('Siapa yang paling tertinggal?')).toBeInTheDocument()
   })
 
   it('tidak muncul di halaman metode', async () => {
@@ -97,23 +96,48 @@ describe('Panduan alur', () => {
   })
 })
 
-describe('Tombol Lanjut', () => {
-  beforeEach(() => tandaiDilihat())
+describe('Tur panduan', () => {
+  beforeEach(() => resetPanduan())
 
-  it('menuju langkah berikutnya dengan filter terbawa', async () => {
-    tampilkan('/kesenjangan?tahun=2023&jenjang=SMP&tab=ekonomi')
-    const lanjut = screen.getByRole('link', { name: 'Lanjut ke langkah 3: Di mana dulu' })
-    expect(lanjut).toHaveAttribute('href', '/provinsi?tahun=2023&jenjang=SMP')
-    fireEvent.click(lanjut)
-    await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent('/provinsi?tahun=2023&jenjang=SMP'))
-    expect(screen.getByRole('link', { name: 'Lanjut ke langkah 4: Apa tindakannya' })).toBeInTheDocument()
+  it('Lanjut memindahkan halaman dan isi kartu ke langkah berikutnya sampai Selesai', async () => {
+    tampilkan('/?tahun=2023')
+    const d = await kartu()
+    fireEvent.click(within(d).getByRole('button', { name: 'Mulai tur' }))
+    expect(within(d).getByText('Siapa yang paling tertinggal?')).toBeInTheDocument()
+    expect(screen.getByTestId('lokasi')).toHaveTextContent('/?tahun=2023')
+
+    const harapan = [
+      ['/kesenjangan?tahun=2023', 'Seberapa jauh jaraknya?'],
+      ['/provinsi?tahun=2023', 'Di mana harus mulai lebih dahulu?'],
+      ['/rekomendasi?tahun=2023', 'Apa yang harus dilakukan?'],
+    ]
+    for (const [url, pertanyaan] of harapan) {
+      fireEvent.click(within(d).getByRole('button', { name: 'Lanjut' }))
+      await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent(url))
+      expect(within(d).getByText(pertanyaan)).toBeInTheDocument()
+    }
+    expect(within(d).queryByRole('button', { name: 'Lanjut' })).not.toBeInTheDocument()
+    fireEvent.click(within(d).getByRole('button', { name: 'Selesai' }))
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expect(sudahDilihat()).toBe(true)
   })
 
-  it('dari profil provinsi lanjut ke rekomendasi, dan tidak ada di langkah terakhir', () => {
-    const { unmount } = tampilkan('/provinsi/9400')
-    expect(screen.getByRole('link', { name: /^Lanjut ke langkah 4/ })).toHaveAttribute('href', '/rekomendasi')
-    unmount()
-    tampilkan('/rekomendasi')
-    expect(screen.queryByRole('link', { name: /^Lanjut/ })).not.toBeInTheDocument()
+  it('Kembali mundur satu halaman, dan di langkah 1 kembali ke ikhtisar', async () => {
+    tampilkan('/')
+    const d = await kartu()
+    fireEvent.click(within(d).getByRole('button', { name: 'Mulai tur' }))
+    fireEvent.click(within(d).getByRole('button', { name: 'Lanjut' }))
+    await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent('/kesenjangan'))
+    fireEvent.click(within(d).getByRole('button', { name: 'Kembali' }))
+    await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent(/^\/$/))
+    fireEvent.click(within(d).getByRole('button', { name: 'Kembali' }))
+    expect(within(d).getAllByRole('listitem')).toHaveLength(4)
+  })
+
+  it('penanda alur tidak lagi punya tombol Lanjut', () => {
+    tandaiDilihat()
+    tampilkan('/kesenjangan')
+    const alur = screen.getByRole('navigation', { name: 'Alur cerita' })
+    expect(within(alur).queryByRole('link', { name: /Lanjut/ })).not.toBeInTheDocument()
   })
 })

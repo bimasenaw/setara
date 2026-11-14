@@ -95,10 +95,21 @@
   view-transition-name: alur;
 }
 
+/* Kartu tur ikut diam saat halaman di belakangnya bergeser; ukurannya berubah mulus. */
+.vt-panduan {
+  view-transition-name: panduan;
+}
+
 ::view-transition-group(kepala),
 ::view-transition-group(alur) {
   z-index: 1;
   animation-duration: 200ms;
+}
+
+::view-transition-group(panduan) {
+  z-index: 2;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @keyframes geser-keluar-kiri {

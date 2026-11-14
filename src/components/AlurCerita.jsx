@@ -7,7 +7,7 @@ import { sudahDilihat, tandaiDilihat } from './statusPanduan'
 
 // Penanda alur 1–4 yang melayang di bawah layar.
 // Langkah aktif mengikuti halaman yang dibuka dari navbar; saat digulir ke bawah ia mengecil.
-// Kunjungan pertama memunculkan kartu panduan; tombol "?" membukanya lagi.
+// Kunjungan pertama memunculkan kartu panduan berisi tur 1–4; tombol "?" membukanya lagi.
 export default function AlurCerita() {
   const { pathname, search } = useLocation()
   const navigate = useNavigate()
@@ -15,7 +15,7 @@ export default function AlurCerita() {
   const idPanduan = useId()
   const tombolRef = useRef(null)
   const [ringkas, setRingkas] = useState(false)
-  const [panduan, setPanduan] = useState({ buka: false, otomatis: false })
+  const [panduan, setPanduan] = useState({ buka: false, otomatis: false, mode: 'ikhtisar' })
   const sekarang = alurDariPath(pathname)
   const adaLangkah = Boolean(sekarang)
   const paksa = new URLSearchParams(search).get('panduan') === '1'
@@ -30,7 +30,10 @@ export default function AlurCerita() {
   // Kunjungan pertama (atau ?panduan=1): muncul setelah halaman sempat terlihat.
   useEffect(() => {
     if (!adaLangkah || (!paksa && sudahDilihat())) return
-    const t = setTimeout(() => setPanduan({ buka: true, otomatis: true }), 600)
+    const t = setTimeout(
+      () => setPanduan((p) => (p.buka ? p : { buka: true, otomatis: true, mode: 'ikhtisar' })),
+      600,
+    )
     return () => clearTimeout(t)
   }, [adaLangkah, paksa])
 
@@ -45,17 +48,31 @@ export default function AlurCerita() {
     }
   }, [navigate, pathname, search])
 
-  const mulai = useCallback(() => {
-    tutup()
-    const to = tautanAlur('/', search)
-    geserKe(() => navigate(to), arahNavigasi(pathname, to))
-  }, [tutup, navigate, pathname, search])
+  // Tur: kartu tetap terbuka, halaman di belakangnya bergeser ke langkah yang dijelaskan.
+  const pergi = useCallback(
+    (to) => geserKe(() => navigate(to), arahNavigasi(pathname, to)),
+    [navigate, pathname],
+  )
+
+  const mulaiTur = useCallback(() => {
+    setPanduan((p) => ({ ...p, mode: 'tur' }))
+    if (sekarang && sekarang.langkah !== 1) pergi(tautanAlur(ALUR[0].to, search))
+  }, [pergi, search, sekarang])
+
+  const lanjutTur = useCallback(() => {
+    const berikutnya = sekarang && ALUR[sekarang.langkah]
+    if (berikutnya) pergi(tautanAlur(berikutnya.to, search))
+  }, [pergi, search, sekarang])
+
+  const kembaliTur = useCallback(() => {
+    if (!sekarang || sekarang.langkah === 1) {
+      setPanduan((p) => ({ ...p, mode: 'ikhtisar' }))
+      return
+    }
+    pergi(tautanAlur(ALUR[sekarang.langkah - 2].to, search))
+  }, [pergi, search, sekarang])
 
   if (!sekarang) return null
-
-  // Tombol Lanjut: ke langkah berikutnya; di langkah terakhir tidak ditampilkan.
-  const berikutnya = ALUR.find((a) => a.langkah === sekarang.langkah + 1) || null
-  const keBerikutnya = berikutnya ? tautanAlur(berikutnya.to, search) : null
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20 flex flex-col items-center pb-[calc(1rem+env(safe-area-inset-bottom))] print:hidden">
@@ -63,9 +80,12 @@ export default function AlurCerita() {
         id={idPanduan}
         buka={panduan.buka}
         otomatis={panduan.otomatis}
+        mode={panduan.mode}
         sekarang={sekarang}
         onTutup={tutup}
-        onMulai={mulai}
+        onMulaiTur={mulaiTur}
+        onLanjut={lanjutTur}
+        onKembali={kembaliTur}
         tombolRef={tombolRef}
       />
       <nav
@@ -112,7 +132,9 @@ export default function AlurCerita() {
             aria-expanded={panduan.buka}
             aria-controls={panduan.buka ? idPanduan : undefined}
             title="Apa arti angka ini?"
-            onClick={() => (panduan.buka ? tutup() : setPanduan({ buka: true, otomatis: false }))}
+            onClick={() =>
+              panduan.buka ? tutup() : setPanduan({ buka: true, otomatis: false, mode: 'ikhtisar' })
+            }
             className="group flex h-11 w-11 items-center justify-center rounded-full"
           >
             <span
@@ -126,33 +148,6 @@ export default function AlurCerita() {
               ?
             </span>
           </button>
-          {berikutnya && (
-            <Link
-              to={keBerikutnya}
-              onClick={klikGeser(keBerikutnya)}
-              aria-label={`Lanjut ke langkah ${berikutnya.langkah}: ${berikutnya.pendek}`}
-              title={`Lanjut: ${berikutnya.pendek}`}
-              className="tekan group flex h-11 items-center rounded-full pl-0.5 pr-0.5"
-            >
-              <span
-                aria-hidden="true"
-                className="flex h-8 items-center gap-1 whitespace-nowrap rounded-full bg-tinta pl-3.5 pr-2.5 text-[0.9375rem] font-semibold leading-none text-putih"
-              >
-                Lanjut
-                <svg
-                  viewBox="0 0 16 16"
-                  className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M6 3.5L10.5 8L6 12.5" />
-                </svg>
-              </span>
-            </Link>
-          )}
         </div>
       </nav>
     </div>
