@@ -165,3 +165,24 @@ Juri melihat website ini pertama kali saat demo. Dalam beberapa detik pertama me
   - **Langkah 4:** tombol utama berubah menjadi "Selesai", yang menutup kartu dan menyimpan status.
 - Isi kartu yang berubah diumumkan ke pembaca layar lewat wilayah `aria-live`. Fokus tetap di tombol Lanjut, jadi pengguna keyboard cukup menekan Enter berulang kali.
 - Tombol Lanjut di penanda alur dihapus. Navigasi bertahap kini ada di dalam tur.
+
+## 10. Revisi: motto KUAT
+
+- Huruf awal kata kerja setiap langkah membentuk motto **KUAT**:
+
+  | Langkah | Huruf | Kata | Pertanyaan |
+  |---|---|---|---|
+  | 1 | K | Kenali | siapa yang paling tertinggal |
+  | 2 | U | Ukur | seberapa jauh jaraknya |
+  | 3 | A | Arahkan | di mana harus mulai lebih dahulu |
+  | 4 | T | Tindak | apa yang harus dilakukan |
+
+- **Kartu panduan:** motto tampil sebagai empat kotak huruf di bawah judul, di mode ikhtisar dan di mode tur.
+  - Di ikhtisar, kotak langkah yang sedang dibuka diberi sorotan.
+  - Di tur, huruf langkah yang sedang dibuka menyala dan huruf lainnya meredup, sehingga motto juga berfungsi sebagai penanda kemajuan.
+  - Pembaca layar mendengar "Motto KUAT: Kenali, Ukur, Arahkan, Tindak."
+- **Penanda alur:** saat angka diarahkan kursor atau mendapat fokus keyboard, muncul label di atasnya: "K · Kenali", "U · Ukur", "A · Arahkan", "T · Tindak".
+  - Label disembunyikan saat kartu panduan terbuka, karena isinya sudah ada di kartu.
+  - Label tidak muncul karena ketukan di layar sentuh.
+  - Label menggantikan tooltip bawaan browser (`title`). Nama aksesibel tautan tidak berubah.
+- Data huruf dan kata ada di `src/content/alur.js` (field `huruf` dan `kata`, serta `MOTTO`).

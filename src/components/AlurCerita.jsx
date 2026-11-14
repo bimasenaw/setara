@@ -106,9 +106,17 @@ export default function AlurCerita() {
                     onClick={klikGeser(to)}
                     aria-current={isAktif ? 'step' : undefined}
                     aria-label={`Langkah ${a.langkah} dari ${ALUR.length}: ${a.pendek}`}
-                    title={a.pendek}
-                    className="tekan group flex h-11 w-11 items-center justify-center rounded-full"
+                    className="tekan group relative flex h-11 w-11 items-center justify-center rounded-full"
                   >
+                    {/* Huruf motto KUAT muncul saat diarahkan kursor atau fokus keyboard. */}
+                    {!panduan.buka && (
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full bg-tinta px-3 py-1.5 text-sm leading-none text-putih opacity-0 shadow-[0_4px_12px_rgb(24_33_44/0.2)] transition-[opacity,translate] duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:translate-y-0"
+                      >
+                        <span className="font-semibold">{a.huruf}</span> · {a.kata}
+                      </span>
+                    )}
                     <span
                       aria-hidden="true"
                       className={`flex h-8 w-8 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${

@@ -1,5 +1,38 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { ALUR } from '../content/alur'
+import { ALUR, MOTTO } from '../content/alur'
+
+// Motto KUAT: empat huruf, empat langkah, urutannya sama dengan penanda alur.
+// Di mode tur, huruf langkah yang sedang dibuka menyala dan yang lain meredup.
+function MottoKuat({ aktif, tur }) {
+  return (
+    <div className="mb-1 mt-2 grid grid-cols-4 gap-1 rounded-xl bg-kertas p-1">
+      <p className="sr-only">
+        Motto {MOTTO}: {ALUR.map((a) => a.kata).join(', ')}.
+      </p>
+      {ALUR.map((a) => {
+        const ini = a.id === aktif
+        return (
+          <div
+            key={a.id}
+            aria-hidden="true"
+            className={`flex flex-col items-center rounded-lg px-1 py-2 transition-colors duration-200 ${
+              ini ? 'bg-putih shadow-[0_1px_3px_rgb(24_33_44/0.12)]' : ''
+            }`}
+          >
+            <span
+              className={`font-serif text-[1.5rem] font-semibold leading-none ${
+                ini || !tur ? 'text-tinta' : 'text-tinta-redup'
+              }`}
+            >
+              {a.huruf}
+            </span>
+            <span className="mt-1 text-[0.8125rem] leading-tight text-tinta-redup">{a.kata}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 // Kartu panduan alur: tumbuh dari penanda alur, menjelaskan arti angka 1–4.
 // Di HP, kartu bisa diusap ke bawah untuk ditutup (mengikuti jari, meneruskan kecepatan).
@@ -318,6 +351,7 @@ export default function PanduanAlur({
         data-lebih={lebih ? 'ya' : undefined}
         className="panduan-gulir min-h-0 flex-1 overflow-y-auto overscroll-contain px-5"
       >
+        <MottoKuat aktif={sekarang?.id} tur={tur} />
         {tur ? (
           <p
             key={kunci}

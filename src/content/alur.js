@@ -1,5 +1,6 @@
 // Alur cerita SETARA: satu halaman, satu pertanyaan.
 // Teks statis tanpa angka; angka selalu dihitung dari data di halaman masing-masing.
+// Huruf awal kata kerja setiap langkah membentuk motto KUAT.
 
 export const ALUR = [
   {
@@ -7,6 +8,8 @@ export const ALUR = [
     id: 'ringkasan',
     to: '/',
     pendek: 'Siapa tertinggal',
+    huruf: 'K',
+    kata: 'Kenali',
     halaman: 'Ringkasan',
     isi: 'Kelompok anak yang paling banyak tidak sekolah.',
     panduan:
@@ -19,6 +22,8 @@ export const ALUR = [
     id: 'kesenjangan',
     to: '/kesenjangan',
     pendek: 'Seberapa jauh',
+    huruf: 'U',
+    kata: 'Ukur',
     halaman: 'Kesenjangan',
     isi: 'Jarak desa dan kota, termiskin dan terkaya, laki-laki dan perempuan.',
     panduan:
@@ -32,6 +37,8 @@ export const ALUR = [
     id: 'provinsi',
     to: '/provinsi',
     pendek: 'Di mana dulu',
+    huruf: 'A',
+    kata: 'Arahkan',
     halaman: 'Provinsi',
     isi: 'Provinsi yang perlu didahulukan menurut indeks prioritas.',
     panduan:
@@ -44,6 +51,8 @@ export const ALUR = [
     id: 'rekomendasi',
     to: '/rekomendasi',
     pendek: 'Apa tindakannya',
+    huruf: 'T',
+    kata: 'Tindak',
     halaman: 'Rekomendasi',
     isi: 'Lima langkah kebijakan berbasis studi.',
     panduan:
@@ -52,6 +61,9 @@ export const ALUR = [
     ajakan: 'Lihat lima rekomendasi berbasis studi dan provinsi yang perlu didahulukan.',
   },
 ]
+
+// Motto KUAT: satu huruf untuk setiap langkah (Kenali, Ukur, Arahkan, Tindak).
+export const MOTTO = ALUR.map((a) => a.huruf).join('')
 
 export function langkahAlur(id) {
   return ALUR.find((a) => a.id === id) || null

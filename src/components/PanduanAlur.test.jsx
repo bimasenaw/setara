@@ -30,7 +30,10 @@ describe('Panduan alur', () => {
     expect(within(d).getAllByRole('listitem')).toHaveLength(4)
     expect(within(d).getByText('Siapa yang paling tertinggal?')).toBeInTheDocument()
     expect(within(d).getByRole('button', { name: 'Mulai tur' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
   })
 
   it('Esc menutup, menyimpan status, dan mengembalikan fokus ke tombol "?"', async () => {
@@ -93,6 +96,27 @@ describe('Panduan alur', () => {
     fireEvent.keyDown(document, { key: 'Escape' })
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
     expect(sudahDilihat()).toBe(true)
+  })
+})
+
+describe('Motto KUAT', () => {
+  beforeEach(() => resetPanduan())
+
+  it('kartu panduan memuat motto KUAT di ikhtisar dan tur', async () => {
+    tampilkan('/')
+    const d = await kartu()
+    expect(within(d).getByText('Motto KUAT: Kenali, Ukur, Arahkan, Tindak.')).toBeInTheDocument()
+    fireEvent.click(within(d).getByRole('button', { name: 'Mulai tur' }))
+    expect(within(d).getByText('Motto KUAT: Kenali, Ukur, Arahkan, Tindak.')).toBeInTheDocument()
+  })
+
+  it('setiap angka di penanda alur menyimpan huruf dan kata motto untuk hover dan fokus', () => {
+    tandaiDilihat()
+    tampilkan('/')
+    const tautan = within(screen.getByRole('navigation', { name: 'Alur cerita' })).getAllByRole('link')
+    const harapan = ['K · Kenali', 'U · Ukur', 'A · Arahkan', 'T · Tindak']
+    tautan.forEach((t, i) => expect(t).toHaveTextContent(harapan[i]))
+    expect(tautan[0]).toHaveAccessibleName('Langkah 1 dari 4: Siapa tertinggal')
   })
 })
 
