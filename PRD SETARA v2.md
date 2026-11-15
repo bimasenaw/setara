@@ -430,3 +430,33 @@ Pada halaman yang isinya pendek, misalnya "Provinsi tidak ditemukan", footer mel
 ### 16.8 Pertanyaan terbuka
 
 - Foto hero halaman Provinsi: pakai ulang `foto-papua.jpg`, atau pengguna memberi foto baru?
+
+## 17. Catatan pelaksanaan Fase 3 (Ringkasan dan Kesenjangan)
+
+Status: selesai (15 November 2026). Angka, data, dan logika di `src/lib` tidak berubah. Perubahannya hanya susunan tampilan, teks, dan komponen.
+
+**Ringkasan (8.1)**
+- Hero ramping (220 px di HP, 300 px di desktop), dengan kepanjangan SETARA.
+- Kalimat temuan utama naik ke atas, di bawah hero.
+- Grafik utama: dumbbell tiga dimensi (wilayah, ekonomi, gender) untuk jenjang yang dipilih. `StatRow` tetap ada sebagai "Lihat angka lengkap" untuk aksesibilitas.
+- "Tiga temuan utama" menjadi daftar baris dengan angka besar dan tautan "Lihat di Kesenjangan".
+- Perkiraan jumlah anak diberi label "Perkiraan, bukan sensus" dan tautan ke `/metode#rumus`.
+- Dihapus: dua tombol CTA di atas dan tiga accordion. Diganti satu `CaraMembaca`, `AksiData`, dan `LangkahBerikutnya`.
+- Salah ketik "anak anak" diperbaiki di halaman, tanpa mengubah `src/lib`.
+
+**Kesenjangan (8.2)**
+- `KepalaHalaman` dengan foto jenjang di samping teks (desktop) atau di bawahnya (HP).
+- Satu baris kontrol: dimensi, tahun, jenjang.
+- Satu `CaraMembaca` yang menjelaskan beda selisih dan rasio dengan angka dari data.
+- Tren di atas latar kertas, dengan judul berupa kalimat arah tren.
+- `KonteksNasional` masuk ke "Analisis lanjutan" (komponen baru `AnalisisLanjutan`).
+- "Apa yang bisa dilakukan" dipangkas menjadi dua solusi, dengan tautan ke `/rekomendasi#{dimensi}`.
+- Kaitan SDGs dipindah ke halaman Rekomendasi.
+
+**Komponen dan perbaikan bersama**
+- `Dumbbell` mendukung baris dimensi dan jumlah angka sumbu menyesuaikan lebar layar.
+- `HeroBanner` punya mode `ramping`.
+- Jangkar `#id` kini menggulir ke bagian yang dituju (`PenandaHalaman`).
+
+**Yang berbeda dari rencana**
+- Kontrol Kesenjangan **tidak dibuat menempel** saat digulir di HP. Tiga baris kontrol yang menempel akan memakai lebih dari seperempat layar HP, lebih mengganggu daripada membantu.

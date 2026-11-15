@@ -1,18 +1,29 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { useData } from '../lib/data'
-import { JENJANG, perbandingan, nasional } from '../lib/metrik'
+import { JENJANG, PAIRS, perbandingan, nasional } from '../lib/metrik'
 import { kalimatDimensi, kalimatRingkasanUtama, tahunTerakhir, temuanTigaDimensi } from '../lib/temuan'
-import { validJenjang, validTahun, tulisParam, tautanKesenjangan } from '../lib/params'
+import { validJenjang, validTahun, tulisParam, tautanKesenjangan, labelKelompok } from '../lib/params'
 import { dampakEkonomi, dampakGender } from '../lib/dampak'
 import { fotoJenjang } from '../lib/foto'
-import { formatAngka, formatJumlahOrang, formatPoin } from '../lib/format'
+import { formatAngka, formatJumlahOrang, formatPersen, formatPoin } from '../lib/format'
 import TahunSelect from '../components/TahunSelect'
 import SegmentedControl from '../components/SegmentedControl'
 import StatRow from '../components/StatRow'
-import Accordion from '../components/Accordion'
+import Dumbbell from '../components/Dumbbell'
+import CaraMembaca from '../components/CaraMembaca'
+import AksiData from '../components/AksiData'
+import { aksiStandar } from '../components/aksiStandar'
+import Sumber from '../components/Sumber'
+import LangkahBerikutnya from '../components/LangkahBerikutnya'
 import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
+
+const DIMENSI = [
+  { key: 'wilayah', label: 'Wilayah' },
+  { key: 'ekonomi', label: 'Ekonomi' },
+  { key: 'gender', label: 'Gender' },
+]
 
 export default function Ringkasan() {
   const { status, tidakSekolah, indikator, error, reload } = useData()
@@ -34,7 +45,7 @@ export default function Ringkasan() {
 
   if (status === 'loading') {
     return (
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
         <Muat />
       </main>
     )
@@ -42,7 +53,7 @@ export default function Ringkasan() {
 
   if (status === 'error') {
     return (
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
         <Gagal message={error} onReload={reload} />
       </main>
     )
@@ -50,32 +61,51 @@ export default function Ringkasan() {
 
   const kalimatUtama =
     kalimatRingkasanUtama(tidakSekolah, jenjang, tahun) ||
-    kalimatDimensi(tidakSekolah, 'ekonomi', jenjang, tahun)
+    kalimatDimensi(tidakSekolah, 'ekonomi', jenjang, tahun) ||
+    'Kesenjangan pendidikan paling tajam terlihat di tingkat ekonomi.'
   const temuan = temuanTigaDimensi(tidakSekolah, tahun, jenjang)
   const foto = fotoJenjang(jenjang)
 
   const wilayah = perbandingan(tidakSekolah, 'wilayah', jenjang, tahun)
   const ekonomi = perbandingan(tidakSekolah, 'ekonomi', jenjang, tahun)
   const gender = perbandingan(tidakSekolah, 'gender', jenjang, tahun)
+  const perDimensi = { wilayah, ekonomi, gender }
   const angkaNasional = nasional(tidakSekolah, jenjang, tahun)
   const dampakEko = dampakEkonomi(tidakSekolah, indikator, jenjang, tahun)
   const dampakGen = dampakGender(tidakSekolah, indikator, jenjang, tahun)
-  const gapUtama = [
-    { label: 'kota dan desa', value: wilayah.selisih },
-    { label: 'kelompok termiskin dan terkaya', value: ekonomi.selisih },
-    { label: 'laki-laki dan perempuan', value: gender.selisih },
-  ]
-    .filter((g) => g.value !== null)
-    .reduce((m, g) => (g.value > (m ? m.value : -1) ? g : m), null)
+
+  const items = DIMENSI.map((d) => ({
+    label: d.label,
+    pembanding: perDimensi[d.key].pembanding,
+    tertinggal: perDimensi[d.key].tertinggal,
+  }))
+  const adaGrafik = items.some((it) => it.pembanding !== null || it.tertinggal !== null)
+  const namaPembanding = DIMENSI.map((d) =>
+    labelKelompok(PAIRS[d.key].pembanding)
+      .replace(/ \(20%\)/, '')
+      .toLowerCase(),
+  ).join(', ')
+  const namaTertinggal = DIMENSI.map((d) =>
+    labelKelompok(PAIRS[d.key].tertinggal)
+      .replace(/ \(20%\)/, '')
+      .toLowerCase(),
+  ).join(', ')
+
+  const terbesar = DIMENSI.map((d) => ({ ...d, selisih: perDimensi[d.key].selisih }))
+    .filter((d) => d.selisih !== null)
+    .reduce((m, d) => (d.selisih > (m ? m.selisih : -1) ? d : m), null)
 
   return (
-    <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+    <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 pb-8 pt-6 md:pt-8">
       <HeroBanner
+        ramping
         judul="SETARA"
-        deskripsi="Melihat kesenjangan pendidikan lewat data BPS. Aplikasi ini menunjukkan siapa yang paling tertinggal, seberapa jauh, dan apa yang bisa dilakukan."
+        deskripsi="Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. Melihat siapa yang paling tertinggal, seberapa jauh, dan apa yang bisa dilakukan, dari data BPS."
         gambar={foto.src}
         alt={foto.alt}
       />
+
+      <p className="judul-temuan mt-8 max-w-[30ch] text-tinta">{kalimatUtama}</p>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <SegmentedControl
@@ -91,163 +121,169 @@ export default function Ringkasan() {
         />
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-3">
-        <Link
-          to={tautanKesenjangan({ tab: 'ekonomi', tahun, jenjang })}
-          className="min-h-11 rounded-lg bg-tinta px-4 py-2 text-base text-putih hover:bg-tinta-redup"
-        >
-          Lihat kesenjangan
-        </Link>
-        <Link
-          to="/provinsi"
-          className="min-h-11 rounded-lg border border-garis bg-putih px-4 py-2 text-base text-tinta hover:bg-kertas"
-        >
-          Lihat peringkat provinsi
-        </Link>
-      </div>
-
-      <section className="mt-10">
-        <p className="max-w-[30ch] font-serif text-[1.75rem] leading-snug text-tinta md:text-[2.5rem]">
-          {kalimatUtama || 'Kesenjangan pendidikan paling tajam terlihat di tingkat ekonomi.'}
-        </p>
-        <Accordion judul="Apa makna temuan ini?">
+      <section className="mt-6 rounded-lg border border-garis bg-putih p-5">
+        <h2 className="subjudul text-tinta">
+          Tiga jarak antarkelompok · {jenjang} {tahun}
+        </h2>
+        {adaGrafik ? (
+          <div className="mt-4">
+            <Dumbbell
+              items={items}
+              pembandingNama={namaPembanding}
+              tertinggalNama={namaTertinggal}
+              ringkasan={kalimatUtama}
+              baris="dimensi"
+              labelLebar={84}
+            />
+          </div>
+        ) : (
+          <p className="teks-bantu mt-3">Data belum tersedia untuk tahun {tahun}.</p>
+        )}
+        <Sumber tahun={tahun} selisih />
+        <CaraMembaca>
           <p>
-            Temuan ini menunjukkan bahwa anak dari keluarga termiskin lebih berisiko tidak sekolah
-            daripada anak dari keluarga terkaya. Selisih {formatPoin(ekonomi.selisih, 1)} berarti
-            jarak antara kedua kelompok sebesar itu.
+            Setiap baris membandingkan dua kelompok anak yang tidak sekolah pada {jenjang} {tahun}: lingkaran
+            biru untuk kelompok pembanding, persegi merah untuk kelompok yang lebih tertinggal.
           </p>
           <p>
-            Semakin besar selisihnya, semakin tidak setara akses pendidikannya. Angka ini menunjukkan
-            persentase, bukan jumlah anak.
+            {terbesar
+              ? `Garis yang lebih panjang berarti jarak yang lebih jauh. Pada ${jenjang}, jarak terbesar ada pada ${terbesar.label.toLowerCase()}, yaitu ${formatPoin(terbesar.selisih, 1)}.`
+              : 'Garis yang lebih panjang berarti jarak yang lebih jauh.'}
           </p>
-        </Accordion>
-      </section>
-
-      <section className="mt-10">
-        <h2 className="text-base font-semibold text-tinta">Tiga temuan utama ({tahun})</h2>
-        <div className="mt-3 space-y-3">
-          {temuan.map((t) => (
-            <Link
-              key={t.dimensi}
-              to={tautanKesenjangan({ tab: t.dimensi, tahun, jenjang: t.jenjang })}
-              className="block rounded-lg border border-garis bg-putih p-4 hover:border-tinta"
+          <p>Angka ini adalah persentase anak, bukan jumlah anak, dan berasal dari survei sampel.</p>
+        </CaraMembaca>
+        <details className="group mt-1">
+          <summary className="tekan inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-md text-sm font-semibold text-tinta [&::-webkit-details-marker]:hidden">
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 16 16"
+              className="h-4 w-4 transition-transform duration-150 ease-out group-open:rotate-90"
             >
-              <p className="text-sm font-semibold uppercase tracking-wide text-tinta-redup">
-                {t.dimensi}
-              </p>
-              <p className="mt-1 text-sm leading-relaxed text-tinta">{t.kalimat}</p>
-              <p className="mt-1 text-xs text-tinta-redup">
-                Selisih {formatPoin(t.selisih, 2)} · buka detail {t.jenjang}
-              </p>
-            </Link>
-          ))}
-        </div>
-        <Accordion judul="Apa makna tiga temuan ini?">
-          <p>
-            Tiga temuan ini menunjukkan pola yang konsisten: kelompok yang sama cenderung tertinggal
-            di beberapa sudut sekaligus. Ini berarti kesenjangan bukan hanya soal rata-rata nasional.
-          </p>
-          <p>
-            Gunakan ketiga temuan bersama untuk melihat apakah masalahnya lebih kuat di wilayah,
-            ekonomi, atau gender.
-          </p>
-        </Accordion>
+              <path
+                d="M6 3.5 10.5 8 6 12.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Lihat angka lengkap · {jenjang} {tahun}
+          </summary>
+          <div className="pl-6">
+            <StatRow label="Nasional" a={{ label: 'Anak tidak sekolah', value: angkaNasional }} />
+            <StatRow
+              label="Selisih kota dan desa"
+              a={{ label: 'Kota', value: wilayah.pembanding }}
+              b={{ label: 'Desa', value: wilayah.tertinggal }}
+              selisih={wilayah.selisih}
+            />
+            <StatRow
+              label="Selisih kelompok termiskin dan terkaya"
+              a={{ label: 'Termiskin (20%)', value: ekonomi.tertinggal }}
+              b={{ label: 'Terkaya (20%)', value: ekonomi.pembanding }}
+              selisih={ekonomi.selisih}
+            />
+            <StatRow
+              label="Selisih laki-laki dan perempuan"
+              a={{ label: 'Laki-laki', value: gender.tertinggal }}
+              b={{ label: 'Perempuan', value: gender.pembanding }}
+              selisih={gender.selisih}
+            />
+          </div>
+        </details>
       </section>
 
-      <section className="mt-10">
-        <h2 className="text-base font-semibold text-tinta">Empat angka ringkasan · {jenjang} {tahun}</h2>
-        <div className="mt-3 rounded-lg border border-garis bg-putih p-5">
-          <StatRow
-            label="Nasional"
-            a={{ label: 'Anak tidak sekolah', value: angkaNasional }}
-          />
-          <StatRow
-            label="Selisih kota dan desa"
-            a={{ label: 'Kota', value: wilayah.pembanding }}
-            b={{ label: 'Desa', value: wilayah.tertinggal }}
-            selisih={wilayah.selisih}
-          />
-          <StatRow
-            label="Selisih kelompok termiskin dan terkaya"
-            a={{ label: 'Termiskin (20%)', value: ekonomi.tertinggal }}
-            b={{ label: 'Terkaya (20%)', value: ekonomi.pembanding }}
-            selisih={ekonomi.selisih}
-          />
-          <StatRow
-            label="Selisih laki-laki dan perempuan"
-            a={{ label: 'Laki-laki', value: gender.tertinggal }}
-            b={{ label: 'Perempuan', value: gender.pembanding }}
-            selisih={gender.selisih}
-          />
-          <p className="mt-3 text-xs text-tinta-redup">
-            Selisih dihitung dalam poin persentase. Satuan nilai: persen. Sumber: BPS, Susenas {tahun}.
-          </p>
-          <Accordion judul="Apa makna empat angka ini?">
-            <p>
-              Empat angka ini menunjukkan bahwa kesenjangan tidak hanya terlihat dari rata-rata
-              nasional. Ada jarak antara kota dan desa, antara kelompok termiskin dan terkaya, serta
-              antara laki-laki dan perempuan.
-            </p>
-            {gapUtama && (
-              <p>
-                Pada jenjang {jenjang}, selisih terbesar ada pada {gapUtama.label}, yaitu{' '}
-                {formatPoin(gapUtama.value, 1)}. Ini menunjukkan dimensi yang paling perlu
-                diperhatikan.
+      <section className="mt-12 border-t border-garis pt-6">
+        <h2 className="subjudul text-tinta">Tiga temuan utama ({tahun})</h2>
+        <ul className="mt-2">
+          {temuan.map((t) => (
+            <li key={t.dimensi} className="border-b border-garis py-5 last:border-0">
+              <p className="label-grafik uppercase tracking-wide text-tinta-redup">{t.dimensi}</p>
+              <div className="mt-1 flex items-baseline gap-4">
+                <p className="shrink-0 font-serif text-[2.5rem] font-semibold leading-none tracking-[-0.02em] text-tinta tabular-nums md:text-[3rem]">
+                  {formatPersen(t.tertinggal, 1)}
+                </p>
+                <p className="max-w-[44ch] text-base leading-relaxed text-tinta">{t.kalimat}</p>
+              </div>
+              <p className="teks-bantu mt-2">
+                Selisih {formatPoin(t.selisih, 2)} ·{' '}
+                <Link
+                  to={tautanKesenjangan({ tab: t.dimensi, tahun, jenjang: t.jenjang })}
+                  className="inline-flex min-h-11 items-center text-tinta underline decoration-garis underline-offset-2 hover:decoration-tinta md:min-h-0"
+                >
+                  Lihat di Kesenjangan ({t.jenjang})
+                </Link>
               </p>
-            )}
-            <p>Semua selisih ditulis dalam poin, bukan persen.</p>
-          </Accordion>
-        </div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {(dampakEko || dampakGen) && (
-        <section className="mt-10 rounded-lg border border-garis bg-putih p-5">
-          <h2 className="text-base font-semibold text-tinta">Perkiraan jumlah anak</h2>
-          <p className="mt-1 text-sm text-tinta-redup">
-            Angka ini mengubah persentase menjadi perkiraan jumlah anak. Sifatnya indikatif, bukan
-            angka sensus.
+        <section className="mt-12 border-t border-garis pt-6">
+          <h2 className="subjudul text-tinta">Perkiraan jumlah anak</h2>
+          <p className="teks-bantu mt-1">
+            <span className="font-semibold text-tinta">Perkiraan, bukan sensus.</span> Persentase diubah
+            menjadi perkiraan jumlah anak memakai proyeksi penduduk usia sekolah. Lihat{' '}
+            <Link
+              to="/metode#rumus"
+              className="underline decoration-garis underline-offset-2 hover:decoration-tinta"
+            >
+              rumus dan asumsinya
+            </Link>
+            .
           </p>
-          <div className="mt-3 space-y-3">
+          <ul className="mt-3 max-w-[68ch]">
             {dampakEko && (
-              <div className="border-b border-garis pb-3 last:border-0 last:pb-0">
-                <p className="text-sm font-semibold text-tinta">
-                  Ekonomi · {jenjang}: sekitar {formatJumlahOrang(dampakEko.estimasi)} anak usia{' '}
-                  {jenjang} berpotensi kembali bersekolah jika kelompok termiskin setara kelompok
-                  terkaya.
+              <li className="border-b border-garis py-3 last:border-0">
+                <p className="text-base leading-relaxed text-tinta">
+                  <span className="font-semibold">Ekonomi · {jenjang}:</span> sekitar{' '}
+                  {formatJumlahOrang(dampakEko.estimasi)} usia {jenjang} berpotensi kembali bersekolah jika
+                  kelompok termiskin setara kelompok terkaya.
                 </p>
-                <p className="mt-1 text-sm text-tinta-redup">
-                  Selisih {formatAngka(dampakEko.gap, 1)} poin.
-                </p>
-              </div>
+                <p className="teks-bantu mt-1">Selisih {formatAngka(dampakEko.gap, 1)} poin.</p>
+              </li>
             )}
             {dampakGen && (
-              <div className="border-b border-garis pb-3 last:border-0 last:pb-0">
-                <p className="text-sm font-semibold text-tinta">
-                  Gender · {jenjang}: sekitar {formatJumlahOrang(dampakGen.estimasi)} anak{' '}
-                  {dampakGen.kelompok.toLowerCase()} usia {jenjang} berpotensi kembali bersekolah jika
-                  setara kelompok pembanding.
+              <li className="border-b border-garis py-3 last:border-0">
+                <p className="text-base leading-relaxed text-tinta">
+                  <span className="font-semibold">Gender · {jenjang}:</span> sekitar{' '}
+                  {formatJumlahOrang(dampakGen.estimasi)} {dampakGen.kelompok.toLowerCase()} usia {jenjang}{' '}
+                  berpotensi kembali bersekolah jika setara kelompok pembanding.
                 </p>
-                <p className="mt-1 text-sm text-tinta-redup">
-                  Selisih {formatAngka(dampakGen.gap, 2)} poin.
-                </p>
-              </div>
+                <p className="teks-bantu mt-1">Selisih {formatAngka(dampakGen.gap, 2)} poin.</p>
+              </li>
             )}
-          </div>
-          <Accordion judul="Apa makna perkiraan ini?">
-            <p>
-              Perkiraan ini menunjukkan skala anak yang mungkin terdampak, bukan hanya persentase.
-              Jika kesenjangan ditutup, sekitar {formatJumlahOrang(dampakEko?.estimasi)} anak pada
-              dimensi ekonomi dan {formatJumlahOrang(dampakGen?.estimasi)} anak pada dimensi gender
-              berpotensi kembali bersekolah.
-            </p>
-            {dampakEko && <p>{dampakEko.metode}</p>}
-            {dampakGen && <p>{dampakGen.metode}</p>}
-            <p>
-              Angka ini memakai proyeksi populasi dan asumsi pembagian kelompok. Bukan hasil sensus.
-            </p>
-          </Accordion>
+          </ul>
         </section>
       )}
+
+      <AksiData
+        aksi={aksiStandar({
+          temuan: kalimatUtama,
+          judulBagikan: 'SETARA | Ringkasan kesenjangan pendidikan',
+          csv: {
+            nama: `setara-ringkasan-${jenjang}-${tahun}.csv`,
+            baris: DIMENSI.map((d) => ({
+              dimensi: d.label,
+              pembanding: perDimensi[d.key].pembanding,
+              tertinggal: perDimensi[d.key].tertinggal,
+              selisih: perDimensi[d.key].selisih,
+            })),
+            kolom: [
+              { key: 'dimensi', label: 'Dimensi' },
+              { key: 'pembanding', label: 'Kelompok pembanding (%)' },
+              { key: 'tertinggal', label: 'Kelompok lebih tertinggal (%)' },
+              { key: 'selisih', label: 'Selisih (poin)' },
+            ],
+          },
+          sitasi: { judul: kalimatUtama, tahun },
+          bisaCetak: true,
+        })}
+      />
+
+      <LangkahBerikutnya ke="kesenjangan" />
     </main>
   )
 }

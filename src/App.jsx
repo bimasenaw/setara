@@ -42,6 +42,10 @@ function PenandaHalaman() {
     }
     sebelumnya.current = pathname
     halamanSiap()
+    if (hash) {
+      const el = document.getElementById(decodeURIComponent(hash.slice(1)))
+      el?.scrollIntoView?.({ block: 'start' })
+    }
   }, [pathname, hash, key])
 
   return null

@@ -9,16 +9,27 @@ const TINTA = '#18212C'
 const TINTA_REDUP = '#5A6676'
 const GARIS = '#DCE1E7'
 
-export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan = '%', ringkasan }) {
+// `items`: [{ label, sub?, pembanding, tertinggal }]. `baris` menamai isi baris ("jenjang" atau "dimensi").
+// `labelLebar` memberi ruang bagi label baris yang lebih panjang dari "SMP".
+export default function Dumbbell({
+  items,
+  pembandingNama,
+  tertinggalNama,
+  satuan = '%',
+  ringkasan,
+  baris = 'jenjang',
+  labelLebar = 46,
+}) {
   const [ref, width] = useMeasure()
 
   const nilai = items.flatMap((it) => [it.pembanding, it.tertinggal]).filter((n) => n !== null)
-  const skala = skalaRapi(Math.max(0, ...nilai))
+  // Layar sempit: lebih sedikit angka sumbu supaya tidak saling menimpa.
+  const skala = skalaRapi(Math.max(0, ...nilai), width > 0 && width < 460 ? 4 : 6)
   const max = skala.maks
 
   const rowH = 60
   const axisH = 28
-  const plotLeft = 46
+  const plotLeft = labelLebar
   const plotRightPad = 88
 
   const height = items.length * rowH + axisH
@@ -62,6 +73,18 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
                 >
                   {it.label}
                 </text>
+                {it.sub && (
+                  <text
+                    x={plotLeft - 12}
+                    y={y + 17}
+                    textAnchor="end"
+                    dominantBaseline="middle"
+                    fontSize="0.75rem"
+                    fill={TINTA_REDUP}
+                  >
+                    {it.sub}
+                  </text>
+                )}
 
                 {xa !== null && xb !== null && (
                   <line x1={xa} y1={y} x2={xb} y2={y} stroke={TINTA_REDUP} strokeWidth={4} strokeLinecap="round" />
@@ -117,7 +140,7 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
           })}
         </svg>
         <div className="mt-2 space-y-1 text-sm leading-relaxed text-tinta-redup">
-          <p>Angka di kanan tiap jenjang adalah selisih antara kedua kelompok dalam poin persentase.</p>
+          <p>Angka di kanan tiap {baris} adalah selisih antara kedua kelompok dalam poin persentase.</p>
           <p className="flex items-start gap-2">
             <span className="mt-1 inline-block h-3 w-3 shrink-0 bg-merah" aria-hidden="true" />
             <span>
@@ -138,7 +161,7 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
           judul="Lihat data dumbbell"
           namaFile="setara-dumbbell.csv"
           baris={items.map((it) => ({
-            jenjang: it.label,
+            jenjang: it.sub ? `${it.label} (${it.sub})` : it.label,
             pembanding: it.pembanding,
             tertinggal: it.tertinggal,
             selisih:
@@ -150,7 +173,7 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
                 : null,
           }))}
           kolom={[
-            { key: 'jenjang', label: 'Jenjang' },
+            { key: 'jenjang', label: baris === 'jenjang' ? 'Jenjang' : 'Dimensi' },
             { key: 'pembanding', label: pembandingNama },
             { key: 'tertinggal', label: tertinggalNama },
             { key: 'selisih', label: 'Selisih' },

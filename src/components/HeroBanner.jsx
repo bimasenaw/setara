@@ -1,7 +1,7 @@
 // Hero berfoto. Lapisan gelap hanya ada di belakang teks dan mengikuti tingginya: pekat di area teks,
 // lalu memudar dalam 4–5rem di atasnya. Bagian foto di atas teks tetap terang.
 // Kontras teks putih dijaga minimal 4,5:1 di titik terterang (PRD v2, bagian 16.1).
-export default function HeroBanner({ judul, deskripsi, gambar, alt = '' }) {
+export default function HeroBanner({ judul, deskripsi, gambar, alt = '', ramping = false }) {
   return (
     <section className="relative overflow-hidden rounded-lg border border-garis bg-tinta">
       <img
@@ -12,7 +12,9 @@ export default function HeroBanner({ judul, deskripsi, gambar, alt = '' }) {
         decoding="async"
         fetchPriority="high"
       />
-      <div className="relative flex min-h-[280px] flex-col justify-end p-5 md:min-h-[340px] md:p-8">
+      <div className={`relative flex flex-col justify-end p-5 md:p-8 ${
+          ramping ? 'min-h-[220px] md:min-h-[300px]' : 'min-h-[280px] md:min-h-[340px]'
+        }`}>
         <div className="relative">
           <div
             aria-hidden="true"

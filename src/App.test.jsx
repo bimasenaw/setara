@@ -49,7 +49,8 @@ describe('App', () => {
       expect(screen.getByText('Tiga temuan utama (2023)')).toBeInTheDocument()
     })
     expect(screen.getByRole('heading', { name: 'SETARA' })).toBeInTheDocument()
-    expect(screen.getByText('Empat angka ringkasan · SMA 2023')).toBeInTheDocument()
+    expect(screen.getByText('Lihat angka lengkap · SMA 2023')).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Langkah berikutnya' })).toBeInTheDocument()
   })
 
   it('menampilkan halaman provinsi dengan pencarian', async () => {
@@ -79,7 +80,8 @@ describe('App', () => {
       },
       { timeout: 10000 },
     )
-    expect(screen.getByText(/Solusi berbasis studi/i)).toBeInTheDocument()
+    expect(screen.getByText('Apa yang bisa dilakukan')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Bagikan dan unduh' })).toBeInTheDocument()
   })
 
   it('menampilkan detail provinsi', async () => {
@@ -119,7 +121,9 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Lima langkah/)
     })
-    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(5)
+    // Lima rekomendasi, ditambah satu bagian kaitan SDGs.
+    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(6)
+    expect(screen.getByRole('heading', { name: /tujuan pembangunan berkelanjutan/ })).toBeInTheDocument()
     const alur = screen.getByRole('navigation', { name: 'Alur cerita' })
     const aktif = within(alur).getByRole('link', { current: 'step' })
     expect(aktif).toHaveTextContent('4')
