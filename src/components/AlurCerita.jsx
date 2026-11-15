@@ -76,88 +76,93 @@ export default function AlurCerita() {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20 flex flex-col items-center pb-[calc(1rem+env(safe-area-inset-bottom))] print:hidden">
-      <PanduanAlur
-        id={idPanduan}
-        buka={panduan.buka}
-        otomatis={panduan.otomatis}
-        mode={panduan.mode}
-        sekarang={sekarang}
-        onTutup={tutup}
-        onMulaiTur={mulaiTur}
-        onLanjut={lanjutTur}
-        onKembali={kembaliTur}
-        tombolRef={tombolRef}
-      />
-      <nav
-        aria-label="Alur cerita"
-        className={`header-kaca vt-alur pointer-events-auto origin-bottom rounded-full border border-garis p-1 shadow-[0_4px_16px_rgb(24_33_44/0.12)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] focus-within:scale-100 hover:scale-100 ${
-          ringkas && !panduan.buka ? 'scale-[0.8]' : 'scale-100'
-        }`}
-      >
-        <div className="flex items-center">
-          <ol className="flex items-center">
-            {ALUR.map((a) => {
-              const isAktif = a.id === sekarang.id
-              const to = tautanAlur(a.to, search)
-              return (
-                <li key={a.id}>
-                  <Link
-                    to={to}
-                    onClick={klikGeser(to)}
-                    aria-current={isAktif ? 'step' : undefined}
-                    aria-label={`Langkah ${a.langkah} dari ${ALUR.length}: ${a.pendek}`}
-                    className="tekan group relative flex h-11 w-11 items-center justify-center rounded-full"
-                  >
-                    {/* Huruf motto KUAT muncul saat diarahkan kursor atau fokus keyboard. */}
-                    {!panduan.buka && (
+      <div className="relative flex flex-col items-center">
+        {/* Kartu melayang di atas penanda: ukuran wadah tidak berubah saat kartu muncul. */}
+        <div className="pointer-events-none absolute bottom-full left-1/2 flex -translate-x-1/2 flex-col items-center">
+          <PanduanAlur
+            id={idPanduan}
+            buka={panduan.buka}
+            otomatis={panduan.otomatis}
+            mode={panduan.mode}
+            sekarang={sekarang}
+            onTutup={tutup}
+            onMulaiTur={mulaiTur}
+            onLanjut={lanjutTur}
+            onKembali={kembaliTur}
+            tombolRef={tombolRef}
+          />
+        </div>
+        <nav
+          aria-label="Alur cerita"
+          className={`header-kaca vt-alur pointer-events-auto origin-bottom rounded-full border border-garis p-1 shadow-[0_4px_16px_rgb(24_33_44/0.12)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] focus-within:scale-100 hover:scale-100 ${
+            ringkas && !panduan.buka ? 'scale-[0.8]' : 'scale-100'
+          }`}
+        >
+          <div className="flex items-center">
+            <ol className="flex items-center">
+              {ALUR.map((a) => {
+                const isAktif = a.id === sekarang.id
+                const to = tautanAlur(a.to, search)
+                return (
+                  <li key={a.id}>
+                    <Link
+                      to={to}
+                      onClick={klikGeser(to)}
+                      aria-current={isAktif ? 'step' : undefined}
+                      aria-label={`Langkah ${a.langkah} dari ${ALUR.length}: ${a.pendek}`}
+                      className="tekan group relative flex h-11 w-11 items-center justify-center rounded-full"
+                    >
+                      {/* Huruf motto KUAT muncul saat diarahkan kursor atau fokus keyboard. */}
+                      {!panduan.buka && (
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full bg-tinta px-3 py-1.5 text-sm leading-none text-putih opacity-0 shadow-[0_4px_12px_rgb(24_33_44/0.2)] transition-[opacity,translate] duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:translate-y-0"
+                        >
+                          <span className="font-semibold">{a.huruf}</span> · {a.kata}
+                        </span>
+                      )}
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full bg-tinta px-3 py-1.5 text-sm leading-none text-putih opacity-0 shadow-[0_4px_12px_rgb(24_33_44/0.2)] transition-[opacity,translate] duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:translate-y-0"
+                        className={`flex h-8 w-8 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
+                          isAktif
+                            ? 'bg-tinta text-putih'
+                            : 'text-tinta-redup group-hover:bg-kertas group-hover:text-tinta'
+                        }`}
                       >
-                        <span className="font-semibold">{a.huruf}</span> · {a.kata}
+                        {a.langkah}
                       </span>
-                    )}
-                    <span
-                      aria-hidden="true"
-                      className={`flex h-8 w-8 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
-                        isAktif
-                          ? 'bg-tinta text-putih'
-                          : 'text-tinta-redup group-hover:bg-kertas group-hover:text-tinta'
-                      }`}
-                    >
-                      {a.langkah}
-                    </span>
-                  </Link>
-                </li>
-              )
-            })}
-          </ol>
-          <span aria-hidden="true" className="mx-0.5 h-6 w-px bg-garis" />
-          <button
-            ref={tombolRef}
-            type="button"
-            aria-label="Apa arti angka ini?"
-            aria-expanded={panduan.buka}
-            aria-controls={panduan.buka ? idPanduan : undefined}
-            title="Apa arti angka ini?"
-            onClick={() =>
-              panduan.buka ? tutup() : setPanduan({ buka: true, otomatis: false, mode: 'ikhtisar' })
-            }
-            className="group flex h-11 w-11 items-center justify-center rounded-full"
-          >
-            <span
-              aria-hidden="true"
-              className={`flex h-8 w-8 items-center justify-center rounded-full border border-dashed text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
-                panduan.buka
-                  ? 'border-tinta bg-kertas text-tinta'
-                  : 'border-tinta-redup text-tinta-redup group-hover:border-tinta group-hover:text-tinta'
-              }`}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ol>
+            <span aria-hidden="true" className="mx-0.5 h-6 w-px bg-garis" />
+            <button
+              ref={tombolRef}
+              type="button"
+              aria-label="Apa arti angka ini?"
+              aria-expanded={panduan.buka}
+              aria-controls={panduan.buka ? idPanduan : undefined}
+              title="Apa arti angka ini?"
+              onClick={() =>
+                panduan.buka ? tutup() : setPanduan({ buka: true, otomatis: false, mode: 'ikhtisar' })
+              }
+              className="group flex h-11 w-11 items-center justify-center rounded-full"
             >
-              ?
-            </span>
-          </button>
-        </div>
-      </nav>
+              <span
+                aria-hidden="true"
+                className={`flex h-8 w-8 items-center justify-center rounded-full border border-dashed text-[0.9375rem] font-semibold leading-none transition-colors duration-150 ${
+                  panduan.buka
+                    ? 'border-tinta bg-kertas text-tinta'
+                    : 'border-tinta-redup text-tinta-redup group-hover:border-tinta group-hover:text-tinta'
+                }`}
+              >
+                ?
+              </span>
+            </button>
+          </div>
+        </nav>
+      </div>
     </div>
   )
 }

@@ -43,8 +43,7 @@ export default function Dumbbell({
 
   return (
     <div ref={ref} className="w-full">
-      {width > 0 && (
-        <>
+      {width > 0 ? (
         <svg
           width={width}
           height={height}
@@ -139,6 +138,10 @@ export default function Dumbbell({
             )
           })}
         </svg>
+      ) : (
+        // Memesan tinggi grafik sebelum lebar terukur, supaya isi di bawahnya tidak bergeser.
+        <div aria-hidden="true" style={{ height }} />
+      )}
         <div className="mt-2 space-y-1 text-sm leading-relaxed text-tinta-redup">
           <p>Angka di kanan tiap {baris} adalah selisih antara kedua kelompok dalam poin persentase.</p>
           <p className="flex items-start gap-2">
@@ -158,7 +161,6 @@ export default function Dumbbell({
           </p>
         </div>
         <DataTable
-          judul="Lihat data dumbbell"
           namaFile="setara-dumbbell.csv"
           baris={items.map((it) => ({
             jenjang: it.sub ? `${it.label} (${it.sub})` : it.label,
@@ -179,8 +181,6 @@ export default function Dumbbell({
             { key: 'selisih', label: 'Selisih' },
           ]}
         />
-        </>
-      )}
     </div>
   )
 }

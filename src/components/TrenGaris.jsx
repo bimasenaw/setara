@@ -87,7 +87,6 @@ export default function TrenGaris({ data, pembandingNama, tertinggalNama, ringka
       </ResponsiveContainer>
       </div>
       <DataTable
-        judul="Lihat data tren"
         namaFile="setara-tren.csv"
         baris={data.map((d) => ({
           tahun: d.tahun,

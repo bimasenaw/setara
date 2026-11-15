@@ -87,7 +87,6 @@ export default function ProvinsiTrend({ data, namaProvinsi = 'Provinsi', label =
         <span>Satuan: {satuan || 'nilai'}.</span>
       </div>
       <DataTable
-        judul="Lihat data tren provinsi"
         namaFile="setara-tren-provinsi.csv"
         baris={data.map((d) => ({
           tahun: d.tahun,

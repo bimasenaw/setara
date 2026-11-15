@@ -100,7 +100,15 @@ export default function Ringkasan() {
       <HeroBanner
         ramping
         judul="SETARA"
-        deskripsi="Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. Melihat siapa yang paling tertinggal, seberapa jauh, dan apa yang bisa dilakukan, dari data BPS."
+        deskripsi={
+          <>
+            Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses.
+            <span className="hidden md:inline">
+              {' '}
+              Melihat siapa yang paling tertinggal, seberapa jauh, dan apa yang bisa dilakukan, dari data BPS.
+            </span>
+          </>
+        }
         gambar={foto.src}
         alt={foto.alt}
       />

@@ -113,7 +113,6 @@ export default function TrenMultiGaris({
       </div>
 
       <DataTable
-        judul="Lihat data tren"
         namaFile={namaFile}
         baris={data.map((d) => {
           const row = { tahun: d.tahun }

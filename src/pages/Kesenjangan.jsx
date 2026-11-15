@@ -149,7 +149,7 @@ export default function Kesenjangan() {
     return `Pada ${akhir.tahun}, selisih antarkelompok berkisar ${formatPoin(
       terkecil,
       1,
-    )} sampai ${formatPoin(terbesar, 1)}. Pilih SD, SMP, atau SMA untuk melihat arah perubahan tiap jenjang.`
+    )} sampai ${formatPoin(terbesar, 1)}.`
   })()
 
   const dampak =
@@ -266,7 +266,12 @@ export default function Kesenjangan() {
       <section className="mt-12 border-t border-garis pt-6">
         <h2 className="subjudul text-tinta">{trendInsight || `${trendTitle} (2019–2023)`}</h2>
         {trendInsight && (
-          <p className="teks-bantu mt-1">{trendTitle} (2019–2023). Kategori mengikuti filter di atas.</p>
+          <p className="teks-bantu mt-1">
+            {trendTitle} (2019–2023).{' '}
+            {jenjang
+              ? 'Kategori mengikuti filter di atas.'
+              : 'Pilih SD, SMP, atau SMA di atas untuk melihat arah perubahan tiap jenjang.'}
+          </p>
         )}
         <div className="mt-4">
           {trendData.length > 0 ? (

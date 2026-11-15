@@ -34,7 +34,7 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
 
   return (
     <div ref={ref} className="w-full">
-      {width > 0 && (
+      {width > 0 ? (
         <svg
           width={width}
           height={height}
@@ -136,9 +136,10 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
             </g>
           )}
         </svg>
+      ) : (
+        <div aria-hidden="true" style={{ height }} />
       )}
       <DataTable
-        judul="Lihat data peringkat provinsi"
         namaFile="setara-peringkat-provinsi.csv"
         baris={provinsi.map((p) => ({
           provinsi: p.provinsi,

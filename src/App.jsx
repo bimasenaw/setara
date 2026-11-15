@@ -74,19 +74,22 @@ export default function App() {
   return (
     <div className="flex min-h-dvh flex-col bg-kertas text-tinta">
       <Nav />
-      <Suspense fallback={<Fallback />}>
-        <Routes>
-          <Route path="/" element={<Ringkasan />} />
-          <Route path="/kesenjangan" element={<Kesenjangan />} />
-          <Route path="/provinsi" element={<Provinsi />} />
-          <Route path="/provinsi/:kode" element={<ProvinsiDetail />} />
-          <Route path="/rekomendasi" element={<Rekomendasi />} />
-          <Route path="/metode" element={<Metode />} />
-          <Route path="/rujukan/:id" element={<BacaRujukan />} />
-          <Route path="*" element={<Ringkasan />} />
-        </Routes>
-        <PenandaHalaman />
-      </Suspense>
+      {/* Isi minimal setinggi layar: footer tidak muncul lalu terdorong saat data dimuat. */}
+      <div className="min-h-dvh">
+        <Suspense fallback={<Fallback />}>
+          <Routes>
+            <Route path="/" element={<Ringkasan />} />
+            <Route path="/kesenjangan" element={<Kesenjangan />} />
+            <Route path="/provinsi" element={<Provinsi />} />
+            <Route path="/provinsi/:kode" element={<ProvinsiDetail />} />
+            <Route path="/rekomendasi" element={<Rekomendasi />} />
+            <Route path="/metode" element={<Metode />} />
+            <Route path="/rujukan/:id" element={<BacaRujukan />} />
+            <Route path="*" element={<Ringkasan />} />
+          </Routes>
+          <PenandaHalaman />
+        </Suspense>
+      </div>
       {/* Jarak minimal ke footer; sisa ruang di halaman pendek mendorong footer ke bawah layar. */}
       <div aria-hidden="true" className="h-16 shrink-0" />
       <Footer ruangAlur={adaAlur} />
