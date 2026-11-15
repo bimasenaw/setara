@@ -41,7 +41,7 @@ export default function Rekomendasi() {
   const siap = status === 'ready'
 
   useDocumentMeta({
-    judul: 'SETARA | Rekomendasi',
+    judul: 'Rekomendasi | SETARA',
     deskripsi:
       'Lima rekomendasi berbasis studi untuk menutup kesenjangan pendidikan Indonesia, dimulai dari kelompok dan daerah yang paling tertinggal.',
   })

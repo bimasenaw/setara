@@ -146,6 +146,19 @@ describe('App', () => {
     expect(screen.queryByText('Makna catatan')).not.toBeInTheDocument()
   })
 
+  it('alamat tidak dikenal menampilkan halaman tidak ditemukan tanpa penanda alur', async () => {
+    render(
+      <MemoryRouter initialEntries={['/tidak-ada']}>
+        <App />
+      </MemoryRouter>,
+    )
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Halaman tidak ditemukan' })).toBeInTheDocument()
+    })
+    expect(screen.getByRole('link', { name: 'Kembali ke Ringkasan' })).toHaveAttribute('href', '/')
+    expect(screen.queryByRole('navigation', { name: 'Alur cerita' })).not.toBeInTheDocument()
+  })
+
   it('menampilkan detail provinsi', async () => {
     render(
       <MemoryRouter initialEntries={['/provinsi/1100']}>

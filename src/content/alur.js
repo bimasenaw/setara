@@ -73,8 +73,9 @@ export function langkahAlur(id) {
 // Metode dan penampil rujukan bukan bagian cerita: tidak punya langkah.
 export function alurDariPath(pathname = '/') {
   const akar = pathname.split('/').filter(Boolean)[0] || ''
-  if (akar === 'metode' || akar === 'rujukan') return null
-  return langkahAlur(akar) || ALUR[0]
+  if (!akar) return ALUR[0]
+  // Metode, penampil rujukan, dan alamat tidak dikenal tidak punya langkah.
+  return langkahAlur(akar)
 }
 
 // Filter yang ikut terbawa saat berpindah langkah. Setiap halaman memvalidasi ulang nilainya.

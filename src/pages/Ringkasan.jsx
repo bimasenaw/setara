@@ -38,15 +38,37 @@ export default function Ringkasan() {
   const jenjang = validJenjang(params.get('jenjang'), JENJANG)
 
   useDocumentMeta({
-    judul: 'SETARA | Ringkasan kesenjangan pendidikan',
+    judul: 'Ringkasan kesenjangan pendidikan | SETARA',
     deskripsi:
       'Ringkasan kesenjangan pendidikan Indonesia: wilayah, ekonomi, gender, dan prioritas provinsi dari data BPS.',
   })
 
+  const foto = fotoJenjang(jenjang)
+  const hero = (
+    <HeroBanner
+      ramping
+      judul="SETARA"
+      deskripsi={
+        <>
+          Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses.
+          <span className="hidden md:inline">
+            {' '}
+            Melihat siapa yang paling tertinggal, seberapa jauh, dan apa yang bisa dilakukan, dari data BPS.
+          </span>
+        </>
+      }
+      gambar={foto.src}
+      alt={foto.alt}
+    />
+  )
+
   if (status === 'loading') {
     return (
-      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
-        <Muat />
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 pb-8 pt-6 md:pt-8">
+        {hero}
+        <div className="mt-8">
+          <Muat />
+        </div>
       </main>
     )
   }
@@ -64,7 +86,6 @@ export default function Ringkasan() {
     kalimatDimensi(tidakSekolah, 'ekonomi', jenjang, tahun) ||
     'Kesenjangan pendidikan paling tajam terlihat di tingkat ekonomi.'
   const temuan = temuanTigaDimensi(tidakSekolah, tahun, jenjang)
-  const foto = fotoJenjang(jenjang)
 
   const wilayah = perbandingan(tidakSekolah, 'wilayah', jenjang, tahun)
   const ekonomi = perbandingan(tidakSekolah, 'ekonomi', jenjang, tahun)
@@ -97,21 +118,7 @@ export default function Ringkasan() {
 
   return (
     <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 pb-8 pt-6 md:pt-8">
-      <HeroBanner
-        ramping
-        judul="SETARA"
-        deskripsi={
-          <>
-            Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses.
-            <span className="hidden md:inline">
-              {' '}
-              Melihat siapa yang paling tertinggal, seberapa jauh, dan apa yang bisa dilakukan, dari data BPS.
-            </span>
-          </>
-        }
-        gambar={foto.src}
-        alt={foto.alt}
-      />
+      {hero}
 
       <p className="judul-temuan mt-8 max-w-[30ch] text-tinta">{kalimatUtama}</p>
 

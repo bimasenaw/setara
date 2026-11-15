@@ -207,7 +207,7 @@ export default function BacaRujukan() {
   const tampil = bisaDitampilkan(sumber)
 
   useDocumentMeta({
-    judul: rujukan ? `SETARA | ${rujukan.sitasi.replace(/^\(|\)$/g, '')}` : 'SETARA | Rujukan',
+    judul: rujukan ? `${rujukan.sitasi.replace(/^\(|\)$/g, '')} | SETARA` : 'Rujukan | SETARA',
     deskripsi: rujukan?.referensi,
   })
 

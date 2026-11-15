@@ -1,6 +1,6 @@
 # PRD: Fase 7, perbaikan hasil audit SETARA
 
-Status: draf, menunggu persetujuan (15 November 2026)
+Status: selesai (15 November 2026)
 Cabang: `v2-tampilan`
 Terkait: `PRD SETARA v2.md` (bagian 16–20)
 
@@ -121,3 +121,37 @@ Setiap langkah berakhir dalam keadaan siap deploy. Kalau waktu habis setelah lan
 
 - Merge `v2-tampilan` ke `main` dan deploy, atas persetujuan pengguna. Disarankan lewat URL preview Vercel dulu.
 - Fase P: persiapan presentasi.
+
+## 8. Hasil
+
+Diukur pada build produksi dengan Lighthouse 12 mode HP (simulasi 4G lambat), satu kali run per halaman. Nilai Lighthouse bisa bergeser beberapa poin antar-run.
+
+| Halaman | Kinerja (sebelum → sesudah) | LCP | FCP | TBT | CLS | Aksesibilitas | Praktik terbaik | SEO |
+|---|---|---|---|---|---|---|---|---|
+| Ringkasan | 50 → **89** | 3,5 s | 1,8 s | 70 ms | 0 | 100 | 100 | 100 |
+| Rekomendasi | 53 → **84** | 3,7 s | 1,8 s | 240 ms | 0 | 100 | 100 | 100 |
+| Kesenjangan | – → **82** | 4,5 s | 2,1 s | 70 ms | 0 | 100 | 100 | 100 |
+| Provinsi | 51 → **77** | 3,8 s | 1,7 s | 450 ms | 0 | 100 | 100 | 100 |
+
+**CLS dengan `PerformanceObserver`** (HP 390 px, enam halaman):
+- Pengunjung lama: 0,18–0,35 → 0,001–0,010.
+- Kunjungan pertama: 0,71–0,78 → 0,001–0,010.
+- Semua lolos (< 0,1).
+
+**Pemeriksaan Fase 6 diulang:**
+- axe 0 pelanggaran.
+- Tanpa gulir horizontal di 3 lebar × 4 ukuran huruf.
+- Semua tab stop punya indikator fokus.
+- Kurangi gerakan berjalan.
+- Tidak ada galat di console.
+- Kontras hero Ringkasan 9,69:1.
+
+**Perubahan di luar daftar awal, ditemukan saat mengukur:**
+- Data JSON di-preload di `index.html`, sehingga diunduh bersamaan dengan JavaScript, bukan setelahnya. Ini penyebab utama LCP sekitar 5 detik.
+- Hero Ringkasan tampil selagi data dimuat.
+- Kode halaman lain dimuat setelah interaksi pertama (atau paling lambat 6 detik), bukan saat browser senggang. Sebelumnya pustaka grafik ikut dijalankan di semua halaman dan menambah beban CPU.
+
+**Yang masih tersisa:**
+- `useDocumentMeta` (di `src/lib`, dibekukan) masih mengisi `og:image` dengan `/og.svg` saat halaman berjalan. Crawler pratinjau tautan membaca `index.html` tanpa menjalankan JavaScript, jadi pratinjau tetap memakai `og.png`. Perlu izin untuk menyelaraskannya.
+- LCP Kesenjangan 4,5 s masih di atas 2,5 s pada simulasi 4G lambat, karena foto jenjang baru diminta setelah halaman dirender.
+- Provinsi: TBT 450 ms, dari perhitungan indeks dan sekitar 1.160 elemen DOM.

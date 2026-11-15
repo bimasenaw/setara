@@ -15,11 +15,11 @@ const MUAT_HALAMAN = [
   () => import('./pages/Rekomendasi'),
   () => import('./pages/Metode'),
   () => import('./pages/BacaRujukan'),
+  () => import('./pages/TidakDitemukan'),
 ]
 
-const [Ringkasan, Kesenjangan, Provinsi, ProvinsiDetail, Rekomendasi, Metode, BacaRujukan] = MUAT_HALAMAN.map((f) =>
-  lazy(f),
-)
+const [Ringkasan, Kesenjangan, Provinsi, ProvinsiDetail, Rekomendasi, Metode, BacaRujukan, TidakDitemukan] =
+  MUAT_HALAMAN.map((f) => lazy(f))
 
 function Fallback() {
   return (
@@ -56,13 +56,22 @@ function PenandaHalaman() {
 function useMuatDiLatar() {
   useEffect(() => {
     if (import.meta.env.MODE === 'test') return
-    const muat = () => MUAT_HALAMAN.forEach((f) => f().catch(() => {}))
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(muat, { timeout: 2000 })
-      return () => window.cancelIdleCallback(id)
+    // Tunggu interaksi pertama (atau paling lambat 6 detik) supaya tidak bersaing dengan tampilan pertama.
+    const PEMICU = ['pointerdown', 'keydown', 'scroll', 'touchstart']
+    let selesai = false
+    const muat = () => {
+      if (selesai) return
+      selesai = true
+      lepas()
+      MUAT_HALAMAN.forEach((f) => f().catch(() => {}))
     }
-    const id = setTimeout(muat, 1200)
-    return () => clearTimeout(id)
+    const lepas = () => PEMICU.forEach((e) => window.removeEventListener(e, muat))
+    PEMICU.forEach((e) => window.addEventListener(e, muat, { passive: true, once: true }))
+    const id = setTimeout(muat, 6000)
+    return () => {
+      clearTimeout(id)
+      lepas()
+    }
   }, [])
 }
 
@@ -85,7 +94,7 @@ export default function App() {
             <Route path="/rekomendasi" element={<Rekomendasi />} />
             <Route path="/metode" element={<Metode />} />
             <Route path="/rujukan/:id" element={<BacaRujukan />} />
-            <Route path="*" element={<Ringkasan />} />
+            <Route path="*" element={<TidakDitemukan />} />
           </Routes>
           <PenandaHalaman />
         </Suspense>

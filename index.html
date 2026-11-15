@@ -13,17 +13,25 @@
       property="og:description"
       content="Siapa yang tertinggal, seberapa jauh, dan apa yang perlu dilakukan. Analisis kesenjangan pendidikan Indonesia dari data BPS."
     />
-    <meta property="og:image" content="/og.svg" />
+    <meta property="og:url" content="https://setara-web.vercel.app/" />
+    <meta property="og:image" content="https://setara-web.vercel.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SETARA: siapa yang tertinggal, seberapa jauh, dan apa yang perlu dilakukan." />
+    <meta name="twitter:image" content="https://setara-web.vercel.app/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#F5F6F8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>SETARA | Melihat kesenjangan pendidikan lewat data BPS</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="/fonts/public-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Data dipakai semua halaman: diunduh bersamaan dengan JavaScript, bukan setelahnya. -->
+    <link rel="preload" href="/data/tidak_sekolah.json" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/data/provinsi.json" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/data/indikator.json" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/data/meta.json" as="fetch" crossorigin="anonymous" />
+    <!-- Foto hero halaman pertama (Ringkasan, jenjang SMA bawaan) dimuat sebelum JavaScript berjalan. -->
+    <link rel="preload" href="/images/foto-sma.jpeg" as="image" fetchpriority="high" />
   </head>
   <body>
     <div id="root"></div>
