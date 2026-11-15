@@ -73,3 +73,29 @@ Angka di situs tidak ada yang berubah. Yang berubah hanya teks klaim dan daftar 
 - Ganti nama PDF `Duflo, E. (2001)….pdf` menjadi Roodman (2022), karena isinya komentar Roodman.
 - Hapus PDF Setyadi yang lama dari `rujukan/`. Isinya makalah lain di Gorontalo Development Review.
 - Perbaiki DOI Setyadi dan klaim Hudang di slide presentasi kalau keduanya dikutip.
+
+## 6. Pembaruan: rujukan tambahan (Fase R2, 15 November 2026)
+
+Empat rujukan ditambahkan untuk klaim yang buktinya masih tipis. Pencarian lewat Consensus, lalu DOI dan lisensi dicek ke Crossref. Setiap kutipan diuji terhadap teks PDF-nya.
+
+| Rujukan | Dipakai untuk | Temuan | Tampil di SETARA |
+|---|---|---|---|
+| Surbakti et al. (2020), Bank Dunia | Gender | Secara nasional tidak ada kesenjangan yang menguntungkan laki-laki, tetapi di tingkat kabupaten/kota ada daerah yang merugikan perempuan dan ada yang merugikan laki-laki | Tautan saja |
+| Sirait (2019), Jurnal Budget | Sekolah di desa (SMP) | Data 33 provinsi 2010–2017: jarak ke sekolah menurunkan partisipasi SMP secara signifikan | PDF di SETARA (CC BY-NC-SA 4.0) |
+| Filmer (2004), Bank Dunia | Sekolah di desa | Studi 21 negara miskin: pembangunan sekolah saja tidak bisa diharapkan berefek besar. Permintaan (misalnya bantuan biaya) perlu didorong | Tautan saja |
+| Jung & Hasan (2014), Bank Dunia | PAUD | Proyek PAUD berbasis desa (310 desa) mempersempit kesenjangan capaian anak kaya dan miskin | Tautan saja |
+
+Klaim yang dihaluskan:
+- **Anak laki-laki:** dari "dukungan tertarget untuk anak laki-laki" menjadi "arahkan dukungan ke kelompok gender yang lebih tertinggal di tiap daerah".
+- **Sekolah di desa:** ditambah bahwa jarak berpengaruh tetapi efeknya kecil bila biaya tidak ikut ditangani. Judul rekomendasi menjadi "Dekatkan sekolah menengah ke perdesaan, disertai bantuan biaya".
+- **Kejar paket:** dari "perluas" menjadi "pertahankan jalur kesetaraan sebagai kesempatan kedua, dan pantau hasilnya", karena evaluasinya baru deskriptif.
+
+Tidak ada bukti yang layak untuk menambah dua klaim ini: penyebab anak laki-laki tertinggal di Indonesia, dan dampak kejar paket. Dua klaim itu sengaja dibuat lebih hati-hati, bukan dipaksa.
+
+### Tambahan untuk tanya-jawab
+
+**"Kenapa SETARA bilang membangun sekolah saja tidak cukup?"**
+Studi Filmer (2004) di 21 negara miskin menemukan pengaruh jarak nyata tetapi kecil. Studi Indonesia (Sirait, 2019) menemukan jarak menurunkan partisipasi SMP. Karena itu rekomendasinya: dekatkan sekolah **dan** tutup biayanya.
+
+**"Apakah anak laki-laki tertinggal di semua daerah?"**
+Tidak. Data nasional SETARA menunjukkan laki-laki lebih banyak tidak sekolah, tetapi Bank Dunia (2020) menunjukkan arah kesenjangan berbeda antardaerah. Maka dukungan diarahkan menurut daerah.

@@ -42,6 +42,13 @@ export const REFERENSI = [
     url: 'https://doi.org/10.1257/aer.91.4.795',
   },
   {
+    id: 'filmer2004',
+    sitasi: '(Filmer, 2004)',
+    referensi:
+      'Filmer, D. (2004). If you build it, will they come? School availability and school enrollment in 21 poor countries (Policy Research Working Paper No. 3340). World Bank.',
+    url: 'https://doi.org/10.1596/1813-9450-3340',
+  },
+  {
     id: 'harahap2020',
     sitasi: '(Harahap et al., 2020)',
     referensi:
@@ -61,6 +68,13 @@ export const REFERENSI = [
     referensi:
       'Hudang, A. K., Haryanto, T., & Handoyo, R. D. (2024). Does conditional cash transfer deliver? The Indonesian evidence on PKH. Business: Theory and Practice, 25(2), 447–457.',
     url: 'https://doi.org/10.3846/btp.2024.13865',
+  },
+  {
+    id: 'jung2014',
+    sitasi: '(Jung & Hasan, 2014)',
+    referensi:
+      'Jung, H., & Hasan, A. (2014). The impact of early childhood education on early achievement gaps: Evidence from the Indonesia Early Childhood Education and Development (ECED) project (Policy Research Working Paper No. 6794). World Bank.',
+    url: 'https://doi.org/10.1596/1813-9450-6794',
   },
   {
     id: 'islam2018',
@@ -133,6 +147,13 @@ export const REFERENSI = [
     url: 'https://doi.org/10.21107/mediatrend.v16i2.10083',
   },
   {
+    id: 'sirait2019',
+    sitasi: '(Sirait, 2019)',
+    referensi:
+      'Sirait, R. A. (2019). Pengaruh jarak ke sekolah terhadap angka partisipasi dan putus sekolah SMP di Indonesia. Jurnal Budget: Isu dan Masalah Keuangan Negara, 4(1), 24–42.',
+    url: 'https://doi.org/10.22212/jbudget.v4i1.24',
+  },
+  {
     id: 'sugiharti2017',
     sitasi: '(Sugiharti, 2017)',
     referensi:
@@ -145,6 +166,13 @@ export const REFERENSI = [
     referensi:
       'Sulistyaningrum, E. (2016). Impact evaluation of the School Operational Assistance program (BOS) using the matching method. Journal of Indonesian Economy and Business, 31(1).',
     url: 'https://doi.org/10.22146/jieb.10319',
+  },
+  {
+    id: 'surbakti2020',
+    sitasi: '(Surbakti et al., 2020)',
+    referensi:
+      "Surbakti, S., Cooper, R. A., Afkar, R., & Yarrow, N. (2020). Inclusion in Indonesia's education sector: A subnational review of gender gaps and children with disabilities (Policy Research Working Paper No. 9282). World Bank.",
+    url: 'https://doi.org/10.1596/1813-9450-9282',
   },
   {
     id: 'utomo2014',
@@ -219,8 +247,8 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Partisipasi sekolah menengah dipengaruhi kemiskinan, pendidikan orang tua, dan lokasi desa.',
         solusi:
-          'Gabungkan bantuan biaya dengan perbaikan akses sekolah menengah di desa agar transisi SD→SMP tidak terputus.',
-        sumber: ['sugiharti2017', 'siddique2021'],
+          'Gabungkan bantuan biaya dengan perbaikan akses sekolah menengah di desa agar transisi SD→SMP tidak terputus. Jarak ke sekolah menurunkan partisipasi SMP, tetapi dalam studi di 21 negara miskin pengaruhnya kecil bila tidak disertai upaya menaikkan permintaan, seperti bantuan biaya.',
+        sumber: ['sugiharti2017', 'sirait2019', 'filmer2004'],
       },
     ],
     SMA: [
@@ -301,8 +329,8 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Laki-laki lebih banyak tidak sekolah: SMP 7,97% vs 5,86%; SMA 23,78% vs 19,34%.',
         solusi:
-          'Terapkan dukungan tertarget untuk anak laki-laki. Studi di Sri Lanka menunjukkan biaya kesempatan bersekolah lebih berat bagi laki-laki, dan di Indonesia anak laki-laki menghadapi tarik-menarik antara sekolah dan bekerja.',
-        sumber: ['himaz2021', 'sugiharti2017'],
+          'Arahkan dukungan pada kelompok gender yang lebih tertinggal di tiap daerah, termasuk anak laki-laki. Secara nasional tidak ada kesenjangan yang menguntungkan laki-laki, tetapi di tingkat kabupaten/kota ada daerah yang merugikan perempuan dan ada yang merugikan laki-laki. Biaya kesempatan bersekolah juga lebih berat bagi laki-laki, dan anak laki-laki menghadapi tarik-menarik antara sekolah dan bekerja.',
+        sumber: ['surbakti2020', 'himaz2021', 'sugiharti2017'],
       },
       {
         temuan: 'Buku teks sekolah menengah di kawasan ini masih memuat stereotip gender.',

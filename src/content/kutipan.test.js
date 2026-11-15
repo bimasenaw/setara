@@ -64,6 +64,10 @@ describe('Data kutipan', () => {
 
 // Berkas asli ada di folder rujukan/ (tidak ikut di-commit). Tanpa folder itu, tes ini dilewati.
 const BERKAS = {
+  filmer2004: 'Filmer, D.',
+  jung2014: 'Jung, H.',
+  sirait2019: 'Sirait, R. A.',
+  surbakti2020: 'Surbakti, S.',
   asadullah2018: 'Madrasah for girls',
   brinkman2017: 'brinkman_et_al',
   cahyadi2020: 'cahyadi-et-al',

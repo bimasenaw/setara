@@ -13,8 +13,89 @@ const CC_BY_4 = { nama: 'CC BY 4.0', url: 'https://creativecommons.org/licenses/
 const CC_BY_SA_4 = { nama: 'CC BY-SA 4.0', url: 'https://creativecommons.org/licenses/by-sa/4.0/' }
 const CC_BY_3 = { nama: 'CC BY 3.0', url: 'https://creativecommons.org/licenses/by/3.0/' }
 const CC_BY_NC_2 = { nama: 'CC BY-NC 2.0', url: 'https://creativecommons.org/licenses/by-nc/2.0/' }
+const CC_BY_NC_SA_4 = { nama: 'CC BY-NC-SA 4.0', url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/' }
 
 export const SUMBER = {
+  filmer2004: {
+    jenis: 'Survei lintas negara',
+    lisensi: null,
+    pdf: null,
+    baca: {
+      label: 'Bank Dunia (Working Paper 3340)',
+      url: 'http://documents.worldbank.org/curated/en/208311468779412280/pdf/wps3340.pdf#page=2',
+    },
+    kutipan: {
+      utama: {
+        halaman: 'ii (abstrak)',
+        halamanPdf: 2,
+        teks: 'Although increasing school availability by decreasing the average distance to schools can be a tool for increasing enrollments, it cannot be expected to have a substantial effect. Other interventions, such as those geared toward increasing the demand for schooling or increasing the quality of schooling should be prioritized.',
+        sorot: ['it cannot be expected to have a substantial effect', 'increasing the demand for schooling'],
+        mendukung:
+          'Studi di 21 daerah perdesaan di negara miskin (bukan khusus Indonesia): jarak ke sekolah berkaitan dengan partisipasi, tetapi pengaruhnya kecil. Pembangunan sekolah perlu disertai upaya menaikkan permintaan, misalnya bantuan biaya.',
+      },
+    },
+  },
+  jung2014: {
+    jenis: 'Kuasi-eksperimen',
+    lisensi: null,
+    pdf: null,
+    baca: {
+      label: 'Bank Dunia (Working Paper 6794)',
+      url: 'http://documents.worldbank.org/curated/en/317381468038953682/pdf/WPS6794.pdf#page=2',
+    },
+    kutipan: {
+      utama: {
+        halaman: 'abstrak',
+        halamanPdf: 2,
+        // Urutan teks PDF menyisipkan catatan kaki di tengah kalimat, jadi dicocokkan per potongan.
+        cek: [
+          'There is clear evidence that in project villages, the achievement gap',
+          'between richer and poorer children decreased on many dimensions. By contrast, in non-project villages, this gap either increased or stayed constant.',
+        ],
+        teks: 'There is clear evidence that in project villages, the achievement gap between richer and poorer children decreased on many dimensions. By contrast, in non-project villages, this gap either increased or stayed constant.',
+        sorot: ['the achievement gap between richer and poorer children decreased on many dimensions'],
+        mendukung:
+          'Proyek PAUD berbasis desa (310 desa, sekitar 3.000 anak) mempersempit kesenjangan capaian antara anak kaya dan miskin. Di desa tanpa proyek, kesenjangan itu tetap atau melebar.',
+      },
+    },
+  },
+  sirait2019: {
+    jenis: 'Data panel',
+    lisensi: CC_BY_NC_SA_4,
+    pdf: '/rujukan/sirait2019.pdf',
+    baca: { label: 'Jurnal Budget', url: 'https://doi.org/10.22212/jbudget.v4i1.24' },
+    kutipan: {
+      utama: {
+        halaman: '37',
+        halamanPdf: 14,
+        teks: 'jarak ke sekolah berpengaruh negatif dan signifikan secara statistik terhadap Angka Partisipasi Murni (APM). Artinya, jarak dari tempat tinggal ke sekolah yang semakin jauh akan mendorong penurunan angka partisipasi sekolah.',
+        sorot: [
+          'jarak ke sekolah berpengaruh negatif dan signifikan secara statistik terhadap Angka Partisipasi Murni',
+        ],
+        mendukung:
+          'Data 33 provinsi (2010–2017): makin jauh jarak ke sekolah, makin rendah partisipasi SMP. Pengaruhnya pada angka putus sekolah searah, tetapi tidak signifikan.',
+      },
+    },
+  },
+  surbakti2020: {
+    jenis: 'Tinjauan subnasional',
+    lisensi: null,
+    pdf: null,
+    baca: {
+      label: 'Bank Dunia (Policy Research Working Paper 9282)',
+      url: 'http://documents.worldbank.org/curated/en/603641592335430591/pdf/Inclusion-in-Indonesias-Education-Sector-A-Subnational-Review-of-Gender-Gaps-and-Children-with-Disabilities.pdf#page=10',
+    },
+    kutipan: {
+      utama: {
+        halaman: '8',
+        halamanPdf: 10,
+        teks: 'At the national level, the GPI in school participation conveys that there is no gender disparity in favor of males, but sub-nationally there is considerable variation in gender disparity, with girls at a disadvantage in many districts and boys at a disadvantage in others. This condition holds across all education levels.',
+        sorot: ['girls at a disadvantage in many districts and boys at a disadvantage in others'],
+        mendukung:
+          'Secara nasional tidak ada kesenjangan gender yang merugikan perempuan. Di tingkat kabupaten/kota, sebagian daerah merugikan perempuan dan sebagian lain merugikan laki-laki.',
+      },
+    },
+  },
   asadullah2018: {
     jenis: 'Survei dan regresi',
     lisensi: null,

@@ -22,9 +22,9 @@ export function rekomendasiProvinsi(rows, kode) {
         prioritas: 'Tinggi',
         judul: 'Perluas layanan PAUD 3-6 tahun',
         solusi:
-          'Perluas akses PAUD di daerah dengan partisipasi rendah. Perluasan kelompok bermain di perdesaan menaikkan partisipasi PAUD, dengan manfaat perkembangan terbesar bagi anak dari keluarga kurang mampu. Pengalaman PAUD jarak jauh di Jayapura dapat menjadi bahan rancangan layanan untuk wilayah yang sulit dijangkau.',
+          'Perluas akses PAUD di daerah dengan partisipasi rendah. Perluasan kelompok bermain di perdesaan menaikkan partisipasi PAUD, dengan manfaat perkembangan terbesar bagi anak dari keluarga kurang mampu, dan proyek PAUD berbasis desa mempersempit kesenjangan capaian anak kaya dan miskin. Pengalaman PAUD jarak jauh di Jayapura dapat menjadi bahan rancangan layanan untuk wilayah yang sulit dijangkau.',
         dasar: `APK PAUD ${formatAngka(paud.nilai, 2)}%, ${formatPoin(Math.abs(gap), 2)} di bawah nasional (${formatAngka(paudNasional.nilai, 2)}%).`,
-        sumber: ['brinkman2017', 'pratiwi2021'],
+        sumber: ['jung2014', 'brinkman2017', 'pratiwi2021'],
       })
     }
   }
@@ -74,7 +74,7 @@ export function rekomendasiProvinsi(rows, kode) {
       prioritas: 'Menengah',
       judul: 'Perkuat literasi dan pendidikan kesetaraan',
       solusi:
-        'Perluas program kejar paket dan literasi dewasa, dengan pendampingan agar peserta bertahan. Remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar, dan tambahan tahun sekolah masih memberi imbal hasil upah yang positif.',
+        'Pertahankan jalur pendidikan kesetaraan (Paket A, B, C) sebagai kesempatan kedua bagi remaja yang putus sekolah, dan pantau hasilnya karena bukti dampaknya masih terbatas pada evaluasi deskriptif. Remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar, dan tambahan tahun sekolah masih memberi imbal hasil upah yang positif.',
       dasar: `Rata-rata lama sekolah ${formatAngka(lama.nilai, 2)} tahun, di bawah nasional (${formatAngka(lamaNasional.nilai, 2)} tahun).`,
       sumber: ['utomo2014', 'purnastuti2015'],
     })

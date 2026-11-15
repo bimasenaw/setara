@@ -24,10 +24,10 @@ export const REKOMENDASI_UTAMA = [
   {
     id: 'wilayah',
     sasaran: 'Anak di perdesaan',
-    judul: 'Dekatkan sekolah menengah ke perdesaan',
+    judul: 'Dekatkan sekolah menengah ke perdesaan, disertai bantuan biaya',
     intervensi:
-      'Perluas ketersediaan sekolah menengah di perdesaan agar jarak dan ongkos perjalanan tidak lagi menjadi penghalang untuk melanjutkan sekolah.',
-    sumber: ['petrosino2012', 'sugiharti2017'],
+      'Perluas ketersediaan sekolah menengah di perdesaan, dan tutup juga biayanya. Jarak ke sekolah menurunkan partisipasi SMP di Indonesia, tetapi dalam studi di 21 negara miskin pengaruhnya kecil bila tidak disertai bantuan biaya.',
+    sumber: ['sirait2019', 'filmer2004', 'petrosino2012', 'sugiharti2017'],
     data: { to: '/kesenjangan', tab: 'wilayah', jenjang: 'SMA' },
   },
   {
@@ -35,8 +35,8 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Daerah tertinggal',
     judul: 'Perluas PAUD di daerah dengan partisipasi terendah',
     intervensi:
-      'Perluas layanan PAUD di daerah tertinggal, mulai dari kelompok bermain berbasis desa, agar anak tidak memulai SD dengan bekal yang lebih sedikit. Pengalaman PAUD jarak jauh di Jayapura dapat menjadi bahan rancangan layanan untuk wilayah yang sulit dijangkau.',
-    sumber: ['brinkman2017', 'pratiwi2021'],
+      'Perluas layanan PAUD di daerah tertinggal, mulai dari kelompok bermain berbasis desa, agar anak tidak memulai SD dengan bekal yang lebih sedikit. Proyek PAUD berbasis desa mempersempit kesenjangan capaian anak kaya dan miskin. Pengalaman PAUD jarak jauh di Jayapura dapat menjadi bahan rancangan layanan untuk wilayah yang sulit dijangkau.',
+    sumber: ['jung2014', 'brinkman2017', 'pratiwi2021'],
     data: { to: '/provinsi' },
   },
   {
@@ -44,8 +44,8 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Kelompok gender yang tertinggal',
     judul: 'Beri dukungan tertarget berdasarkan data gender, bukan stereotip',
     intervensi:
-      'Arahkan dukungan pada kelompok gender yang lebih banyak tidak sekolah di jenjang menengah, dan perhatikan bahwa pilihan jenis sekolah juga berbeda menurut gender.',
-    sumber: ['himaz2021', 'asadullah2018'],
+      'Arahkan dukungan pada kelompok gender yang lebih banyak tidak sekolah di daerahnya, karena arah kesenjangan gender berbeda antardaerah, dan perhatikan bahwa pilihan jenis sekolah juga berbeda menurut gender.',
+    sumber: ['surbakti2020', 'himaz2021', 'asadullah2018'],
     data: { to: '/kesenjangan', tab: 'gender', jenjang: 'SMA' },
   },
 ]
