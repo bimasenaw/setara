@@ -505,3 +505,23 @@ Status: selesai (15 November 2026). Angka, data, dan logika di `src/lib` tidak b
 
 **Belum dikerjakan**
 - Foto khas tiap provinsi. Profil selain Papua masih memakai foto umum. Rencananya diambil dari Wikimedia Commons dengan atribusi, dan memerlukan pengecekan lisensi per foto.
+
+## 20. Hasil QA Fase 6
+
+Status: selesai (15 November 2026), kecuali merge ke `main` dan deploy.
+
+| Pemeriksaan | Hasil |
+|---|---|
+| `public/data` dan `scripts` dibanding `versi-esai` | Identik |
+| `src/lib` dibanding `versi-esai` | Hanya teks klaim, daftar sumber, dan satu jalur foto. Tidak ada logika atau angka |
+| Angka di 94 halaman (semua filter jenjang, tahun, dimensi, dan 38 provinsi) | 2.987 angka desimal di versi baru, semuanya ada di versi esai. Empat yang tidak ditemukan adalah label sumbu grafik ("1,25%") |
+| Tata letak di 360, 390, dan 1280 px dengan ukuran huruf 14, 16, 20, dan 22 px | Tanpa gulir horizontal halaman |
+| axe-core (WCAG 2.0/2.1 A dan AA, praktik terbaik) di 390 dan 1280 px, 7 halaman | 0 pelanggaran |
+| Keyboard: indikator fokus di semua tab stop, panel rujukan, menu aksi | Semua punya indikator fokus. Esc mengembalikan fokus |
+| Kurangi gerakan | Kartu panduan tanpa transformasi, tur dan transisi halaman berjalan |
+| `npm audit` (dependensi produksi) | 0 celah |
+
+Perbaikan yang ditemukan QA:
+- Tabel yang bisa digeser tidak bisa difokus dengan keyboard: kini diberi `tabIndex`, `role="region"`, dan nama.
+- Halaman Provinsi melebar sedikit di 360 px dengan huruf besar: pencarian, pilihan provinsi, dan batang indeks kini membungkus.
+- Menu "Bagikan dan unduh" tidak memindahkan fokus ke item pertama di browser sungguhan (menu masih `visibility: hidden` pada frame pertama). Fokus kini dipindah setelah bingkai pertama.

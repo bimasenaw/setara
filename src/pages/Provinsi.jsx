@@ -178,14 +178,14 @@ export default function Provinsi() {
           >
             Urut {sort.dir === 'asc' ? 'naik' : 'turun'}
           </button>
-          <label className="flex items-center gap-2 text-sm text-tinta">
+          <label className="flex w-full flex-wrap items-center gap-2 text-sm text-tinta sm:w-auto">
             <span className="text-tinta-redup">Cari provinsi</span>
             <input
               type="search"
               value={cari}
               onChange={(e) => setCari(e.target.value)}
               placeholder="mis. Papua"
-              className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-base text-tinta focus:outline-none focus:ring-2 focus:ring-biru"
+              className="min-h-11 min-w-0 flex-1 rounded-lg border border-garis bg-putih px-3 text-base text-tinta focus:outline-none focus:ring-2 focus:ring-biru sm:flex-none"
             />
           </label>
         </div>
@@ -239,7 +239,7 @@ export default function Provinsi() {
 
         <div className="mt-6 rounded-lg border border-garis bg-putih p-5">
           <h3 className="text-base font-semibold text-tinta">Selisih dari nilai nasional</h3>
-          <div className="mt-3 overflow-x-auto">
+          <div className="mt-3 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta" tabIndex={0} role="region" aria-label="Tabel selisih dari nasional">
             <table className="w-full min-w-[520px] border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-garis text-tinta-redup">

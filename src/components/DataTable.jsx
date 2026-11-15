@@ -13,7 +13,7 @@ export default function DataTable({ judul = 'Lihat data (tabel)', kolom, baris, 
   return (
     <details className="mt-3 rounded-lg border border-garis bg-kertas p-3 text-sm">
       <summary className="cursor-pointer font-semibold text-tinta">{judul}</summary>
-      <div className="mt-2 overflow-x-auto">
+      <div className="mt-2 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta" tabIndex={0} role="region" aria-label="Tabel data">
         <table className="w-full min-w-[460px] border-collapse text-left text-sm">
           <thead>
             <tr className="border-b border-garis text-tinta-redup">

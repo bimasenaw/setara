@@ -37,12 +37,12 @@ export default function BandingProvinsi({ rows, provinsiList, defaultA, defaultB
     <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
       <h2 className="text-base font-semibold text-tinta">Bandingkan dua provinsi</h2>
       <div className="mt-3 flex flex-wrap gap-3">
-        <label className="flex items-center gap-2 text-sm text-tinta">
+        <label className="flex w-full min-w-0 items-center gap-2 text-sm text-tinta sm:w-auto">
           <span className="text-tinta-redup">Provinsi A</span>
           <select
             value={a}
             onChange={(e) => setA(e.target.value)}
-            className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-base text-tinta focus:outline-none focus:ring-2 focus:ring-biru"
+            className="min-h-11 min-w-0 flex-1 rounded-lg border border-garis bg-putih px-3 text-base text-tinta focus:outline-none focus:ring-2 focus:ring-biru sm:flex-none"
           >
             {provinsiList.map((p) => (
               <option key={p.kode} value={p.kode}>
@@ -51,12 +51,12 @@ export default function BandingProvinsi({ rows, provinsiList, defaultA, defaultB
             ))}
           </select>
         </label>
-        <label className="flex items-center gap-2 text-sm text-tinta">
+        <label className="flex w-full min-w-0 items-center gap-2 text-sm text-tinta sm:w-auto">
           <span className="text-tinta-redup">Provinsi B</span>
           <select
             value={b}
             onChange={(e) => setB(e.target.value)}
-            className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-base text-tinta focus:outline-none focus:ring-2 focus:ring-biru"
+            className="min-h-11 min-w-0 flex-1 rounded-lg border border-garis bg-putih px-3 text-base text-tinta focus:outline-none focus:ring-2 focus:ring-biru sm:flex-none"
           >
             {provinsiList.map((p) => (
               <option key={p.kode} value={p.kode}>
@@ -66,7 +66,7 @@ export default function BandingProvinsi({ rows, provinsiList, defaultA, defaultB
           </select>
         </label>
       </div>
-      <div className="mt-4 overflow-x-auto">
+      <div className="mt-4 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta" tabIndex={0} role="region" aria-label="Tabel perbandingan provinsi">
         <table className="w-full min-w-[560px] border-collapse text-left text-sm">
           <thead>
             <tr className="border-b border-garis text-tinta-redup">

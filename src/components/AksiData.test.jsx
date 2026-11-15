@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import AksiData from './AksiData'
 
 function setup() {
@@ -7,11 +7,7 @@ function setup() {
   const unduh = vi.fn()
   render(
     <AksiData
-      aksi={[
-        { label: 'Salin temuan', jalankan: salin },
-        { label: 'Unduh CSV', jalankan: unduh },
-        null,
-      ]}
+      aksi={[{ label: 'Salin temuan', jalankan: salin }, { label: 'Unduh CSV', jalankan: unduh }, null]}
     />,
   )
   const tombol = screen.getByRole('button', { name: 'Bagikan dan unduh' })
@@ -19,18 +15,20 @@ function setup() {
 }
 
 describe('AksiData', () => {
-  it('membuka menu dan memfokuskan item pertama', () => {
+  it('membuka menu dan memfokuskan item pertama', async () => {
     const { tombol } = setup()
     expect(tombol).toHaveAttribute('aria-expanded', 'false')
     fireEvent.click(tombol)
     expect(tombol).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByRole('menuitem', { name: 'Salin temuan' })).toHaveFocus()
+    // Fokus pindah setelah bingkai pertama, saat menu sudah terlihat.
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Salin temuan' })).toHaveFocus())
   })
 
-  it('panah berpindah item dan Esc menutup serta mengembalikan fokus', () => {
+  it('panah berpindah item dan Esc menutup serta mengembalikan fokus', async () => {
     const { tombol } = setup()
     fireEvent.click(tombol)
     const menu = screen.getByRole('menu')
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Salin temuan' })).toHaveFocus())
     fireEvent.keyDown(menu, { key: 'ArrowDown' })
     expect(screen.getByRole('menuitem', { name: 'Unduh CSV' })).toHaveFocus()
     fireEvent.keyDown(menu, { key: 'ArrowDown' })

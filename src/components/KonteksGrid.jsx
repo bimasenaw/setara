@@ -6,7 +6,7 @@ export default function KonteksGrid({ items, judul = 'Konteks yang perlu diperik
   return (
     <section className="mt-12 rounded-lg border border-garis bg-putih p-5">
       <h2 className="subjudul text-tinta">{judul}</h2>
-      <div className="mt-4 overflow-x-auto">
+      <div className="mt-4 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta" tabIndex={0} role="region" aria-label="Tabel konteks provinsi">
         <table className="w-full min-w-[520px] border-collapse text-left text-sm">
           <thead>
             <tr className="border-b border-garis text-tinta-redup">

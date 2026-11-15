@@ -202,7 +202,7 @@ export default function Metode() {
           </Bagian>
 
           <Bagian id="indikator" judul="Indikator yang dipakai">
-            <div className="mt-3 overflow-x-auto rounded-lg border border-garis bg-putih p-4">
+            <div className="mt-3 overflow-x-auto rounded-lg border border-garis bg-putih p-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta" tabIndex={0} role="region" aria-label="Tabel indikator">
               <table className="w-full min-w-[620px] border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-garis text-tinta-redup">

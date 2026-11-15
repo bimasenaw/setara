@@ -24,17 +24,20 @@ export default function GrafikPrioritas({ daftar, tahun, komponen = [] }) {
         {tampil.map((p) => {
           const teratas = p.peringkat <= LIMA_TERATAS
           return (
-            <li key={p.kode} className="flex items-center gap-3 py-2">
+            <li key={p.kode} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2">
               <span className="w-6 shrink-0 text-right text-sm tabular-nums text-tinta-redup">
                 {p.peringkat}
               </span>
               <Link
                 to={tautanProvinsi(p.kode, tahun)}
-                className="min-h-11 w-[8.25rem] shrink-0 content-center text-[0.9375rem] leading-tight text-tinta underline decoration-garis underline-offset-2 hover:decoration-tinta md:w-48"
+                className="min-h-11 min-w-0 flex-1 content-center text-[0.9375rem] leading-tight text-tinta underline decoration-garis underline-offset-2 hover:decoration-tinta sm:w-48 sm:flex-none"
               >
                 {p.provinsi}
               </Link>
-              <span aria-hidden="true" className="h-3 min-w-0 flex-1 rounded-full bg-kertas">
+              <span
+                aria-hidden="true"
+                className="order-last h-3 w-full rounded-full bg-kertas sm:order-none sm:w-auto sm:min-w-0 sm:flex-1"
+              >
                 <span
                   className={`block h-3 rounded-full ${teratas ? 'bg-merah' : 'bg-biru'}`}
                   style={{ width: `${Math.max(2, Math.min(100, p.skor))}%` }}

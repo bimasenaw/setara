@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { bingkai } from './gerak'
 
 // Satu tombol "Bagikan dan unduh" yang membuka menu aksi.
 // Menu muncul dari tombolnya dan menutup lewat jalur yang sama (opacity + scale, 150 ms).
@@ -17,14 +18,18 @@ export default function AksiData({ aksi, label = 'Bagikan dan unduh', className 
 
   useEffect(() => {
     if (!buka) return
-    itemRefs.current[0]?.focus()
+    // Menu baru terlihat setelah bingkai pertama transisi (visibility), jadi fokus dipindah sesudahnya.
+    const batalFokus = bingkai(() => itemRefs.current[0]?.focus())
     const tutupLuar = (e) => {
       if (!menuRef.current?.contains(e.target) && !tombolRef.current?.contains(e.target)) {
         setBuka(false)
       }
     }
     document.addEventListener('pointerdown', tutupLuar)
-    return () => document.removeEventListener('pointerdown', tutupLuar)
+    return () => {
+      batalFokus()
+      document.removeEventListener('pointerdown', tutupLuar)
+    }
   }, [buka])
 
   useEffect(() => {
@@ -107,7 +112,14 @@ export default function AksiData({ aksi, label = 'Bagikan dan unduh', className 
           viewBox="0 0 16 16"
           className={`h-4 w-4 transition-transform duration-150 ease-out ${buka ? 'rotate-180' : ''}`}
         >
-          <path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M3.5 6 8 10.5 12.5 6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </button>
 
