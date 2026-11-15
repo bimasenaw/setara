@@ -9,7 +9,8 @@ import { fotoJenjang } from '../lib/foto'
 import { sdgUntuk } from '../lib/sdg'
 import { buatSitasi, copyText, downloadCsv, shareTeks } from '../lib/ekspor'
 import { formatAngka, formatJumlahOrang, formatPoin } from '../lib/format'
-import { SOLUSI_MATRIX, JENJANG_KATEGORI, refs } from '../lib/solusi'
+import { SOLUSI_MATRIX, JENJANG_KATEGORI } from '../lib/solusi'
+import { DaftarRujukan } from '../components/TombolRujukan'
 import TabBar from '../components/TabBar'
 import TahunSelect from '../components/TahunSelect'
 import SegmentedControl from '../components/SegmentedControl'
@@ -527,23 +528,11 @@ export default function Kesenjangan() {
                 <p className="mt-1 text-sm leading-relaxed text-tinta">
                   <span className="font-semibold">Solusi:</span> {s.solusi}
                 </p>
-                <div className="mt-1.5 text-xs leading-relaxed text-tinta-redup">
-                  <span className="font-semibold">Sumber:</span>
-                  <ul className="mt-0.5 space-y-0.5">
-                    {refs(s.sumber).map((r) => (
-                      <li key={r.id}>
-                        <a
-                          href={r.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="underline decoration-garis underline-offset-2 hover:text-tinta"
-                        >
-                          {r.referensi}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <DaftarRujukan
+                  sumber={s.sumber}
+                  tempat={`kesenjangan.${dim}.${kategori}.${i + 1}`}
+                  className="mt-1.5"
+                />
               </li>
             ))}
           </ol>

@@ -1,6 +1,6 @@
 # PRD: Rujukan Interaktif SETARA
 
-Status: draf, menunggu persetujuan
+Status: selesai (Fase R, 15 November 2026)
 Cabang: `v2-tampilan`
 Terkait:
 - `Verifikasi Rujukan SETARA.md` (hasil pemeriksaan klaim)

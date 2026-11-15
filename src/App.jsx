@@ -14,9 +14,12 @@ const MUAT_HALAMAN = [
   () => import('./pages/ProvinsiDetail'),
   () => import('./pages/Rekomendasi'),
   () => import('./pages/Metode'),
+  () => import('./pages/BacaRujukan'),
 ]
 
-const [Ringkasan, Kesenjangan, Provinsi, ProvinsiDetail, Rekomendasi, Metode] = MUAT_HALAMAN.map((f) => lazy(f))
+const [Ringkasan, Kesenjangan, Provinsi, ProvinsiDetail, Rekomendasi, Metode, BacaRujukan] = MUAT_HALAMAN.map((f) =>
+  lazy(f),
+)
 
 function Fallback() {
   return (
@@ -75,6 +78,7 @@ export default function App() {
           <Route path="/provinsi/:kode" element={<ProvinsiDetail />} />
           <Route path="/rekomendasi" element={<Rekomendasi />} />
           <Route path="/metode" element={<Metode />} />
+          <Route path="/rujukan/:id" element={<BacaRujukan />} />
           <Route path="*" element={<Ringkasan />} />
         </Routes>
         <PenandaHalaman />

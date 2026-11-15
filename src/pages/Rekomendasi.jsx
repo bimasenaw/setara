@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { refs } from '../lib/solusi'
+import { DaftarRujukan } from '../components/TombolRujukan'
 import { REKOMENDASI_UTAMA, tautanDataRekomendasi } from '../content/rekomendasi'
 import KepalaHalaman from '../components/KepalaHalaman'
 import useDocumentMeta from '../lib/useDocumentMeta'
@@ -28,20 +28,7 @@ export default function Rekomendasi() {
             </p>
             <h2 className="judul-bagian mt-1 max-w-[48ch] text-tinta">{r.judul}</h2>
             <p className="mt-2 max-w-[68ch] text-base leading-relaxed text-tinta">{r.intervensi}</p>
-            <ul className="mt-3 space-y-1">
-              {refs(r.sumber).map((ref) => (
-                <li key={ref.id} className="teks-bantu">
-                  <a
-                    href={ref.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline decoration-garis underline-offset-2 hover:text-tinta"
-                  >
-                    {ref.sitasi}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <DaftarRujukan sumber={r.sumber} tempat={`rekomendasi.${r.id}`} label="Bukti:" className="mt-3" />
             <Link
               to={tautanDataRekomendasi(r.data)}
               className="tekan mt-3 inline-flex min-h-11 items-center text-base text-tinta underline decoration-garis underline-offset-4 hover:decoration-tinta"

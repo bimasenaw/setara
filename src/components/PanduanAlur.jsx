@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ALUR, MOTTO } from '../content/alur'
+import { FOKUSABEL, bingkai, karet, kurvaLanjutan, proyeksi, ySekarang } from './gerak'
 
 // Motto KUAT: empat huruf, empat langkah, urutannya sama dengan penanda alur.
 // Di mode tur, huruf langkah yang sedang dibuka menyala dan yang lain meredup.
@@ -36,49 +37,6 @@ function MottoKuat({ aktif, tur }) {
 
 // Kartu panduan alur: tumbuh dari penanda alur, menjelaskan arti angka 1–4.
 // Di HP, kartu bisa diusap ke bawah untuk ditutup (mengikuti jari, meneruskan kecepatan).
-
-// Hambatan lembut saat ditarik melewati batas: makin jauh, makin berat.
-function karet(lebih, dimensi, c = 0.55) {
-  return (lebih * dimensi * c) / (dimensi + c * Math.abs(lebih))
-}
-
-// Proyeksi titik berhenti dari kecepatan lepas (px/s), seperti perlambatan gulir.
-function proyeksi(v, d = 0.99) {
-  return ((v / 1000) * d) / (1 - d)
-}
-
-// Kurva yang kemiringan awalnya sama dengan kecepatan jari, agar tidak ada sambungan
-// yang terasa antara menyeret dan animasi.
-function kurvaLanjutan(v, jarak, durasi) {
-  const kemiringan = jarak > 0 ? (Math.max(0, v) * durasi) / jarak : 0
-  const x1 = 0.25
-  const y1 = Math.min(1, x1 * kemiringan)
-  return `cubic-bezier(${x1}, ${y1.toFixed(3)}, 0.4, 1)`
-}
-
-function ySekarang(el) {
-  try {
-    const t = getComputedStyle(el).transform
-    return t && t !== 'none' ? new DOMMatrixReadOnly(t).m42 : 0
-  } catch {
-    return 0
-  }
-}
-
-// Menjalankan fn dua bingkai lagi. Pembatalan berlaku untuk kedua bingkai, supaya kartu yang
-// ditutup tepat saat mulai membuka tidak kembali ke fase "buka".
-function bingkai(fn) {
-  if (typeof requestAnimationFrame === 'function') {
-    let id = requestAnimationFrame(() => {
-      id = requestAnimationFrame(fn)
-    })
-    return () => cancelAnimationFrame(id)
-  }
-  const id = setTimeout(fn, 16)
-  return () => clearTimeout(id)
-}
-
-const FOKUSABEL = 'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
 
 export default function PanduanAlur({
   id,

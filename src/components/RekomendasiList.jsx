@@ -1,4 +1,4 @@
-import { refs } from '../lib/solusi'
+import { DaftarRujukan } from './TombolRujukan'
 import Accordion from './Accordion'
 
 export default function RekomendasiList({ items, judul = 'Rekomendasi kontekstual' }) {
@@ -19,20 +19,7 @@ export default function RekomendasiList({ items, judul = 'Rekomendasi kontekstua
             </div>
             <p className="mt-1.5 text-sm leading-relaxed text-tinta">{item.solusi}</p>
             <p className="mt-1.5 text-sm leading-relaxed text-tinta-redup">{item.dasar}</p>
-            <ul className="mt-1.5 space-y-0.5 text-xs leading-relaxed text-tinta-redup">
-              {refs(item.sumber).map((r) => (
-                <li key={r.id}>
-                  <a
-                    href={r.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline decoration-garis underline-offset-2 hover:text-tinta"
-                  >
-                    {r.referensi}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <DaftarRujukan sumber={item.sumber} tempat={`profil.${item.judul}`} className="mt-1.5" />
           </li>
         ))}
       </ol>

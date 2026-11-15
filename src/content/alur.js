@@ -70,10 +70,10 @@ export function langkahAlur(id) {
 }
 
 // Langkah aktif dibaca dari URL, sehingga selalu sama dengan menu navbar yang dibuka.
-// Metode adalah halaman rujukan, bukan bagian cerita: tidak punya langkah.
+// Metode dan penampil rujukan bukan bagian cerita: tidak punya langkah.
 export function alurDariPath(pathname = '/') {
   const akar = pathname.split('/').filter(Boolean)[0] || ''
-  if (akar === 'metode') return null
+  if (akar === 'metode' || akar === 'rujukan') return null
   return langkahAlur(akar) || ALUR[0]
 }
 
