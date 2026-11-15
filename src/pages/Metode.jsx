@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { downloadCsv } from '../lib/ekspor'
 import { REFERENSI } from '../lib/solusi'
-import Accordion from '../components/Accordion'
+import { SUMBER, bisaDitampilkan } from '../content/kutipan'
 import KepalaHalaman from '../components/KepalaHalaman'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
@@ -26,7 +26,7 @@ const RUMUS = [
   },
   {
     judul: 'Estimasi jumlah anak',
-    teks: 'Persentase selisih dikalikan populasi usia sekolah. Untuk kelompok pengeluaran, dipakai asumsi 20% anak per kelompok pengeluaran. Populasi provinsi memakai distribusi umur SP2020 yang diskalakan ke total penduduk 2025. Angka ini indikatif, bukan sensus.',
+    teks: 'Persentase selisih dikalikan populasi usia sekolah. Untuk kelompok pengeluaran, dipakai asumsi 20% anak per kelompok pengeluaran. Populasi provinsi memakai distribusi umur SP2020 yang diskalakan ke total penduduk 2025. Angka ini indikatif, bukan sensus. Asumsi 20% anak per kelompok bersifat sederhana: bila keluarga berpengeluaran rendah memiliki lebih banyak anak, estimasi untuk kelompok termiskin cenderung lebih rendah dari keadaan sebenarnya.',
   },
   {
     judul: 'Kuadran prioritas',
@@ -34,18 +34,65 @@ const RUMUS = [
   },
 ]
 
+const ISI = [
+  { id: 'sumber', label: 'Sumber dan pembaruan' },
+  { id: 'indikator', label: 'Indikator' },
+  { id: 'istilah', label: 'Istilah' },
+  { id: 'rumus', label: 'Rumus dan asumsi' },
+  { id: 'keterbatasan', label: 'Keterbatasan' },
+  { id: 'pustaka', label: 'Daftar pustaka' },
+  { id: 'sitasi', label: 'Sitasi' },
+]
+
+const ISTILAH = [
+  ['Anak tidak sekolah', 'Anak usia sekolah yang tidak sedang mengikuti pendidikan formal atau nonformal.'],
+  ['Poin', 'Satuan untuk selisih antara dua persentase. Selisih 10 poin berbeda dengan 10%.'],
+  [
+    'Kelompok termiskin dan terkaya',
+    'Penduduk dibagi menjadi lima kelompok berdasarkan pengeluaran. Kelompok termiskin adalah 20% dengan pengeluaran terendah.',
+  ],
+  [
+    'APK dan APS',
+    'APK adalah angka partisipasi kasar. APS adalah angka partisipasi sekolah. Keduanya mengukur partisipasi, bukan angka anak tidak sekolah.',
+  ],
+  ['PAUD', 'Pendidikan anak usia dini untuk anak usia 3-6 tahun.'],
+  [
+    'IPM',
+    'Indeks Pembangunan Manusia, ringkasan kesehatan, pendidikan, dan pendapatan. Semakin tinggi, semakin baik.',
+  ],
+  [
+    'Indeks ketimpangan gender',
+    'Ketimpangan antara laki-laki dan perempuan. Semakin rendah angkanya, semakin setara.',
+  ],
+  [
+    'Rasio APM gender',
+    '100 berarti setara. Di bawah 100 berarti perempuan tertinggal, dan di atas 100 berarti laki-laki tertinggal.',
+  ],
+  ['Estimasi', 'Perkiraan yang dihitung dari data, bukan angka sensus atau angka resmi.'],
+]
+
+function Bagian({ id, judul, children }) {
+  return (
+    <section id={id} className="mt-12 first:mt-0 border-t border-garis pt-6 first:border-0 first:pt-0">
+      <h2 className="subjudul text-tinta">{judul}</h2>
+      {children}
+    </section>
+  )
+}
+
+const TAUTAN = 'underline decoration-garis underline-offset-2 hover:decoration-tinta'
+
 export default function Metode() {
   const { status, meta, error, reload } = useData()
 
   useDocumentMeta({
     judul: 'Metode dan sumber | SETARA',
-    deskripsi:
-      'Sumber data BPS, definisi indikator, rumus, asumsi, dan keterbatasan aplikasi SETARA.',
+    deskripsi: 'Sumber data BPS, definisi indikator, rumus, asumsi, dan keterbatasan aplikasi SETARA.',
   })
 
   if (status === 'loading') {
     return (
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
         <Muat />
       </main>
     )
@@ -53,7 +100,7 @@ export default function Metode() {
 
   if (status === 'error') {
     return (
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
         <Gagal message={error} onReload={reload} />
       </main>
     )
@@ -62,232 +109,247 @@ export default function Metode() {
   const indikator = meta?.indikator || []
 
   return (
-    <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-      <p className="text-sm text-tinta-redup">
-        <Link to="/" className="underline decoration-garis underline-offset-2">
-          ← Kembali ke ringkasan
-        </Link>
-      </p>
-      <div className="mt-2">
-        <KepalaHalaman
-          judul="Metode dan sumber"
-          konteks="Penjelasan data, istilah, rumus, dan keterbatasan yang dipakai SETARA. Bagian ini membantu membaca setiap grafik dengan benar."
-        />
-      </div>
+    <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 pb-8 pt-6 md:pt-8">
+      <KepalaHalaman
+        judul="Metode dan sumber"
+        konteks="Mengapa angka di SETARA bisa dipercaya: dari mana datanya, bagaimana dihitung, dan apa batasnya."
+      />
 
-      <section id="pustaka" className="mt-6 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Daftar pustaka</h2>
-        <Accordion judul="Referensi yang dipakai">
-          <p>Referensi yang menjadi dasar solusi dan rekomendasi pada aplikasi ini.</p>
-          <ol className="space-y-3">
-            {REFERENSI.map((r) => (
-              <li key={r.id}>
-                <p className="break-words leading-relaxed">{r.referensi}</p>
-                {r.url && (
-                  <a
-                    href={r.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="break-all text-xs underline decoration-garis underline-offset-2 hover:text-tinta"
-                  >
-                    {r.url}
-                  </a>
-                )}
+      <div className="mt-8 md:grid md:grid-cols-[13rem_1fr] md:gap-10">
+        <nav aria-label="Isi halaman" className="mb-6 md:sticky md:top-20 md:mb-0 md:self-start">
+          <ul className="tanpa-scrollbar tepi-pudar -mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-col md:gap-0 md:px-0 md:[mask-image:none]">
+            {ISI.map((b) => (
+              <li key={b.id} className="shrink-0">
+                <a
+                  href={`#${b.id}`}
+                  className="inline-flex min-h-11 items-center whitespace-nowrap rounded-full border border-garis bg-putih px-4 text-base text-tinta hover:bg-kertas md:rounded-none md:border-0 md:bg-transparent md:px-0 md:text-[0.9375rem] md:text-tinta-redup md:hover:text-tinta"
+                >
+                  {b.label}
+                </a>
               </li>
             ))}
-          </ol>
-        </Accordion>
-      </section>
-
-      <section id="sumber" className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Sumber dan pembaruan</h2>
-        <dl className="mt-3 space-y-1 text-sm text-tinta">
-          <div className="flex flex-wrap gap-x-2">
-            <dt className="font-semibold">Sumber:</dt>
-            <dd>{meta?.source || 'BPS WebAPI'}</dd>
-          </div>
-          <div className="flex flex-wrap gap-x-2">
-            <dt className="font-semibold">Domain:</dt>
-            <dd>{meta?.domain || '0000'}</dd>
-          </div>
-          <div className="flex flex-wrap gap-x-2">
-            <dt className="font-semibold">Diperbarui:</dt>
-            <dd>
-              {meta?.generatedAt
-                ? new Date(meta.generatedAt).toLocaleString('id-ID', {
-                    dateStyle: 'long',
-                    timeStyle: 'short',
-                  })
-                : '-'}
-            </dd>
-          </div>
-          <div className="flex flex-wrap gap-x-2">
-            <dt className="font-semibold">Catatan:</dt>
-            <dd className="max-w-[68ch]">{meta?.catatan || '-'}</dd>
-          </div>
-        </dl>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <a
-            href="/data/indikator.json"
-            className="min-h-11 rounded-lg border border-garis bg-putih px-3 py-2 text-sm text-tinta hover:bg-kertas"
-          >
-            Buka JSON indikator
-          </a>
-          <a
-            href="/data/meta.json"
-            className="min-h-11 rounded-lg border border-garis bg-putih px-3 py-2 text-sm text-tinta hover:bg-kertas"
-          >
-            Buka metadata
-          </a>
-          <button
-            type="button"
-            onClick={() =>
-              downloadCsv(
-                'setara-daftar-indikator.csv',
-                indikator.map((i) => ({
-                  indikator: i.indikator,
-                  var_id: i.var_id,
-                  judul: i.judul,
-                  satuan: i.satuan,
-                  tahun: (i.tahun || []).join('; '),
-                  baris: i.baris,
-                })),
-                [
-                  { key: 'indikator', label: 'Indikator' },
-                  { key: 'var_id', label: 'Var ID' },
-                  { key: 'judul', label: 'Judul' },
-                  { key: 'satuan', label: 'Satuan' },
-                  { key: 'tahun', label: 'Tahun' },
-                  { key: 'baris', label: 'Baris' },
-                ],
-              )
-            }
-            className="min-h-11 rounded-lg border border-garis bg-putih px-3 py-2 text-sm text-tinta hover:bg-kertas"
-          >
-            Unduh daftar indikator (CSV)
-          </button>
-        </div>
-      </section>
-
-      <section id="indikator" className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Indikator yang dipakai</h2>
-        <div className="mt-3 overflow-x-auto">
-          <table className="w-full min-w-[620px] border-collapse text-left text-sm">
-            <thead>
-              <tr className="border-b border-garis text-tinta-redup">
-                <th className="py-2 pr-4 font-medium">Indikator</th>
-                <th className="py-2 pr-4 font-medium">Var BPS</th>
-                <th className="py-2 pr-4 font-medium">Satuan</th>
-                <th className="py-2 pr-4 font-medium">Tahun</th>
-                <th className="py-2 font-medium">Baris</th>
-              </tr>
-            </thead>
-            <tbody>
-              {indikator.map((i, index) => (
-                <tr key={`${i.indikator}-${i.var_id}-${index}`} className="border-b border-garis last:border-0">
-                  <td className="py-2 pr-4 text-tinta">{i.judul}</td>
-                  <td className="py-2 pr-4 text-tinta">{i.var_id}</td>
-                  <td className="py-2 pr-4 text-tinta">{i.satuan}</td>
-                  <td className="py-2 pr-4 text-tinta">{(i.tahun || []).join(', ')}</td>
-                  <td className="py-2 text-tinta">{i.baris}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="istilah" className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Istilah mudah</h2>
-        <Accordion judul="Apa makna istilah-istilah ini?">
-          <dl className="space-y-2">
-            <div>
-              <dt className="font-semibold text-tinta">Anak tidak sekolah</dt>
-              <dd>Anak usia sekolah yang tidak sedang mengikuti pendidikan formal atau nonformal.</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-tinta">Poin</dt>
-              <dd>Satuan untuk selisih antara dua persentase. Selisih 10 poin berbeda dengan 10%.</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-tinta">Kelompok termiskin dan terkaya</dt>
-              <dd>
-                Penduduk dibagi menjadi lima kelompok berdasarkan pengeluaran. Kelompok termiskin
-                adalah 20% dengan pengeluaran terendah.
-              </dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-tinta">APK dan APS</dt>
-              <dd>
-                APK adalah angka partisipasi kasar. APS adalah angka partisipasi sekolah. Keduanya
-                mengukur partisipasi, bukan angka anak tidak sekolah.
-              </dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-tinta">PAUD</dt>
-              <dd>Pendidikan anak usia dini untuk anak usia 3-6 tahun.</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-tinta">IPM</dt>
-              <dd>
-                Indeks Pembangunan Manusia, ringkasan kesehatan, pendidikan, dan pendapatan. Semakin
-                tinggi, semakin baik.
-              </dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-tinta">Estimasi</dt>
-              <dd>Perkiraan yang dihitung dari data, bukan angka sensus atau angka resmi.</dd>
-            </div>
-          </dl>
-        </Accordion>
-      </section>
-
-      <section id="rumus" className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Rumus dan asumsi</h2>
-        <div className="mt-3">
-          {RUMUS.map((r) => (
-            <Accordion key={r.judul} judul={r.judul}>
-              <p>{r.teks}</p>
-            </Accordion>
-          ))}
-        </div>
-      </section>
-
-      <section id="keterbatasan" className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Keterbatasan</h2>
-        <Accordion judul="Apa makna keterbatasan ini?">
-          <ul className="list-disc space-y-1 pl-5">
-            {(meta?.keterbatasan || []).map((k) => (
-              <li key={k}>{k}</li>
-            ))}
-            <li>
-              Angka anak tidak sekolah (var 1984/1986/1988) tersedia sampai 2023. Indikator
-              partisipasi yang lebih baru tidak dicampur dalam grafik yang sama.
-            </li>
-            <li>
-              Estimasi jumlah anak memakai proyeksi populasi dan asumsi distribusi. Angka ini bukan
-              hasil sensus dan tidak boleh dikutip sebagai angka resmi.
-            </li>
-            <li>
-              Beberapa provinsi baru Papua memiliki data terbatas atau RSE tinggi pada indikator
-              tertentu. Aplikasi menampilkan data yang tersedia dan tidak mengisi kekosongan dengan
-              nol.
-            </li>
           </ul>
-        </Accordion>
-      </section>
+        </nav>
 
-      <section id="sitasi" className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Sitasi</h2>
-        <p className="mt-2 max-w-[68ch] break-words text-sm leading-relaxed text-tinta">
-          SETARA | Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. (2026). Data BPS
-          (Susenas). Diakses dari {typeof window !== 'undefined' ? window.location.origin : 'situs SETARA'}.
-        </p>
-        <p className="mt-2 text-xs text-tinta-redup">
-          Ganti tahun akses sesuai tanggal penggunaan. Untuk kutipan angka, cantumkan tabel BPS asli
-          dan verifikasi satuan sebelum dipublikasikan.
-        </p>
-      </section>
+        <div className="min-w-0">
+          <Bagian id="sumber" judul="Sumber dan pembaruan">
+            <dl className="mt-3 space-y-1 text-base text-tinta">
+              <div className="flex flex-wrap gap-x-2">
+                <dt className="font-semibold">Sumber:</dt>
+                <dd>{meta?.source || 'BPS WebAPI'}</dd>
+              </div>
+              <div className="flex flex-wrap gap-x-2">
+                <dt className="font-semibold">Domain:</dt>
+                <dd>{meta?.domain || '0000'}</dd>
+              </div>
+              <div className="flex flex-wrap gap-x-2">
+                <dt className="font-semibold">Diperbarui:</dt>
+                <dd>
+                  {meta?.generatedAt
+                    ? new Date(meta.generatedAt).toLocaleString('id-ID', {
+                        dateStyle: 'long',
+                        timeStyle: 'short',
+                      })
+                    : '-'}
+                </dd>
+              </div>
+              <div className="flex flex-wrap gap-x-2">
+                <dt className="font-semibold">Catatan:</dt>
+                <dd className="max-w-[68ch]">{meta?.catatan || '-'}</dd>
+              </div>
+            </dl>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <a
+                href="/data/indikator.json"
+                className="tekan inline-flex min-h-11 items-center rounded-lg border border-garis bg-putih px-3 text-sm text-tinta hover:bg-kertas"
+              >
+                Buka JSON indikator
+              </a>
+              <a
+                href="/data/meta.json"
+                className="tekan inline-flex min-h-11 items-center rounded-lg border border-garis bg-putih px-3 text-sm text-tinta hover:bg-kertas"
+              >
+                Buka metadata
+              </a>
+              <button
+                type="button"
+                onClick={() =>
+                  downloadCsv(
+                    'setara-daftar-indikator.csv',
+                    indikator.map((i) => ({
+                      indikator: i.indikator,
+                      var_id: i.var_id,
+                      judul: i.judul,
+                      satuan: i.satuan,
+                      tahun: (i.tahun || []).join('; '),
+                      baris: i.baris,
+                    })),
+                    [
+                      { key: 'indikator', label: 'Indikator' },
+                      { key: 'var_id', label: 'Var ID' },
+                      { key: 'judul', label: 'Judul' },
+                      { key: 'satuan', label: 'Satuan' },
+                      { key: 'tahun', label: 'Tahun' },
+                      { key: 'baris', label: 'Baris' },
+                    ],
+                  )
+                }
+                className="tekan inline-flex min-h-11 items-center rounded-lg border border-garis bg-putih px-3 text-sm text-tinta hover:bg-kertas"
+              >
+                Unduh daftar indikator (CSV)
+              </button>
+            </div>
+          </Bagian>
+
+          <Bagian id="indikator" judul="Indikator yang dipakai">
+            <div className="mt-3 overflow-x-auto rounded-lg border border-garis bg-putih p-4">
+              <table className="w-full min-w-[620px] border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-garis text-tinta-redup">
+                    <th className="py-2 pr-4 font-medium">Indikator</th>
+                    <th className="py-2 pr-4 font-medium">Var BPS</th>
+                    <th className="py-2 pr-4 font-medium">Satuan</th>
+                    <th className="py-2 pr-4 font-medium">Tahun</th>
+                    <th className="py-2 font-medium">Baris</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {indikator.map((i, index) => (
+                    <tr
+                      key={`${i.indikator}-${i.var_id}-${index}`}
+                      className="border-b border-garis last:border-0"
+                    >
+                      <td className="py-2 pr-4 text-tinta">{i.judul}</td>
+                      <td className="py-2 pr-4 text-tinta">{i.var_id}</td>
+                      <td className="py-2 pr-4 text-tinta">{i.satuan}</td>
+                      <td className="py-2 pr-4 text-tinta">{(i.tahun || []).join(', ')}</td>
+                      <td className="py-2 text-tinta">{i.baris}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Bagian>
+
+          <Bagian id="istilah" judul="Istilah">
+            <dl className="mt-3 max-w-[68ch] space-y-3 text-base leading-relaxed">
+              {ISTILAH.map(([istilah, arti]) => (
+                <div key={istilah}>
+                  <dt className="font-semibold text-tinta">{istilah}</dt>
+                  <dd className="text-tinta-redup">{arti}</dd>
+                </div>
+              ))}
+            </dl>
+          </Bagian>
+
+          <Bagian id="rumus" judul="Rumus dan asumsi">
+            <dl className="mt-3 max-w-[68ch] space-y-3 text-base leading-relaxed">
+              {RUMUS.map((r) => (
+                <div key={r.judul}>
+                  <dt className="font-semibold text-tinta">{r.judul}</dt>
+                  <dd className="text-tinta-redup">{r.teks}</dd>
+                </div>
+              ))}
+            </dl>
+          </Bagian>
+
+          <Bagian id="keterbatasan" judul="Keterbatasan">
+            <ul className="mt-3 max-w-[68ch] list-disc space-y-2 pl-5 text-base leading-relaxed text-tinta">
+              {(meta?.keterbatasan || []).map((k) => (
+                <li key={k}>{k}</li>
+              ))}
+              <li>
+                Angka anak tidak sekolah (var 1984/1986/1988) tersedia sampai 2023. Indikator partisipasi yang
+                lebih baru tidak dicampur dalam grafik yang sama.
+              </li>
+              <li>
+                Estimasi jumlah anak memakai proyeksi populasi dan asumsi distribusi. Angka ini bukan hasil
+                sensus dan tidak boleh dikutip sebagai angka resmi.
+              </li>
+              <li>
+                Beberapa provinsi baru Papua memiliki data terbatas atau RSE tinggi pada indikator tertentu.
+                Aplikasi menampilkan data yang tersedia dan tidak mengisi kekosongan dengan nol.
+              </li>
+              <li>
+                Skor prioritas menunjukkan kebutuhan relatif, bukan penilaian resmi. Skor rendah tidak berarti
+                tidak ada masalah, dan skor tinggi tidak berarti gagal.
+              </li>
+              <li>
+                Partisipasi sekolah dan angka anak tidak sekolah adalah dua hal berbeda. Hubungan
+                antarindikator tidak membuktikan sebab-akibat.
+              </li>
+              <li>
+                Rekomendasi bersandar pada studi dengan kekuatan bukti yang berbeda: sebagian uji acak atau
+                ulasan sistematis, sebagian hanya menunjukkan hubungan. Jenis studinya tertera pada setiap
+                kutipan bukti.
+              </li>
+            </ul>
+          </Bagian>
+
+          <Bagian id="pustaka" judul="Daftar pustaka">
+            <p className="teks-bantu mt-1 max-w-[68ch]">
+              Rujukan yang mendasari solusi dan rekomendasi. Jurnal berlisensi terbuka dapat dibaca langsung
+              di SETARA, dengan kalimat yang dikutip disorot. Jurnal lain dibuka di situs sumbernya.
+            </p>
+            <ol className="mt-3 max-w-[72ch] space-y-4">
+              {REFERENSI.map((r) => {
+                const sumber = SUMBER[r.id]
+                const tampil = bisaDitampilkan(sumber)
+                return (
+                  <li key={r.id} className="text-base leading-relaxed">
+                    <p className="break-words text-tinta">{r.referensi}</p>
+                    <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-tinta-redup">
+                      {sumber && (
+                        <span className="rounded-full bg-putih px-2 py-0.5 text-tinta">{sumber.jenis}</span>
+                      )}
+                      {sumber?.lisensi && <span>Lisensi {sumber.lisensi.nama}</span>}
+                      {tampil && (
+                        <Link
+                          to={`/rujukan/${r.id}`}
+                          className={`${TAUTAN} inline-flex min-h-11 items-center md:min-h-0`}
+                        >
+                          Baca di SETARA
+                        </Link>
+                      )}
+                      {sumber?.baca && (
+                        <a
+                          href={sumber.baca.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={`${TAUTAN} inline-flex min-h-11 items-center md:min-h-0`}
+                        >
+                          {tampil ? 'Sumber asli' : `Baca di ${sumber.baca.label}`} ↗
+                        </a>
+                      )}
+                      {r.url && (
+                        <a
+                          href={r.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={`${TAUTAN} inline-flex min-h-11 items-center md:min-h-0`}
+                        >
+                          DOI ↗
+                        </a>
+                      )}
+                    </p>
+                  </li>
+                )
+              })}
+            </ol>
+          </Bagian>
+
+          <Bagian id="sitasi" judul="Sitasi">
+            <p className="mt-2 max-w-[68ch] break-words text-base leading-relaxed text-tinta">
+              SETARA | Statistik Edukasi Terbuka untuk Analisis Rekomendasi Akses. (2026). Data BPS (Susenas).
+              Diakses dari {typeof window !== 'undefined' ? window.location.origin : 'situs SETARA'}.
+            </p>
+            <p className="teks-bantu mt-2 max-w-[68ch]">
+              Ganti tahun akses sesuai tanggal penggunaan. Untuk kutipan angka, cantumkan tabel BPS asli dan
+              verifikasi satuan sebelum dipublikasikan.
+            </p>
+          </Bagian>
+        </div>
+      </div>
     </main>
   )
 }

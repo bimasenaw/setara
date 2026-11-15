@@ -4,16 +4,18 @@ import { useData } from '../lib/data'
 import { formatAngka, formatPoin, formatJumlahOrang } from '../lib/format'
 import { daftarProvinsi, nilaiTerbaru, seriTahunan, tahunTerbaru } from '../lib/indikator'
 import { dampakTerbaru } from '../lib/dampak'
-import { hitungPrioritas, matriksPrioritas } from '../lib/prioritas'
+import { hitungPrioritas, labelKategori, matriksPrioritas } from '../lib/prioritas'
 import { rekomendasiProvinsi } from '../lib/rekomendasi'
 import { gabungSeri, perubahanPeringkat } from '../lib/tren'
-import { copyText, downloadCsv, shareTeks, buatSitasi } from '../lib/ekspor'
 import ProvinsiTrend from '../components/ProvinsiTrend'
 import KonteksGrid from '../components/KonteksGrid'
 import RekomendasiList from '../components/RekomendasiList'
 import SegmentedControl from '../components/SegmentedControl'
-import Accordion from '../components/Accordion'
-import HeroBanner from '../components/HeroBanner'
+import KepalaHalaman from '../components/KepalaHalaman'
+import CaraMembaca from '../components/CaraMembaca'
+import AksiData from '../components/AksiData'
+import { aksiStandar } from '../components/aksiStandar'
+import Sumber from '../components/Sumber'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -35,8 +37,7 @@ function konteksItems(rows, kode) {
   return defs.map((d) => {
     const prov = nilaiTerbaru(rows, { ...d, kode })
     const nas = nilaiTerbaru(rows, { ...d, kode: '9999' })
-    const selisih =
-      prov.nilai !== null && nas.nilai !== null ? prov.nilai - nas.nilai : null
+    const selisih = prov.nilai !== null && nas.nilai !== null ? prov.nilai - nas.nilai : null
     return {
       label: d.label,
       nilai: prov.nilai,
@@ -58,7 +59,6 @@ export default function ProvinsiDetail() {
   const { status, indikator, error, reload } = useData()
   const [params] = useSearchParams()
   const [mode, setMode] = useState('aps')
-  const [pesan, setPesan] = useState('')
 
   const provinsi = daftarProvinsi(indikator).find((p) => p.kode === kode)
   const tahun = Number(params.get('tahun')) || tahunTerbaru(indikator, { indikator: 'aps' }) || 2025
@@ -73,7 +73,7 @@ export default function ProvinsiDetail() {
 
   if (status === 'loading') {
     return (
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
         <Muat />
       </main>
     )
@@ -81,7 +81,7 @@ export default function ProvinsiDetail() {
 
   if (status === 'error') {
     return (
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
         <Gagal message={error} onReload={reload} />
       </main>
     )
@@ -89,11 +89,10 @@ export default function ProvinsiDetail() {
 
   if (!provinsi) {
     return (
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
+      <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 py-8">
         <h1 className="font-serif text-[1.75rem] text-tinta">Provinsi tidak ditemukan</h1>
         <p className="mt-2 text-tinta-redup">
-          Kode provinsi <span className="font-semibold">{kode}</span> tidak ada di data BPS yang
-          tersedia.
+          Kode provinsi <span className="font-semibold">{kode}</span> tidak ada di data BPS yang tersedia.
         </p>
         <Link
           to="/provinsi"
@@ -135,140 +134,74 @@ export default function ProvinsiDetail() {
       ? akhir.provinsi - awal.provinsi
       : null
 
-  const salin = async () => {
-    const ok = await copyText(
-      `${provinsi.provinsi}: skor prioritas ${formatAngka(skor?.skor, 1)}/100. Sumber: BPS.`,
-    )
-    setPesan(ok ? 'Ringkasan disalin.' : 'Gagal menyalin.')
-  }
-
-  const bagikan = async () => {
-    const ok = await shareTeks({
-      title: `SETARA | ${provinsi.provinsi}`,
-      text: `Profil pendidikan ${provinsi.provinsi}`,
-      url: window.location.href,
-    })
-    if (!ok) setPesan('Share tidak tersedia; tautan disalin.')
-  }
+  const konteksPeringkat = skor
+    ? `Peringkat ${skor.peringkat} dari ${prioritas.daftar.length} pada indeks prioritas.`
+    : 'Peringkat belum tersedia karena data indikator belum cukup.'
 
   return (
-    <main className="mx-auto w-full max-w-[1080px] px-4 py-8">
-      <p className="text-sm text-tinta-redup">
-        <Link to="/provinsi" className="underline decoration-garis underline-offset-2">
-          ← Kembali ke peringkat provinsi
-        </Link>
-      </p>
-      <div className="mt-2">
-        <HeroBanner
-          judul={provinsi.provinsi}
-          deskripsi="Profil ini menunjukkan posisi provinsi, tren partisipasi, konteks, dan langkah yang bisa diprioritaskan."
-          gambar={foto.src}
-          alt={foto.alt}
-        />
-      </div>
+    <main id="konten" className="mx-auto w-full max-w-[1080px] px-4 pb-8 pt-6 md:pt-8">
+      <nav aria-label="Remah navigasi" className="mb-6">
+        <ol className="flex flex-wrap items-center gap-x-2 text-sm text-tinta-redup">
+          <li>
+            <Link
+              to={`/provinsi?tahun=${tahun}`}
+              className="inline-flex min-h-11 items-center underline decoration-garis underline-offset-2 hover:text-tinta"
+            >
+              Provinsi
+            </Link>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" className="font-semibold text-tinta">
+            {provinsi.provinsi}
+          </li>
+        </ol>
+      </nav>
 
-      <div className="mt-4 flex flex-wrap gap-2 text-sm">
-        <button
-          type="button"
-          onClick={salin}
-          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
-        >
-          Salin ringkasan
-        </button>
-        <button
-          type="button"
-          onClick={bagikan}
-          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
-        >
-          Bagikan
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            downloadCsv(
-              `setara-${provinsi.provinsi}-${tahun}.csv`,
-              konteks.map((k) => ({
-                indikator: k.label,
-                provinsi: k.nilai,
-                nasional: k.nasional,
-                selisih: k.selisih,
-              })),
-              [
-                { key: 'indikator', label: 'Indikator' },
-                { key: 'provinsi', label: 'Provinsi' },
-                { key: 'nasional', label: 'Nasional' },
-                { key: 'selisih', label: 'Selisih' },
-              ],
-            )
-          }
-          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
-        >
-          Unduh CSV
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            copyText(buatSitasi({ judul: `Profil ${provinsi.provinsi}`, tahun })).then((ok) =>
-              setPesan(ok ? 'Sitasi disalin.' : 'Gagal menyalin sitasi.'),
-            )
-          }
-          className="min-h-11 rounded-lg border border-garis bg-putih px-3 text-tinta hover:bg-kertas"
-        >
-          Salin sitasi
-        </button>
-      </div>
-      {pesan && <p className="mt-2 text-sm text-tinta-redup">{pesan}</p>}
+      <KepalaHalaman judul={provinsi.provinsi} konteks={konteksPeringkat} gambar={foto.src} alt={foto.alt} />
 
-      <section className="mt-6 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-lg border border-garis bg-putih p-4">
-          <p className="text-xs text-tinta-redup">Indeks prioritas</p>
-          <p className="mt-1 font-serif text-[1.75rem] text-tinta">
-            {skor ? `${formatAngka(skor.skor, 1)}/100` : 'Data belum tersedia'}
+      <section
+        aria-label="Tiga angka utama"
+        className="mt-8 grid gap-6 border-y border-garis py-6 sm:grid-cols-3"
+      >
+        <div>
+          <p className="teks-bantu">Indeks prioritas</p>
+          <p className="mt-1 font-serif text-[2.25rem] font-semibold leading-none tracking-[-0.02em] text-tinta tabular-nums md:text-[2.75rem]">
+            {skor ? formatAngka(skor.skor, 1) : '-'}
+            {skor && <span className="text-[1.25rem] text-tinta-redup">/100</span>}
           </p>
-          <p className="mt-1 text-xs text-tinta-redup">
-            {skor ? `Peringkat ${skor.peringkat} dari ${prioritas.daftar.length}` : '-'}
+          <p className="teks-bantu mt-2">
+            {skor ? `Peringkat ${skor.peringkat} dari ${prioritas.daftar.length}` : 'Data belum tersedia'}
           </p>
         </div>
-        <div className="rounded-lg border border-garis bg-putih p-4">
-          <p className="text-xs text-tinta-redup">Kuadran prioritas</p>
-          <p className="mt-1 text-sm font-semibold text-tinta">{kategori?.kategori || 'Belum tersedia'}</p>
-          <p className="mt-1 text-xs text-tinta-redup">
-            Level {kategori ? `${formatAngka(kategori.level, 1)}%` : '-'} · tren{' '}
-            {kategori ? formatPoin(kategori.tren, 1) : '-'}
+        <div>
+          <p className="teks-bantu">Kuadran prioritas</p>
+          <p className="mt-1 font-serif text-[2.25rem] font-semibold leading-none tracking-[-0.02em] text-tinta md:text-[2.75rem]">
+            {kategori?.kategori || '-'}
+          </p>
+          <p className="teks-bantu mt-2">
+            {kategori
+              ? `${labelKategori(kategori.kategori)}. Level ${formatAngka(kategori.level, 1)}% · tren ${formatPoin(kategori.tren, 1)}`
+              : 'Belum tersedia'}
           </p>
         </div>
-        <div className="rounded-lg border border-garis bg-putih p-4">
-          <p className="text-xs text-tinta-redup">Cakupan indikator</p>
-          <p className="mt-1 font-serif text-[1.75rem] text-tinta">
+        <div>
+          <p className="teks-bantu">Cakupan indikator</p>
+          <p className="mt-1 font-serif text-[2.25rem] font-semibold leading-none tracking-[-0.02em] text-tinta tabular-nums md:text-[2.75rem]">
             {skor ? `${skor.cakupan}/6` : '-'}
           </p>
-          <p className="mt-1 text-xs text-tinta-redup">
-            Indikator yang tersedia untuk provinsi ini.
-          </p>
+          <p className="teks-bantu mt-2">Indikator yang tersedia untuk provinsi ini.</p>
         </div>
-        <Accordion judul="Apa makna tiga angka di atas?">
-          <p>
-            Skor {skor ? `${formatAngka(skor.skor, 1)}/100` : 'belum tersedia'} berarti provinsi ini
-            berada pada urutan {skor ? skor.peringkat : '-'} dalam kebutuhan prioritas. Semakin tinggi
-            skornya, semakin besar kebutuhan untuk diprioritaskan.
-          </p>
-          <p>
-            Kuadran {kategori?.kategori || 'belum tersedia'} menunjukkan arah partisipasi provinsi.
-            Cakupan {skor ? `${skor.cakupan}/6` : '-'} menunjukkan berapa banyak data yang tersedia
-            untuk membaca kondisi ini.
-          </p>
-        </Accordion>
       </section>
 
-      <section className="mt-8">
+      <section className="mt-12">
         <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-base font-semibold text-tinta">Tren {labelTren}</h2>
+          <h2 className="subjudul text-tinta">Tren {labelTren}</h2>
           <SegmentedControl options={TREN_OPTIONS} value={mode} onChange={setMode} label="Indikator tren" />
         </div>
         <div className="mt-4 rounded-lg border border-garis bg-putih p-5">
           {trend.length ? (
             <>
-              <p className="text-sm text-tinta-redup">
+              <p className="text-base leading-relaxed text-tinta">
                 Perbandingan {provinsi.provinsi} dengan rata-rata nasional.{' '}
                 {deltaTren !== null && (
                   <>
@@ -279,8 +212,8 @@ export default function ProvinsiDetail() {
                   <>
                     {' '}
                     Peringkat {awal ? peringkat.awal.peringkat : '-'} →{' '}
-                    {akhir ? peringkat.akhir.peringkat : '-'} dari {peringkat.akhir?.total || '-'}{' '}
-                    provinsi (selisih peringkat {peringkat.deltaPeringkat >= 0 ? '+' : ''}
+                    {akhir ? peringkat.akhir.peringkat : '-'} dari {peringkat.akhir?.total || '-'} provinsi
+                    (selisih peringkat {peringkat.deltaPeringkat >= 0 ? '+' : ''}
                     {peringkat.deltaPeringkat}).
                   </>
                 )}
@@ -297,40 +230,31 @@ export default function ProvinsiDetail() {
           ) : (
             <p className="text-tinta-redup">Data tren belum tersedia.</p>
           )}
-          <p className="mt-3 text-xs text-tinta-redup">Sumber: BPS, Susenas.</p>
-          <Accordion judul="Apa makna tren ini?">
+          <Sumber tahun={trend.length ? `${trend[0].tahun}–${trend[trend.length - 1].tahun}` : undefined} />
+          <CaraMembaca>
             <p>
-              Garis merah menunjukkan angka provinsi, garis biru menunjukkan rata-rata nasional. Jika
-              garis merah mendekat ke garis biru, provinsi ini sedang mengejar nasional. Jika menjauh,
-              provinsi ini makin tertinggal.
+              Garis merah menunjukkan angka {provinsi.provinsi}, garis biru menunjukkan rata-rata nasional.
             </p>
-            {deltaTren !== null && (
-              <p>
-                Perubahan {formatPoin(deltaTren, 2)} dari {awal.tahun} ke {akhir.tahun} menunjukkan
-                arah tersebut. Angka ini bukan proyeksi.
-              </p>
-            )}
-          </Accordion>
+            <p>
+              {deltaTren !== null
+                ? `Perubahan ${formatPoin(deltaTren, 2)} dari ${awal.tahun} ke ${akhir.tahun}. Bila garis merah mendekat ke garis biru, provinsi ini sedang mengejar nasional; bila menjauh, makin tertinggal.`
+                : 'Bila garis merah mendekat ke garis biru, provinsi ini sedang mengejar nasional; bila menjauh, makin tertinggal.'}
+            </p>
+            <p>Angka ini menunjukkan arah, bukan proyeksi.</p>
+          </CaraMembaca>
         </div>
       </section>
 
       {dampak && (
-        <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-          <h2 className="text-base font-semibold text-tinta">Perkiraan jumlah anak PAUD</h2>
-          <p className="mt-1 text-sm font-semibold text-tinta">
-            Sekitar {formatJumlahOrang(dampak.estimasi)} anak usia 3–6 tahun berpotensi mendapat
-            layanan PAUD tambahan jika partisipasi menyamai nasional.
+        <section className="mt-12 border-t border-garis pt-6">
+          <h2 className="subjudul text-tinta">Perkiraan jumlah anak PAUD</h2>
+          <p className="mt-1 max-w-[68ch] text-base leading-relaxed text-tinta">
+            Sekitar {formatJumlahOrang(dampak.estimasi)} usia 3–6 tahun berpotensi mendapat layanan PAUD
+            tambahan jika partisipasi menyamai nasional.
           </p>
-          <Accordion judul="Apa makna angka ini?">
-            <p>
-              Angka ini menunjukkan berapa banyak anak yang bisa memperoleh layanan PAUD jika
-              partisipasi provinsi menyamai nasional. Artinya, masalahnya bukan hanya skor rendah,
-              tetapi akses anak yang belum terpenuhi.
-            </p>
-            <p>{dampak.metode}</p>
-            <p>Asumsi: {dampak.asumsi}</p>
-            <p>Angka ini adalah perkiraan, bukan hasil sensus.</p>
-          </Accordion>
+          <p className="teks-bantu mt-1 max-w-[68ch]">
+            Perkiraan, bukan sensus. {dampak.metode} Asumsi: {dampak.asumsi}
+          </p>
         </section>
       )}
 
@@ -338,38 +262,44 @@ export default function ProvinsiDetail() {
 
       <RekomendasiList items={rekomendasi} judul={`Rekomendasi kontekstual · ${provinsi.provinsi}`} />
 
-      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Makna catatan</h2>
-        <Accordion judul="Apa makna catatan ini?">
-          <p>
-            Skor prioritas menunjukkan kebutuhan relatif, bukan penilaian resmi. Provinsi dengan skor
-            rendah bukan berarti tidak punya masalah, dan skor tinggi bukan berarti gagal.
-          </p>
-          <p>
-            Partisipasi sekolah dan angka anak tidak sekolah adalah dua hal berbeda. Hubungan
-            antarindikator tidak membuktikan sebab-akibat.
-          </p>
-        </Accordion>
+      <AksiData
+        aksi={aksiStandar({
+          temuan: `${provinsi.provinsi}: skor prioritas ${skor ? formatAngka(skor.skor, 1) : '-'}/100. ${konteksPeringkat}`,
+          judulBagikan: `SETARA | ${provinsi.provinsi}`,
+          csv: {
+            nama: `setara-${provinsi.provinsi}-${tahun}.csv`,
+            baris: konteks.map((k) => ({
+              indikator: k.label,
+              provinsi: k.nilai,
+              nasional: k.nasional,
+              selisih: k.selisih,
+            })),
+            kolom: [
+              { key: 'indikator', label: 'Indikator' },
+              { key: 'provinsi', label: 'Provinsi' },
+              { key: 'nasional', label: 'Nasional' },
+              { key: 'selisih', label: 'Selisih' },
+            ],
+          },
+          sitasi: { judul: `Profil ${provinsi.provinsi}`, tahun },
+          bisaCetak: true,
+        })}
+      />
+
+      <nav aria-label="Navigasi provinsi" className="mt-12 flex flex-wrap gap-x-6 border-t border-garis pt-6">
+        <Link
+          to={`/provinsi?tahun=${tahun}`}
+          className="tekan inline-flex min-h-11 items-center text-base text-tinta underline decoration-garis underline-offset-4 hover:decoration-tinta"
+        >
+          ← Kembali ke peringkat provinsi
+        </Link>
         <Link
           to="/metode"
-          className="mt-3 inline-block min-h-11 rounded-lg border border-garis bg-putih px-3 py-2 text-sm text-tinta hover:bg-kertas"
+          className="tekan inline-flex min-h-11 items-center text-base text-tinta underline decoration-garis underline-offset-4 hover:decoration-tinta"
         >
-          Buka metode dan sumber
+          Metode dan keterbatasan
         </Link>
-      </section>
-
-      <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="text-base font-semibold text-tinta">Data provinsi lain</h2>
-        <p className="mt-1 text-sm text-tinta-redup">
-          Bandingkan dengan provinsi lain di halaman peringkat, atau pilih provinsi dari tabel.
-        </p>
-        <Link
-          to="/provinsi"
-          className="mt-3 inline-block min-h-11 rounded-lg bg-tinta px-4 py-2 text-sm text-putih hover:bg-tinta-redup"
-        >
-          Lihat semua provinsi
-        </Link>
-      </section>
+      </nav>
     </main>
   )
 }

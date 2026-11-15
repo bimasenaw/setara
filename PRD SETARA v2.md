@@ -483,3 +483,25 @@ Status: selesai (15 November 2026). Angka, data, dan logika di `src/lib` tidak b
 **Yang berbeda dari rencana**
 - Bagian "Peringkat per indikator" tidak memakai tab, karena indikatornya baru satu (PAUD). Tab ditambahkan bila indikator kedua tersedia.
 - "Rekomendasi keputusan" tiga kalimat umum tidak dipindahkan karena isinya sudah tercakup lima rekomendasi utama.
+
+## 19. Catatan pelaksanaan Fase 5 (profil provinsi dan Metode)
+
+Status: selesai (15 November 2026). Angka, data, dan logika di `src/lib` tidak berubah.
+
+**Profil provinsi (8.5)**
+- Remah navigasi "Provinsi / {nama}" dan kepala halaman dengan kalimat "Peringkat {n} dari {N} pada indeks prioritas".
+- Tiga angka utama memakai gaya angka besar serif, bukan kotak terpisah.
+- Urutan: tren (satu `CaraMembaca`), perkiraan anak PAUD, konteks provinsi, rekomendasi kontekstual, lalu `AksiData` dan tautan kembali.
+- Rekomendasi kontekstual memakai tombol "Bukti" untuk rujukan, jadi daftar pustaka panjang tidak lagi tampil di profil.
+- Dihapus: bagian "Makna catatan" (dipindah ke Keterbatasan di Metode), semua accordion, dan baris empat tombol.
+
+**Metode (8.6)**
+- Daftar isi berupa tautan jangkar: menempel di samping (desktop) dan deretan tombol yang bisa digeser di atas (HP).
+- Urutan baru: Sumber dan pembaruan, Indikator, Istilah, Rumus dan asumsi, Keterbatasan, Daftar pustaka, Sitasi.
+- Istilah, rumus, dan keterbatasan kini tampil langsung, tidak lagi di dalam lipatan.
+- Daftar pustaka memuat jenis studi, lisensi, tautan "Baca di SETARA" (untuk jurnal berlisensi terbuka), tautan sumber asli, dan DOI.
+- Keterbatasan bertambah: skor prioritas dan kekuatan bukti rekomendasi.
+- Catatan asumsi kuintil ditambahkan ke rumus estimasi, dengan kalimat bersyarat ("bila keluarga berpengeluaran rendah memiliki lebih banyak anak, estimasi cenderung lebih rendah").
+
+**Belum dikerjakan**
+- Foto khas tiap provinsi. Profil selain Papua masih memakai foto umum. Rencananya diambil dari Wikimedia Commons dengan atribusi, dan memerlukan pengecekan lisensi per foto.

@@ -103,6 +103,49 @@ describe('App', () => {
     expect(screen.getByText(/Ukurannya berganti/)).toBeInTheDocument()
   })
 
+  it('metode: daftar isi menaut ke bagian dan daftar pustaka memuat tautan baca', async () => {
+    render(
+      <MemoryRouter initialEntries={['/metode']}>
+        <App />
+      </MemoryRouter>,
+    )
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Indikator yang dipakai' })).toBeInTheDocument()
+    })
+    const isi = screen.getByRole('navigation', { name: 'Isi halaman' })
+    const label = within(isi)
+      .getAllByRole('link')
+      .map((a) => a.textContent)
+    expect(label).toEqual([
+      'Sumber dan pembaruan',
+      'Indikator',
+      'Istilah',
+      'Rumus dan asumsi',
+      'Keterbatasan',
+      'Daftar pustaka',
+      'Sitasi',
+    ])
+    expect(screen.getByRole('heading', { name: 'Daftar pustaka' })).toBeInTheDocument()
+    // Jurnal berlisensi terbuka bisa dibaca di SETARA; yang lain ke situs sumbernya.
+    expect(screen.getAllByRole('link', { name: 'Baca di SETARA' }).length).toBeGreaterThanOrEqual(10)
+    expect(screen.getAllByText('Lisensi CC BY 4.0').length).toBeGreaterThan(0)
+  })
+
+  it('profil provinsi: remah navigasi, peringkat di kepala, dan tanpa lipatan', async () => {
+    render(
+      <MemoryRouter initialEntries={['/provinsi/1100']}>
+        <App />
+      </MemoryRouter>,
+    )
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Aceh')
+    })
+    const remah = screen.getByRole('navigation', { name: 'Remah navigasi' })
+    expect(within(remah).getByRole('link', { name: 'Provinsi' })).toBeInTheDocument()
+    expect(screen.getByText(/Peringkat \d+ dari \d+ pada indeks prioritas/)).toBeInTheDocument()
+    expect(screen.queryByText('Makna catatan')).not.toBeInTheDocument()
+  })
+
   it('menampilkan detail provinsi', async () => {
     render(
       <MemoryRouter initialEntries={['/provinsi/1100']}>

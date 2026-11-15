@@ -1,11 +1,11 @@
+import { Link } from 'react-router-dom'
 import { formatAngka, formatPoin } from '../lib/format'
-import Accordion from './Accordion'
 
 export default function KonteksGrid({ items, judul = 'Konteks yang perlu diperiksa' }) {
   if (!items || !items.length) return null
   return (
-    <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-      <h2 className="text-base font-semibold text-tinta">{judul}</h2>
+    <section className="mt-12 rounded-lg border border-garis bg-putih p-5">
+      <h2 className="subjudul text-tinta">{judul}</h2>
       <div className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[520px] border-collapse text-left text-sm">
           <thead>
@@ -26,7 +26,9 @@ export default function KonteksGrid({ items, judul = 'Konteks yang perlu diperik
                   )}
                 </td>
                 <td className="py-2 pr-4 text-tinta">
-                  {item.nilai === null ? 'Data belum tersedia' : `${formatAngka(item.nilai, 2)}${item.satuan || ''}`}
+                  {item.nilai === null
+                    ? 'Data belum tersedia'
+                    : `${formatAngka(item.nilai, 2)}${item.satuan || ''}`}
                 </td>
                 <td className="py-2 pr-4 text-tinta">
                   {item.nasional === null ? '-' : `${formatAngka(item.nasional, 2)}${item.satuan || ''}`}
@@ -34,37 +36,24 @@ export default function KonteksGrid({ items, judul = 'Konteks yang perlu diperik
                 <td className="py-2 text-tinta">
                   {item.selisih === null || item.selisih === undefined
                     ? '-'
-                    : `${formatPoin(Math.abs(item.selisih), 2)} ${
-                        item.selisih >= 0 ? 'di atas' : 'di bawah'
-                      }`}
+                    : `${formatPoin(Math.abs(item.selisih), 2)} ${item.selisih >= 0 ? 'di atas' : 'di bawah'}`}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Accordion judul="Apa makna indikator ini?">
-        <p>
-          Partisipasi SMA adalah persentase anak usia SMA yang masih sekolah. Partisipasi PAUD
-          menunjukkan seberapa banyak anak usia 3-6 tahun yang mengikuti PAUD.
-        </p>
-        <p>
-          Rata-rata lama sekolah menunjukkan berapa tahun penduduk usia 15 tahun ke atas bersekolah.
-          Penduduk miskin adalah persentase penduduk yang hidup di bawah garis kemiskinan.
-        </p>
-        <p>
-          IPM adalah Indeks Pembangunan Manusia, yaitu ringkasan kesehatan, pendidikan, dan
-          pendapatan. Semakin tinggi angkanya, semakin baik.
-        </p>
-        <p>
-          Indeks ketimpangan gender menunjukkan ketimpangan antara laki-laki dan perempuan. Semakin
-          rendah angkanya, semakin setara. Rasio APM gender 100 berarti setara, di bawah 100 berarti
-          perempuan tertinggal, dan di atas 100 berarti laki-laki tertinggal.
-        </p>
-        <p>
-          Angka-angka ini membantu membaca konteks. Angka ini tidak membuktikan hubungan sebab-akibat.
-        </p>
-      </Accordion>
+      <p className="teks-bantu mt-3 max-w-[68ch]">
+        Angka-angka ini membantu membaca konteks dan tidak membuktikan sebab-akibat. Arti setiap indikator ada
+        di{' '}
+        <Link
+          to="/metode#istilah"
+          className="underline decoration-garis underline-offset-2 hover:decoration-tinta"
+        >
+          istilah di halaman Metode
+        </Link>
+        .
+      </p>
     </section>
   )
 }
