@@ -25,10 +25,26 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', cek)
   }, [])
 
+  // Di HP, menu bisa digeser. Tepi pudar hanya muncul di sisi yang masih menyimpan menu.
+  const [tepi, setTepi] = useState({ kiri: false, kanan: false })
+  const cekTepi = () => {
+    const el = navRef.current
+    if (!el) return
+    const kiri = el.scrollLeft > 2
+    const kanan = el.scrollLeft + el.clientWidth < el.scrollWidth - 2
+    setTepi((t) => (t.kiri === kiri && t.kanan === kanan ? t : { kiri, kanan }))
+  }
+  useEffect(() => {
+    cekTepi()
+    window.addEventListener('resize', cekTepi)
+    return () => window.removeEventListener('resize', cekTepi)
+  }, [])
+
   // Di HP, item aktif digulir ke area yang terlihat.
   useEffect(() => {
     const aktif = navRef.current?.querySelector('[aria-current="page"]')
     aktif?.scrollIntoView?.({ block: 'nearest', inline: 'center' })
+    cekTepi()
   }, [pathname])
 
   return (
@@ -48,7 +64,10 @@ export default function Nav() {
         <nav
           ref={navRef}
           aria-label="Navigasi utama"
-          className="tanpa-scrollbar tepi-pudar -mx-4 flex w-[calc(100%+2rem)] items-center gap-1 overflow-x-auto px-3 md:mx-0 md:w-auto md:px-0 md:[mask-image:none]"
+          onScroll={cekTepi}
+          data-kiri={tepi.kiri || undefined}
+          data-kanan={tepi.kanan || undefined}
+          className="tanpa-scrollbar tepi-gulir -mx-4 flex w-[calc(100%+2rem)] items-center gap-1 overflow-x-auto px-3 md:mx-0 md:w-auto md:px-0 md:[mask-image:none]"
         >
           {LINKS.map((l) => (
             <NavLink

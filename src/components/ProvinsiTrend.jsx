@@ -3,11 +3,14 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from 'recharts'
 import { formatAngka } from '../lib/format'
 import DataTable from './DataTable'
+import { skalaRapi } from './skala'
+import TooltipGrafik from './TooltipGrafik'
 
 const BIRU = '#6F8CAB'
 const MERAH = '#C2372D'
@@ -17,7 +20,8 @@ const GARIS = '#DCE1E7'
 export default function ProvinsiTrend({ data, namaProvinsi = 'Provinsi', label = 'Nilai', satuan = '' }) {
   if (!data.length) return null
   const nilai = data.flatMap((d) => [d.provinsi, d.nasional]).filter((n) => typeof n === 'number')
-  const max = nilai.length ? Math.ceil((Math.max(...nilai) + 5) / 5) * 5 : 100
+  const skala = skalaRapi(nilai.length ? Math.max(...nilai) : 100)
+  const akhiran = satuan === 'persen' ? '%' : satuan ? ` ${satuan}` : ''
 
   return (
     <div className="w-full">
@@ -36,12 +40,17 @@ export default function ProvinsiTrend({ data, namaProvinsi = 'Provinsi', label =
               tickLine={false}
             />
             <YAxis
-              domain={[0, max]}
+              domain={[0, skala.maks]}
+              ticks={skala.ticks}
               tick={{ fontSize: '0.75rem', fill: TINTA_REDUP }}
               axisLine={false}
               tickLine={false}
               width={44}
-              tickFormatter={(v) => formatAngka(v, 0)}
+              tickFormatter={(v) => formatAngka(v, skala.desimal)}
+            />
+            <Tooltip
+              cursor={{ stroke: TINTA_REDUP, strokeWidth: 1 }}
+              content={<TooltipGrafik satuan={akhiran} />}
             />
             <Line
               type="linear"
@@ -49,7 +58,8 @@ export default function ProvinsiTrend({ data, namaProvinsi = 'Provinsi', label =
               name="Nasional"
               stroke={BIRU}
               strokeWidth={2}
-              dot={{ r: 3, fill: BIRU, strokeWidth: 0 }}
+              dot={{ r: 4, fill: BIRU, strokeWidth: 0 }}
+              isAnimationActive={false}
               connectNulls
             />
             <Line
@@ -57,8 +67,9 @@ export default function ProvinsiTrend({ data, namaProvinsi = 'Provinsi', label =
               dataKey="provinsi"
               name={namaProvinsi}
               stroke={MERAH}
-              strokeWidth={2.5}
-              dot={{ r: 3, fill: MERAH, strokeWidth: 0 }}
+              strokeWidth={2}
+              dot={{ r: 4, fill: MERAH, strokeWidth: 0 }}
+              isAnimationActive={false}
               connectNulls
             />
           </LineChart>

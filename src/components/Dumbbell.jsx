@@ -1,11 +1,7 @@
 import { useMeasure } from '../lib/useMeasure'
 import { formatAngka } from '../lib/format'
 import DataTable from './DataTable'
-
-function niceMax(v) {
-  if (v <= 0) return 10
-  return Math.ceil(v / 10) * 10
-}
+import { skalaRapi } from './skala'
 
 const BIRU = '#6F8CAB'
 const MERAH = '#C2372D'
@@ -17,7 +13,8 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
   const [ref, width] = useMeasure()
 
   const nilai = items.flatMap((it) => [it.pembanding, it.tertinggal]).filter((n) => n !== null)
-  const max = niceMax(Math.max(0, ...nilai))
+  const skala = skalaRapi(Math.max(0, ...nilai))
+  const max = skala.maks
 
   const rowH = 60
   const axisH = 28
@@ -31,7 +28,7 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
 
   const x = (v) => (v === null ? null : plotLeft + (v / max) * plotWidth)
 
-  const ticks = [0, 1, 2, 3, 4].map((i) => (max / 4) * i)
+  const ticks = skala.ticks
 
   return (
     <div ref={ref} className="w-full">
@@ -113,7 +110,7 @@ export default function Dumbbell({ items, pembandingNama, tertinggalNama, satuan
                   fontSize="0.75rem"
                   fill={TINTA_REDUP}
                 >
-                  {`${formatAngka(t, 0)}${satuan}`}
+                  {`${formatAngka(t, skala.desimal)}${satuan}`}
                 </text>
               </g>
             )

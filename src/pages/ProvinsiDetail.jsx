@@ -112,7 +112,7 @@ export default function ProvinsiDetail() {
   const konteks = konteksItems(indikator, kode)
   const foto = provinsi.provinsi.includes('Papua')
     ? { src: '/images/foto-papua.jpg', alt: 'Suasana kelas di Papua' }
-    : { src: '/images/foto-provinsi.svg', alt: 'Ilustrasi wilayah Indonesia' }
+    : { src: '/images/foto-umum.jpeg', alt: 'Foto suasana pendidikan di Indonesia' }
 
   const trend =
     mode === 'aps'

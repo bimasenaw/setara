@@ -349,7 +349,7 @@ Jika waktu terbatas, fase 0–3 adalah inti. Fase 4 boleh menyusul.
 
 ## 16. Tambahan: Fase 2, fondasi visual bersama
 
-Status: draf, menunggu persetujuan (15 November 2026)
+Status: selesai (15 November 2026)
 Asal: penilaian UI/UX tanggal 14 November 2026. Nilai gambar 5,5/10, grafik 6,5/10.
 Prinsip: Fase 2 hanya mengubah **komponen bersama dan aset gambar**. Susunan halaman tetap dikerjakan di Fase 3–5. Angka, data, dan logika tidak berubah.
 

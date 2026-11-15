@@ -156,8 +156,8 @@ export default function Provinsi() {
       <HeroBanner
         judul={judul || 'Peringkat partisipasi pendidikan usia dini per provinsi'}
         deskripsi="Halaman ini menunjukkan provinsi mana yang perlu diprioritaskan, seberapa jauh jaraknya dari nasional, dan apa yang bisa dilakukan."
-        gambar="/images/foto-provinsi.svg"
-        alt="Ilustrasi wilayah Indonesia"
+        gambar="/images/foto-papua.jpg"
+        alt="Suasana kelas di Papua"
       />
 
       <div className="mt-6 flex flex-wrap items-center gap-3">

@@ -4,11 +4,14 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from 'recharts'
 import { formatAngka } from '../lib/format'
 import DataTable from './DataTable'
+import { skalaRapi } from './skala'
+import TooltipGrafik from './TooltipGrafik'
 
 const BIRU = '#6F8CAB'
 const MERAH = '#C2372D'
@@ -19,7 +22,7 @@ export default function TrenGaris({ data, pembandingNama, tertinggalNama, ringka
   if (!data.length) return null
 
   const allNilai = data.flatMap((d) => [d.pembanding, d.tertinggal]).filter((n) => n !== null)
-  const max = allNilai.length ? Math.ceil((Math.max(...allNilai) + 5) / 5) * 5 : 20
+  const skala = skalaRapi(allNilai.length ? Math.max(...allNilai) : 20)
 
   return (
     <div className="w-full">
@@ -39,20 +42,21 @@ export default function TrenGaris({ data, pembandingNama, tertinggalNama, ringka
             padding={{ left: 12, right: 12 }}
           />
           <YAxis
-            domain={[0, max]}
-            ticks={[0, max / 4, max / 2, (3 * max) / 4, max].map((t) => Math.round(t * 10) / 10)}
+            domain={[0, skala.maks]}
+            ticks={skala.ticks}
             tick={{ fontSize: '0.75rem', fill: TINTA_REDUP }}
             axisLine={false}
             tickLine={false}
             width={44}
-            tickFormatter={(v) => formatAngka(v, 0)}
+            tickFormatter={(v) => formatAngka(v, skala.desimal)}
           />
+          <Tooltip cursor={{ stroke: TINTA_REDUP, strokeWidth: 1 }} content={<TooltipGrafik satuan="%" />} />
           <Line
             type="linear"
             dataKey="pembanding"
             name={pembandingNama}
             stroke={BIRU}
-            strokeWidth={2.5}
+            strokeWidth={2}
             dot={{ r: 4, fill: BIRU, strokeWidth: 0 }}
           >
             <LabelList
@@ -68,7 +72,7 @@ export default function TrenGaris({ data, pembandingNama, tertinggalNama, ringka
             dataKey="tertinggal"
             name={tertinggalNama}
             stroke={MERAH}
-            strokeWidth={2.5}
+            strokeWidth={2}
             dot={{ r: 4, fill: MERAH, strokeWidth: 0 }}
           >
             <LabelList

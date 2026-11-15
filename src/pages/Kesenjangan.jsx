@@ -22,11 +22,14 @@ import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal, BelumTersedia } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
+// Jenjang berurutan: satu warna biru dari terang ke gelap, ditambah pola garis sebagai penanda kedua.
+// Merah tidak dipakai di sini karena merah berarti kelompok tertinggal. Lolos validator palet (ΔE ≥ 15, kontras ≥ 3:1).
 const WARNA_JENJANG = {
-  SD: '#C2372D',
-  SMP: '#6F8CAB',
-  SMA: '#5A6676',
+  SD: '#5C8DC9',
+  SMP: '#2E5F9E',
+  SMA: '#18324F',
 }
+const POLA_JENJANG = { SD: '6 4', SMP: '2 3', SMA: undefined }
 
 function Sumber({ tahun }) {
   return (
@@ -140,7 +143,7 @@ export default function Kesenjangan() {
         { key: 'pembanding', label: pairLabel.pembanding, color: '#6F8CAB' },
         { key: 'tertinggal', label: pairLabel.tertinggal, color: '#C2372D' },
       ]
-    : JENJANG.map((j) => ({ key: j, label: j, color: WARNA_JENJANG[j] }))
+    : JENJANG.map((j) => ({ key: j, label: j, color: WARNA_JENJANG[j], pola: POLA_JENJANG[j] }))
 
   const trendInsight = (() => {
     if (jenjang) {

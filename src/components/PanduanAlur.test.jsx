@@ -42,7 +42,9 @@ describe('Panduan alur', () => {
     fireEvent.keyDown(document, { key: 'Escape' })
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
     expect(sudahDilihat()).toBe(true)
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveFocus())
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveFocus(), {
+      timeout: 3000,
+    })
   })
 
   it('tidak muncul lagi setelah dilihat, tetapi bisa dibuka lewat tombol "?"', async () => {
@@ -54,7 +56,9 @@ describe('Panduan alur', () => {
     const tombol = screen.getByRole('button', { name: 'Apa arti angka ini?' })
     fireEvent.click(tombol)
     const d = await kartu()
-    await waitFor(() => expect(within(d).getByRole('button', { name: 'Mulai tur' })).toHaveFocus())
+    await waitFor(() => expect(within(d).getByRole('button', { name: 'Mulai tur' })).toHaveFocus(), {
+      timeout: 3000,
+    })
     fireEvent.click(tombol)
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
   })

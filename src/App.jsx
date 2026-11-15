@@ -68,7 +68,7 @@ export default function App() {
   useMuatDiLatar()
 
   return (
-    <div className="min-h-screen bg-kertas text-tinta">
+    <div className="flex min-h-dvh flex-col bg-kertas text-tinta">
       <Nav />
       <Suspense fallback={<Fallback />}>
         <Routes>
@@ -83,6 +83,8 @@ export default function App() {
         </Routes>
         <PenandaHalaman />
       </Suspense>
+      {/* Jarak minimal ke footer; sisa ruang di halaman pendek mendorong footer ke bawah layar. */}
+      <div aria-hidden="true" className="h-16 shrink-0" />
       <Footer ruangAlur={adaAlur} />
       <AlurCerita />
     </div>

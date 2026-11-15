@@ -3,7 +3,7 @@ import { useData } from '../lib/data'
 import { downloadCsv } from '../lib/ekspor'
 import { REFERENSI } from '../lib/solusi'
 import Accordion from '../components/Accordion'
-import HeroBanner from '../components/HeroBanner'
+import KepalaHalaman from '../components/KepalaHalaman'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
@@ -69,11 +69,9 @@ export default function Metode() {
         </Link>
       </p>
       <div className="mt-2">
-        <HeroBanner
+        <KepalaHalaman
           judul="Metode dan sumber"
-          deskripsi="Penjelasan data, istilah, rumus, dan keterbatasan yang dipakai SETARA. Bagian ini membantu membaca setiap grafik dengan benar."
-          gambar="/images/foto-data.svg"
-          alt="Ilustrasi data pendidikan"
+          konteks="Penjelasan data, istilah, rumus, dan keterbatasan yang dipakai SETARA. Bagian ini membantu membaca setiap grafik dengan benar."
         />
       </div>
 

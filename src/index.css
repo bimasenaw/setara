@@ -77,6 +77,20 @@
   mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent);
 }
 
+/* Tepi pudar yang mengikuti posisi gulir: hanya di sisi yang masih menyimpan isi. */
+@utility tepi-gulir {
+  --pudar-kiri: 0px;
+  --pudar-kanan: 0px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--pudar-kiri), #000 calc(100% - var(--pudar-kanan)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--pudar-kiri), #000 calc(100% - var(--pudar-kanan)), transparent);
+  &[data-kiri] {
+    --pudar-kiri: 2rem;
+  }
+  &[data-kanan] {
+    --pudar-kanan: 2rem;
+  }
+}
+
 @utility tanpa-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {
