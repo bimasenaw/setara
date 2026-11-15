@@ -346,3 +346,87 @@ Jika waktu terbatas, fase 0–3 adalah inti. Fase 4 boleh menyusul.
 
 - Tanggal presentasi final, untuk menentukan apakah fase 4 ikut dikerjakan.
 - Apakah URL utama langsung memakai v2, atau v2 di-deploy ke URL preview dulu sampai lolos QA.
+
+## 16. Tambahan: Fase 2, fondasi visual bersama
+
+Status: draf, menunggu persetujuan (15 November 2026)
+Asal: penilaian UI/UX tanggal 14 November 2026. Nilai gambar 5,5/10, grafik 6,5/10.
+Prinsip: Fase 2 hanya mengubah **komponen bersama dan aset gambar**. Susunan halaman tetap dikerjakan di Fase 3–5. Angka, data, dan logika tidak berubah.
+
+### 16.1 Hero (`HeroBanner`)
+
+Bagian ini menggantikan aturan "lapisan gelap rata 55%" di bagian 6.1.
+
+- **Masalah:** lapisan `bg-tinta/75` rata menutupi seluruh foto, sehingga foto siswa terlihat kusam dan muram.
+- **Perubahan:** pakai gradasi yang hanya menggelapkan area teks:
+  - HP: dari bawah ke atas, `tinta/85` → `tinta/55` di tengah → `tinta/10` di atas.
+  - Desktop: ditambah gradasi dari kiri, karena teks rata kiri.
+  - Sisi kanan atas foto tetap hampir asli.
+- **Syarat kontras:** teks putih di atas hero minimal 4,5:1 di titik terterang di belakang teks. Ini diukur otomatis lewat Playwright dengan mengambil sampel piksel di bawah kotak judul dan deskripsi.
+- **Gambar:** atribut `width` dan `height` ditambahkan agar tata letak tidak bergeser, dengan `decoding="async"` dan `fetchpriority="high"`.
+
+### 16.2 Gambar
+
+| Tempat | Sekarang | Menjadi |
+|---|---|---|
+| Hero halaman Provinsi | `foto-provinsi.svg` (bentuk bulat abstrak, terlihat seperti placeholder) | Foto asli. Usulan: `foto-papua.jpg`, karena Papua adalah provinsi yang paling tertinggal di halaman ini. Bisa diganti kalau pengguna memberi foto lain |
+| Profil provinsi selain Papua | `foto-provinsi.svg` | `foto-umum.jpeg` |
+| Hero halaman Metode | `foto-data.svg` | `KepalaHalaman` tanpa foto, sesuai 8.6 (dimajukan dari Fase 5 karena hanya mengganti komponen kepala) |
+| `foto-sd.png` | 1,3 MB | Dikompres menjadi JPEG berlebar maksimal 1600 px, sekitar 150–250 KB. Rujukan diperbarui di `src/lib/foto.js` (pengecualian yang diizinkan) |
+
+Berkas SVG placeholder yang tidak dipakai lagi dihapus dari `public/images`.
+
+### 16.3 Grafik
+
+**a. Warna tren SD, SMP, SMA (`TrenMultiGaris` di Kesenjangan)**
+- **Sekarang:** SD merah `#C2372D`, SMP `#6F8CAB`, SMA `#5A6676`.
+  - Hasil validator: SMP dan SMA gagal batas beda warna untuk mata normal (ΔE 12,7, batasnya 15).
+  - Merah untuk SD juga bentrok dengan arti merah di SETARA, yaitu kelompok tertinggal.
+- **Menjadi:** satu warna biru dari terang ke gelap, karena jenjang punya urutan:
+  - SD `#5C8DC9`, SMP `#2E5F9E`, SMA `#18324F`.
+  - Validator: beda warna untuk buta warna ≥ 15,1 dan untuk mata normal ≥ 15,1, kontras ketiganya ≥ 3:1 di latar putih.
+- **Penanda kedua**, supaya identitas garis tidak hanya bergantung pada warna:
+  - pola garis berbeda: SD putus-putus `6 4`, SMP putus pendek `2 3`, SMA utuh
+  - label langsung di ujung kanan setiap garis
+  - legenda tetap ada
+- Merah tetap khusus untuk kelompok tertinggal (dumbbell, peringkat provinsi).
+
+**b. Angka sumbu bulat**
+- Fungsi bersama `skalaRapi(maks)` di `src/components/skala.js` (`src/lib` tidak disentuh). Fungsi ini mengembalikan batas atas dan 4–6 angka sumbu dengan langkah 1, 2, 2,5, atau 5 × 10ⁿ.
+- Contoh: maksimal 26,06 → 0, 10, 20, 30. Maksimal 15 → 0, 5, 10, 15. Maksimal 79 → 0, 20, 40, 60, 80.
+- Dipakai di `Dumbbell`, `TrenGaris`, `TrenMultiGaris`, dan `ProvinsiTrend`.
+  - Sekarang Dumbbell menampilkan 0, 8, 15, 23, 30, TrenMultiGaris 0, 4, 8, 12, 15, dan ProvinsiTrend berpuncak 85.
+
+**c. Lapisan sorot di grafik garis**
+- `TrenGaris`, `TrenMultiGaris`, dan `ProvinsiTrend` mendapat garis bantu vertikal dan tooltip saat disorot kursor atau disentuh.
+- Isinya tahun dan nilai setiap garis, dengan teks berwarna tinta. Warna garis hanya dipakai pada penanda kecil di samping nama.
+- Tabel data di bawah grafik tetap ada.
+
+**d. Ketebalan:** garis 2 px dan penanda 8 px, sesuai spesifikasi grafik. Garis sekarang setebal 2,5 px.
+
+### 16.4 Navigasi HP
+
+- **Sekarang:** menu bisa digeser, tetapi tepi pudarnya selalu ada di kedua sisi, termasuk saat menu masih di ujung kiri. Akibatnya "Ringkasan" ikut pudar, dan "Rekomendasi" terpotong tanpa petunjuk yang jelas.
+- **Menjadi:** tepi pudar hanya muncul di sisi yang masih punya menu tersembunyi. Polanya sama dengan efek tepi gulir (`data-kiri`, `data-kanan` diperbarui saat menu digeser). Item aktif tetap digulir ke tengah.
+
+### 16.5 Footer di halaman pendek
+
+Pada halaman yang isinya pendek, misalnya "Provinsi tidak ditemukan", footer melayang di tengah layar. Pembungkus aplikasi dibuat `flex min-h-dvh flex-col` dan footer `mt-auto`, supaya footer selalu menempel di bawah layar.
+
+### 16.6 Di luar cakupan Fase 2
+
+- Susunan isi tiap halaman: `KepalaHalaman` di semua halaman, `CaraMembaca`, `AksiData`, dan grafik utama baru. Ini dikerjakan di Fase 3–5.
+- Foto untuk halaman Rekomendasi (Fase 4).
+
+### 16.7 Tes dan selesai bila
+
+1. Tes unit `skalaRapi`: contoh di 16.3b dan kasus 0, nilai sangat kecil, serta maksimal tepat bulat.
+2. Tes `TrenMultiGaris`: setiap garis punya pola dan label langsung.
+3. Pengukuran kontras hero di HP 390 px dan desktop 1280 px untuk Ringkasan, Kesenjangan, Provinsi, dan profil provinsi: semuanya ≥ 4,5:1.
+4. Validator palet lolos untuk biru SD, SMP, SMA (beda warna dan kontras).
+5. Screenshot sebelum dan sesudah di 390 px dan 1280 px.
+6. Lint, tes, dan build lolos. `src/lib` (kecuali `foto.js`), `public/data`, dan `scripts` tidak berubah. Angka di semua halaman sama.
+
+### 16.8 Pertanyaan terbuka
+
+- Foto hero halaman Provinsi: pakai ulang `foto-papua.jpg`, atau pengguna memberi foto baru?
