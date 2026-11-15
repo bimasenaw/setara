@@ -460,3 +460,26 @@ Status: selesai (15 November 2026). Angka, data, dan logika di `src/lib` tidak b
 
 **Yang berbeda dari rencana**
 - Kontrol Kesenjangan **tidak dibuat menempel** saat digulir di HP. Tiga baris kontrol yang menempel akan memakai lebih dari seperempat layar HP, lebih mengganggu daripada membantu.
+
+## 18. Catatan pelaksanaan Fase 4 (Provinsi dan Rekomendasi)
+
+Status: selesai (15 November 2026). Angka, data, dan logika di `src/lib` tidak berubah.
+
+**Provinsi (8.3)**
+- Judul dari indeks prioritas: "{tiga teratas} paling perlu diprioritaskan."
+- Kalimat peralihan ukuran: halaman sebelumnya memakai angka anak tidak sekolah, halaman ini memakai indikator provinsi (2023–2025).
+- Grafik utama: batang indeks prioritas 0–100 (`GrafikPrioritas`). Sepuluh teratas tampil, sisanya lewat "Tampilkan semua provinsi (38)". Lima teratas merah, sisanya biru kelabu. Setiap baris menaut ke profil, dan tahun data tiap indikator ditampilkan di bawah grafik.
+- Satu `CaraMembaca`. Matriks prioritas berjudul pertanyaan, dengan kalimat jumlah provinsi mendesak.
+- Peringkat PAUD (dot plot, pencarian, tabel selisih) dipindah ke bagian "Peringkat per indikator", dan filter tahun hanya ada di sana.
+- `BandingProvinsi` dan "Provinsi paling berubah" masuk ke "Analisis lanjutan".
+- Enam tombol disatukan menjadi `AksiData`. Ada `LangkahBerikutnya` ke Rekomendasi.
+- Dipindah ke Rekomendasi: "Rekomendasi kontekstual" dan "Rekomendasi keputusan".
+
+**Rekomendasi (8.4)**
+- Kepala halaman berfoto.
+- Setiap rekomendasi memuat kalimat "Temuan (tahun)" yang dihitung dari data: K1 vs K5 di SMA, nasional SD → SMP → SMA, desa vs kota di SMA, provinsi PAUD terendah vs nasional, dan laki-laki vs perempuan di SMP dan SMA. Bila perempuan yang lebih banyak tidak sekolah, kalimat dan sasaran berubah mengikuti data.
+- Bagian baru: "Mulai dari mana?" (lima provinsi prioritas dengan dua langkah teratas masing-masing), kaitan SDGs, dan "Batas rekomendasi".
+
+**Yang berbeda dari rencana**
+- Bagian "Peringkat per indikator" tidak memakai tab, karena indikatornya baru satu (PAUD). Tab ditambahkan bila indikator kedua tersedia.
+- "Rekomendasi keputusan" tiga kalimat umum tidak dipindahkan karena isinya sudah tercakup lima rekomendasi utama.

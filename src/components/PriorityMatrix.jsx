@@ -2,20 +2,23 @@ import { Link } from 'react-router-dom'
 import { formatAngka, formatPoin } from '../lib/format'
 import { labelKategori } from '../lib/prioritas'
 import { tautanProvinsi } from '../lib/params'
-import Accordion from './Accordion'
 
 const URUTAN = ['Mendesak', 'Membaik', 'Pantau', 'Berhasil']
 
 export default function PriorityMatrix({ data, tahun }) {
   if (!data || !data.length) return null
   return (
-    <section className="mt-8 rounded-lg border border-garis bg-putih p-5">
-      <h2 className="text-base font-semibold text-tinta">Matriks prioritas provinsi</h2>
+    <section className="mt-12 border-t border-garis pt-6">
+      <h2 className="subjudul text-tinta">Tertinggal dan memburuk, atau tertinggal tetapi membaik?</h2>
+      <p className="mt-1 max-w-[68ch] text-base leading-relaxed text-tinta">
+        Dari {data.length} provinsi, {data.filter((d) => d.kategori === 'Mendesak').length} berada di kuadran
+        mendesak: partisipasi SMA-nya di bawah nilai tengah dan tidak membaik sejak {data[0]?.tahunAwal ?? 2019}.
+      </p>
       <div className="mt-4 grid gap-4 md:grid-cols-2">
         {URUTAN.map((kategori) => {
           const items = data.filter((d) => d.kategori === kategori)
           return (
-            <div key={kategori} className="rounded-lg border border-garis bg-kertas p-3">
+            <div key={kategori} className="rounded-lg border border-garis bg-putih p-3">
               <h3 className="text-sm font-semibold text-tinta">{labelKategori(kategori)}</h3>
               {items.length ? (
                 <ul className="mt-2 space-y-1 text-sm text-tinta">
@@ -40,19 +43,10 @@ export default function PriorityMatrix({ data, tahun }) {
           )
         })}
       </div>
-      <Accordion judul="Apa makna kuadran ini?">
-        <p>
-          Setiap provinsi ditempatkan berdasarkan dua hal: tingkat partisipasi SMA saat ini dan
-          perubahannya sejak 2019.
-        </p>
-        <p>
-          Perlu intervensi mendesak berarti partisipasinya rendah dan cenderung turun. Berhasil
-          berarti partisipasinya sudah tinggi dan terus membaik.
-        </p>
-        <p>
-          Kuadran ini alat bantu prioritas. Bukan penilaian resmi terhadap kinerja provinsi.
-        </p>
-      </Accordion>
+      <p className="teks-bantu mt-3 max-w-[68ch]">
+        Kuadran ditentukan oleh tingkat partisipasi SMA terbaru dan perubahannya sejak {data[0]?.tahunAwal ?? 2019}.
+        Ini alat bantu prioritas, bukan penilaian resmi terhadap kinerja provinsi.
+      </p>
     </section>
   )
 }

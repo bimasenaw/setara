@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import App from './App'
 import { resetDataCache } from './lib/data'
@@ -84,6 +84,25 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: 'Bagikan dan unduh' })).toBeInTheDocument()
   })
 
+  it('provinsi: judul dari indeks prioritas, 10 teratas, lalu semua provinsi', async () => {
+    render(
+      <MemoryRouter initialEntries={['/provinsi']}>
+        <App />
+      </MemoryRouter>,
+    )
+    await waitFor(
+      () => {
+        expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/paling perlu diprioritaskan/)
+      },
+      { timeout: 10000 },
+    )
+    const daftar = screen.getByRole('list', { name: /Indeks prioritas per provinsi/ })
+    expect(within(daftar).getAllByRole('listitem')).toHaveLength(10)
+    fireEvent.click(screen.getByRole('button', { name: /Tampilkan semua provinsi/ }))
+    expect(within(daftar).getAllByRole('listitem').length).toBeGreaterThan(30)
+    expect(screen.getByText(/Ukurannya berganti/)).toBeInTheDocument()
+  })
+
   it('menampilkan detail provinsi', async () => {
     render(
       <MemoryRouter initialEntries={['/provinsi/1100']}>
@@ -121,8 +140,14 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Lima langkah/)
     })
-    // Lima rekomendasi, ditambah satu bagian kaitan SDGs.
-    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(6)
+    // Lima rekomendasi, ditambah "Mulai dari mana?", kaitan SDGs, dan batas rekomendasi.
+    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(8)
+    expect(screen.getByRole('heading', { name: 'Mulai dari mana?' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Batas rekomendasi' })).toBeInTheDocument()
+    // Temuan dihitung dari data, bukan disalin.
+    await waitFor(() => {
+      expect(screen.getAllByText(/^Temuan \(\d{4}\):/).length).toBe(5)
+    })
     expect(screen.getByRole('heading', { name: /tujuan pembangunan berkelanjutan/ })).toBeInTheDocument()
     const alur = screen.getByRole('navigation', { name: 'Alur cerita' })
     const aktif = within(alur).getByRole('link', { current: 'step' })
