@@ -122,4 +122,4 @@ Ini **rencana awal**, belum desain akhir. Yang perlu ditinjau pengguna:
 
 - Push, cek preview Vercel, merge ke `main`, dan deploy (menunggu pengguna).
 - Commit perubahan Fase "Matematika Indeks" (menunggu pengguna).
-- Video demo cadangan (opsional).
+- ~~Video demo cadangan~~ **selesai (2026-11-19):** `Presentasi/Video/demo-cadangan.webm`, 59 detik, 1280×720, tanpa suara. Urutannya: Ringkasan (tiga temuan), Kesenjangan (batang desa-kota), Provinsi (uji kepekaan, kuadran), profil Papua Pegunungan (#perhitungan), Rekomendasi, lalu kutipan Caniago yang disorot. Bisa diputar di Edge atau disisipkan ke slide 12. Rekam ulang dari situs lokal: `Presentasi/sumber-deck/rekam-demo.cjs`. Saat pindah ke profil ada kerangka muat sekitar 1 detik (dari server dev).
