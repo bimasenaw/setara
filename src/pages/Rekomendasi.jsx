@@ -15,6 +15,7 @@ import { formatAngka, formatPersen, formatPoin } from '../lib/format'
 import { fotoJenjang } from '../lib/foto'
 import { hitungPrioritas } from '../lib/prioritas'
 import { rekomendasiProvinsi } from '../lib/rekomendasi'
+import { nilaiTerbaru } from '../lib/indikator'
 import { tautanProvinsi } from '../lib/params'
 import { SDG } from '../lib/sdg'
 import useDocumentMeta from '../lib/useDocumentMeta'
@@ -65,7 +66,10 @@ export default function Rekomendasi() {
           ? `Secara nasional, anak tidak sekolah naik dari ${formatPersen(sd, 1)} di SD menjadi ${formatPersen(smp, 1)} di SMP dan ${formatPersen(sma, 1)} di SMA.`
           : null,
       wilayah: kalimatDimensi(tidakSekolah, 'wilayah', 'SMA', tahun),
-      paud: terendah ? kalimatProvinsi(terendah.provinsi, terendah.nilai, nasProv) : null,
+      // Sebut nama indikatornya: ini bukan APK PAUD 3–6 tahun yang tampil di halaman Provinsi.
+      paud: terendah
+        ? `partisipasi pembelajaran setahun sebelum SD di ${kalimatProvinsi(terendah.provinsi, terendah.nilai, nasProv)}`
+        : null,
       gender: gender.teks,
       perempuanTertinggal: gender.perempuanTertinggal,
     }
@@ -76,6 +80,33 @@ export default function Rekomendasi() {
     return hitungPrioritas(indikator)
       .daftar.slice(0, 5)
       .map((p) => ({ ...p, rekomendasi: rekomendasiProvinsi(indikator, p.kode).slice(0, 2) }))
+  }, [siap, indikator])
+
+  // Nilai nasional pembanding ditulis sekali, bukan diulang di setiap provinsi.
+  // Penyaringnya sama dengan rekomendasiProvinsi di src/lib/rekomendasi.js.
+  const pembandingNasional = useMemo(() => {
+    if (!siap) return ''
+    const daftar = [
+      [
+        'APK PAUD',
+        nilaiTerbaru(indikator, { indikator: 'apk_paud', kode: '9999', kelompok: 'Total' }).nilai,
+        '%',
+      ],
+      [
+        'kemiskinan',
+        nilaiTerbaru(indikator, { indikator: 'kemiskinan', kode: '9999', kelompok: 'Jumlah' }).nilai,
+        '%',
+      ],
+      [
+        'partisipasi usia SMA',
+        nilaiTerbaru(indikator, { indikator: 'aps', kode: '9999', jenjang: 'SMA' }).nilai,
+        '%',
+      ],
+    ]
+    return daftar
+      .filter(([, v]) => v !== null)
+      .map(([nama, v, satuan]) => `${nama} ${formatAngka(v, 2)}${satuan}`)
+      .join(', ')
   }, [siap, indikator])
 
   const foto = fotoJenjang('SMP')
@@ -138,8 +169,8 @@ export default function Rekomendasi() {
       <section className="mt-12">
         <h2 className="subjudul text-tinta">Mulai dari mana?</h2>
         <p className="teks-bantu mt-1 max-w-[68ch]">
-          Lima provinsi dengan indeks prioritas tertinggi, masing-masing dengan langkah yang paling relevan
-          menurut datanya.
+          Lima provinsi dengan indeks prioritas tertinggi dan dua langkah yang paling relevan.
+          {pembandingNasional && ` Nasional: ${pembandingNasional}.`}
         </p>
         {status === 'loading' ? (
           <div className="mt-3">
@@ -163,7 +194,11 @@ export default function Rekomendasi() {
                   <ul className="mt-1 max-w-[68ch] space-y-1">
                     {p.rekomendasi.map((r) => (
                       <li key={r.judul} className="text-base leading-relaxed text-tinta">
-                        <span className="font-semibold">{r.judul}.</span> {r.dasar}
+                        <span className="font-semibold">{r.judul}</span>
+                        <span className="text-tinta-redup">
+                          {' '}
+                          · {r.dasar.split(', ')[0].replace(/\.$/, '')}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -191,17 +226,15 @@ export default function Rekomendasi() {
       <section className="mt-12 rounded-lg bg-putih p-5">
         <h2 className="subjudul text-tinta">Batas rekomendasi</h2>
         <p className="mt-2 max-w-[68ch] text-base leading-relaxed text-tinta">
-          Lima langkah ini bukan resep tunggal. Urutan intervensi perlu disesuaikan dengan kondisi tiap
-          daerah. Hubungan antara temuan dan solusi bersifat indikatif, bukan jaminan hasil. Dari studi
-          pendukung, hanya sebagian yang menguji sebab-akibat, seperti uji acak dan ulasan sistematis; sisanya
-          menunjukkan hubungan atau menggambarkan pengalaman.
+          Lima langkah ini bukan resep tunggal dan perlu disesuaikan dengan tiap daerah; hasilnya tidak
+          dijamin. Hanya sebagian studi pendukung yang menguji sebab-akibat; sisanya menunjukkan hubungan.
         </p>
       </section>
 
       <Sumber
         tahun={tahun}
         satuan="persen"
-        catatan="Rujukan setiap langkah dapat dibuka dari tombol Bukti."
+        catatan="Ketuk nama studi di setiap langkah untuk membaca buktinya."
       />
 
       <AksiData

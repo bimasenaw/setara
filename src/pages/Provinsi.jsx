@@ -137,9 +137,8 @@ export default function Provinsi() {
       />
 
       <p className="mt-6 max-w-[68ch] rounded-lg bg-putih p-4 text-base leading-relaxed text-tinta">
-        <span className="font-semibold">Ukurannya berganti.</span> Halaman sebelumnya memakai angka anak tidak
-        sekolah. Halaman ini memakai indikator provinsi terbaru dari BPS (2023–2025), karena angka anak tidak
-        sekolah tidak tersedia per provinsi.
+        <span className="font-semibold">Ukurannya berganti:</span> indikator provinsi BPS 2023–2025, karena
+        angka anak tidak sekolah tidak tersedia per provinsi.
       </p>
 
       {tampilSemua ? (
@@ -150,7 +149,7 @@ export default function Provinsi() {
               Skor 0–100. Makin tinggi, makin perlu didahulukan. Pilih provinsi untuk melihat profilnya.
             </p>
             <div className="mt-4">
-              <GrafikPrioritas daftar={prioritas.daftar} tahun={tahun} komponen={prioritas.komponen} />
+              <GrafikPrioritas daftar={prioritas.daftar} tahun={tahun} />
             </div>
             <Sumber
               tahun="2023–2025"
@@ -166,6 +165,12 @@ export default function Provinsi() {
                   : 'Makin tinggi skor, makin perlu didahulukan.'}
               </p>
               <p>Skor adalah alat bantu menentukan prioritas, bukan vonis terhadap kinerja provinsi.</p>
+              {prioritas.komponen.length > 0 && (
+                <p>
+                  Tahun data per indikator:{' '}
+                  {prioritas.komponen.map((k) => `${k.label} ${k.tahun ?? '-'}`).join(' · ')}.
+                </p>
+              )}
             </CaraMembaca>
           </section>
 
@@ -174,7 +179,8 @@ export default function Provinsi() {
           <section className="mt-12 border-t border-garis pt-6">
             <h2 className="subjudul text-tinta">Peringkat per indikator · PAUD</h2>
             <p className="teks-bantu mt-1">
-              Partisipasi pendidikan usia dini per provinsi. Tahun hanya berlaku untuk indikator ini.
+              Grafik: partisipasi pembelajaran setahun sebelum SD per provinsi. Pilihan tahun hanya berlaku
+              untuk grafik ini.
             </p>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -205,8 +211,8 @@ export default function Provinsi() {
             <div className="mt-4 rounded-lg border border-garis bg-putih p-5">
               <DotPlotProvinsi provinsi={baris} nilaiNasional={nasional} />
               <p className="teks-bantu mt-3">
-                Garis putus-putus adalah rata-rata nasional, dan lima provinsi terendah berwarna merah. Sumbu
-                mulai dari 50%. Empat provinsi baru Papua belum memiliki data indikator ini.
+                Garis putus-putus = rata-rata nasional; lima terendah merah; sumbu mulai 50%. Empat provinsi
+                baru Papua belum punya data.
               </p>
               <Sumber tahun={tahun} />
             </div>
@@ -241,14 +247,18 @@ export default function Provinsi() {
                   ))}
                 </ol>
                 {dampak && (
-                  <p className="mt-3 max-w-[68ch] text-base leading-relaxed text-tinta">
-                    Jika provinsi terendah menyamai APK PAUD nasional, sekitar{' '}
-                    <span className="font-semibold">{formatJumlahOrang(dampak.estimasi)}</span> usia 3–6 tahun
-                    berpotensi mendapat layanan PAUD tambahan.{' '}
-                    <span className="teks-bantu">
-                      Perkiraan, bukan sensus. {dampak.metode} Asumsi: {dampak.asumsi}
-                    </span>
-                  </p>
+                  <>
+                    <p className="mt-3 max-w-[68ch] text-base leading-relaxed text-tinta">
+                      Jika provinsi terendah menyamai APK PAUD nasional, sekitar{' '}
+                      <span className="font-semibold">{formatJumlahOrang(dampak.estimasi)}</span> usia 3–6
+                      tahun berpotensi mendapat layanan PAUD tambahan.{' '}
+                      <span className="teks-bantu">Perkiraan, bukan sensus.</span>
+                    </p>
+                    <CaraMembaca judul="Cara menghitung" className="mt-2">
+                      <p>{dampak.metode}</p>
+                      <p>Asumsi: {dampak.asumsi}</p>
+                    </CaraMembaca>
+                  </>
                 )}
               </div>
             )}

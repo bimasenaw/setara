@@ -8,7 +8,7 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Keluarga termiskin',
     judul: 'Perkuat bantuan tunai bersyarat di jenjang menengah',
     intervensi:
-      'Perluas dan pertajam PKH serta beasiswa bagi rumah tangga termiskin, terutama saat anak memasuki SMP dan SMA, ketika biaya sekolah dan biaya kesempatan bekerja paling besar.',
+      'Perluas dan pertajam PKH serta beasiswa bagi rumah tangga termiskin saat anak masuk SMP dan SMA, ketika biaya sekolah dan biaya kesempatan bekerja paling besar.',
     sumber: ['cahyadi2020', 'hudang2024', 'caniago2021'],
     data: { to: '/kesenjangan', tab: 'ekonomi', jenjang: 'SMA' },
   },
@@ -17,7 +17,7 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Transisi antarjenjang',
     judul: 'Amankan perpindahan dari SD ke SMP dan dari SMP ke SMA',
     intervensi:
-      'Gunakan BOS dan beasiswa untuk menahan anak tetap bersekolah pada titik transisi, karena lonjakan anak tidak sekolah terjadi saat anak berpindah jenjang.',
+      'Pakai BOS dan beasiswa untuk menahan anak tetap sekolah saat berpindah jenjang, titik ketika angka anak tidak sekolah melonjak.',
     sumber: ['petrosino2012', 'sugiharti2017', 'kartasasmita2021'],
     data: { to: '/kesenjangan', tab: 'wilayah', jenjang: 'Umum' },
   },
@@ -26,7 +26,7 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Anak di perdesaan',
     judul: 'Dekatkan sekolah menengah ke perdesaan, disertai bantuan biaya',
     intervensi:
-      'Perluas ketersediaan sekolah menengah di perdesaan, dan tutup juga biayanya. Jarak ke sekolah menurunkan partisipasi SMP di Indonesia, tetapi dalam studi di 21 negara miskin pengaruhnya kecil bila tidak disertai bantuan biaya.',
+      'Dekatkan sekolah menengah ke desa dan bantu biayanya. Jarak menurunkan partisipasi SMP di Indonesia, tetapi di 21 negara miskin pengaruh jarak saja kecil.',
     sumber: ['sirait2019', 'filmer2004', 'petrosino2012', 'sugiharti2017'],
     data: { to: '/kesenjangan', tab: 'wilayah', jenjang: 'SMA' },
   },
@@ -35,7 +35,7 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Daerah tertinggal',
     judul: 'Perluas PAUD di daerah dengan partisipasi terendah',
     intervensi:
-      'Perluas layanan PAUD di daerah tertinggal, mulai dari kelompok bermain berbasis desa, agar anak tidak memulai SD dengan bekal yang lebih sedikit. Proyek PAUD berbasis desa mempersempit kesenjangan capaian anak kaya dan miskin. Pengalaman PAUD jarak jauh di Jayapura dapat menjadi bahan rancangan layanan untuk wilayah yang sulit dijangkau.',
+      'Perluas PAUD di daerah tertinggal lewat kelompok bermain desa, agar anak miskin tidak masuk SD dengan bekal lebih sedikit. PAUD jarak jauh di Jayapura bisa jadi contoh rancangan.',
     sumber: ['jung2014', 'brinkman2017', 'pratiwi2021'],
     data: { to: '/provinsi' },
   },
@@ -44,7 +44,7 @@ export const REKOMENDASI_UTAMA = [
     sasaran: 'Kelompok gender yang tertinggal',
     judul: 'Beri dukungan tertarget berdasarkan data gender, bukan stereotip',
     intervensi:
-      'Arahkan dukungan pada kelompok gender yang lebih banyak tidak sekolah di daerahnya, karena arah kesenjangan gender berbeda antardaerah, dan perhatikan bahwa pilihan jenis sekolah juga berbeda menurut gender.',
+      'Arahkan dukungan ke kelompok gender yang lebih banyak tidak sekolah di daerahnya, karena arah kesenjangan berbeda antardaerah dan pilihan jenis sekolah berbeda menurut gender.',
     sumber: ['surbakti2020', 'himaz2021', 'asadullah2018'],
     data: { to: '/kesenjangan', tab: 'gender', jenjang: 'SMA' },
   },

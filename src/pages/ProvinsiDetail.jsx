@@ -180,7 +180,7 @@ export default function ProvinsiDetail() {
             {skor && <span className="text-[1.25rem] text-tinta-redup">/100</span>}
           </p>
           <p className="teks-bantu mt-2">
-            {skor ? `Peringkat ${skor.peringkat} dari ${prioritas.daftar.length}` : 'Data belum tersedia'}
+            {skor ? 'Makin tinggi, makin perlu didahulukan.' : 'Data belum tersedia'}
           </p>
         </div>
         <div>
@@ -262,9 +262,11 @@ export default function ProvinsiDetail() {
             Sekitar {formatJumlahOrang(dampak.estimasi)} usia 3–6 tahun berpotensi mendapat layanan PAUD
             tambahan jika partisipasi menyamai nasional.
           </p>
-          <p className="teks-bantu mt-1 max-w-[68ch]">
-            Perkiraan, bukan sensus. {dampak.metode} Asumsi: {dampak.asumsi}
-          </p>
+          <p className="teks-bantu mt-1 max-w-[68ch]">Perkiraan, bukan sensus.</p>
+          <CaraMembaca judul="Cara menghitung" className="mt-2">
+            <p>{dampak.metode}</p>
+            <p>Asumsi: {dampak.asumsi}</p>
+          </CaraMembaca>
         </section>
       )}
 

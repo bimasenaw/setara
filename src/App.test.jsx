@@ -83,6 +83,33 @@ describe('App', () => {
     expect(screen.getByText(/batang atas/)).toBeInTheDocument()
   })
 
+  it('temuan utama tidak mengulang angka besar di keterangannya', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>,
+    )
+    expect(
+      await screen.findByText('anak di desa tidak sekolah · 7,6 poin di atas kota', {}, { timeout: 5000 }),
+    ).toBeInTheDocument()
+    expect(screen.queryByText(/^Di SMA, 26,1% anak di desa/)).not.toBeInTheDocument()
+  })
+
+  it('temuan PAUD di Rekomendasi menyebut nama indikatornya', async () => {
+    render(
+      <MemoryRouter initialEntries={['/rekomendasi']}>
+        <App />
+      </MemoryRouter>,
+    )
+    expect(
+      await screen.findByText(
+        /partisipasi pembelajaran setahun sebelum SD di Papua 62,98%/,
+        {},
+        { timeout: 5000 },
+      ),
+    ).toBeInTheDocument()
+  })
+
   it('menampilkan halaman provinsi dengan pencarian', async () => {
     render(
       <MemoryRouter initialEntries={['/provinsi']}>

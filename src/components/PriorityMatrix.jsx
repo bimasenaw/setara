@@ -44,6 +44,11 @@ export function SebaranKuadran({ data }) {
             <a
               key={kategori}
               href={`#${idKuadran(kategori)}`}
+              onClick={() => {
+                // Kotak tujuan mungkin terlipat: buka dulu sebelum digulir ke sana.
+                const kotak = document.getElementById(idKuadran(kategori))
+                if (kotak) kotak.open = true
+              }}
               aria-label={`${labelKategori(kategori)}: ${jumlah} provinsi`}
               data-kuadran={kategori}
               data-jumlah={jumlah}
@@ -82,17 +87,34 @@ export default function PriorityMatrix({ data, tahun }) {
         {URUTAN.map((kategori) => {
           const items = data.filter((d) => d.kategori === kategori)
           return (
-            <div
+            // Daftar nama dilipat; hanya kuadran mendesak yang terbuka. Batang di atas sudah memberi gambaran.
+            <details
               key={kategori}
               id={idKuadran(kategori)}
-              className="scroll-mt-24 rounded-lg border border-garis bg-putih p-3"
+              open={kategori === 'Mendesak'}
+              className="group scroll-mt-24 self-start rounded-lg border border-garis bg-putih"
             >
-              <h3 className="flex items-center gap-2 text-sm font-semibold text-tinta">
+              <summary className="tekan flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-tinta [&::-webkit-details-marker]:hidden">
                 <Swatch kategori={kategori} />
-                {labelKategori(kategori)}
-              </h3>
+                <h3 className="flex-1">{labelKategori(kategori)}</h3>
+                <span className="tabular-nums text-tinta-redup">{items.length}</span>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 16 16"
+                  className="h-4 w-4 shrink-0 text-tinta-redup transition-transform duration-150 ease-out group-open:rotate-90"
+                >
+                  <path
+                    d="M6 3.5 10.5 8 6 12.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </summary>
               {items.length ? (
-                <ul className="mt-2 space-y-1 text-sm text-tinta">
+                <ul className="space-y-1 px-3 pb-3 text-sm text-tinta">
                   {items.map((d) => (
                     <li key={d.kode} className="flex flex-wrap justify-between gap-2">
                       <Link
@@ -108,16 +130,15 @@ export default function PriorityMatrix({ data, tahun }) {
                   ))}
                 </ul>
               ) : (
-                <p className="mt-2 text-sm text-tinta-redup">Tidak ada provinsi di kuadran ini.</p>
+                <p className="px-3 pb-3 text-sm text-tinta-redup">Tidak ada provinsi di kuadran ini.</p>
               )}
-            </div>
+            </details>
           )
         })}
       </div>
       <p className="teks-bantu mt-3 max-w-[68ch]">
-        Kuadran ditentukan oleh tingkat partisipasi SMA terbaru dan perubahannya sejak{' '}
-        {data[0]?.tahunAwal ?? 2019}. Ini alat bantu prioritas, bukan penilaian resmi terhadap kinerja
-        provinsi.
+        Kuadran: partisipasi SMA terbaru dan perubahannya sejak {data[0]?.tahunAwal ?? 2019}. Alat bantu,
+        bukan penilaian resmi.
       </p>
     </section>
   )

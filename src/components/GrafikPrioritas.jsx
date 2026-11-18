@@ -9,7 +9,7 @@ import { tautanProvinsi } from '../lib/params'
 const TAMPIL_AWAL = 10
 const LIMA_TERATAS = 5
 
-export default function GrafikPrioritas({ daftar, tahun, komponen = [] }) {
+export default function GrafikPrioritas({ daftar, tahun }) {
   const [semua, setSemua] = useState(false)
   if (!daftar?.length) return null
   const tampil = semua ? daftar : daftar.slice(0, TAMPIL_AWAL)
@@ -72,12 +72,6 @@ export default function GrafikPrioritas({ daftar, tahun, komponen = [] }) {
           Provinsi lainnya
         </span>
       </div>
-
-      {komponen.length > 0 && (
-        <p className="teks-bantu mt-2">
-          Tahun data per indikator: {komponen.map((k) => `${k.label} ${k.tahun ?? '-'}`).join(' · ')}.
-        </p>
-      )}
     </div>
   )
 }

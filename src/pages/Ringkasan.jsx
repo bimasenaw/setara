@@ -1,11 +1,17 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { JENJANG, PAIRS, perbandingan, nasional } from '../lib/metrik'
-import { kalimatDimensi, kalimatRingkasanUtama, tahunTerakhir, temuanTigaDimensi } from '../lib/temuan'
+import {
+  KELOMPOK_AWAM,
+  kalimatDimensi,
+  kalimatRingkasanUtama,
+  tahunTerakhir,
+  temuanTigaDimensi,
+} from '../lib/temuan'
 import { validJenjang, validTahun, tulisParam, tautanKesenjangan, labelKelompok } from '../lib/params'
 import { dampakEkonomi, dampakGender } from '../lib/dampak'
 import { fotoJenjang } from '../lib/foto'
-import { formatAngka, formatJumlahOrang, formatPersen, formatPoin } from '../lib/format'
+import { formatJumlahOrang, formatPersen, formatPoin } from '../lib/format'
 import TahunSelect from '../components/TahunSelect'
 import SegmentedControl from '../components/SegmentedControl'
 import StatRow from '../components/StatRow'
@@ -21,6 +27,15 @@ import HeroBanner from '../components/HeroBanner'
 import KreditFoto from '../components/KreditFoto'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
+
+// Keterangan pendek di bawah angka besar temuan: angka persennya tidak diulang.
+// Nilai dan nama kelompok sama dengan kalimatDimensi di src/lib/temuan.js; arah mengikuti tanda selisih.
+function keteranganTemuan(t) {
+  const tertinggal = KELOMPOK_AWAM[PAIRS[t.dimensi].tertinggal]
+  const pembanding = KELOMPOK_AWAM[PAIRS[t.dimensi].pembanding].replace(/^dari /, '').replace(/^di /, '')
+  const arah = t.selisih >= 0 ? 'di atas' : 'di bawah'
+  return `anak ${tertinggal} tidak sekolah · ${formatPoin(Math.abs(t.selisih), 1)} ${arah} ${pembanding}`
+}
 
 const DIMENSI = [
   { key: 'wilayah', label: 'Wilayah' },
@@ -251,25 +266,27 @@ export default function Ringkasan() {
 
       <section className="mt-12 border-t border-garis pt-6">
         <h2 className="subjudul text-tinta">Tiga temuan utama ({tahun})</h2>
-        <ul className="mt-2">
+        {/* Setiap temuan tersusun tegak: label, angka, kalimat, tautan. HP bertumpuk, desktop tiga kolom. */}
+        <ul className="mt-4 md:grid md:grid-cols-3">
           {temuan.map((t) => (
-            <li key={t.dimensi} className="border-b border-garis py-5 last:border-0">
-              <p className="label-grafik uppercase tracking-wide text-tinta-redup">{t.dimensi}</p>
-              <div className="mt-1 flex items-baseline gap-4">
-                <p className="shrink-0 font-serif text-[2.5rem] font-semibold leading-none tracking-[-0.02em] text-tinta tabular-nums md:text-[3rem]">
-                  {formatPersen(t.tertinggal, 1)}
-                </p>
-                <p className="max-w-[44ch] text-base leading-relaxed text-tinta">{t.kalimat}</p>
-              </div>
-              <p className="teks-bantu mt-2">
-                Selisih {formatPoin(t.selisih, 2)} ·{' '}
-                <Link
-                  to={tautanKesenjangan({ tab: t.dimensi, tahun, jenjang: t.jenjang })}
-                  className="inline-flex min-h-11 items-center text-tinta underline decoration-garis underline-offset-2 hover:decoration-tinta md:min-h-0"
-                >
-                  Lihat di Kesenjangan ({t.jenjang})
-                </Link>
+            <li
+              key={t.dimensi}
+              className="flex flex-col border-b border-garis py-5 first:pt-0 last:border-0 md:border-b-0 md:border-l md:px-6 md:py-0 md:first:border-l-0 md:first:pl-0 md:last:pr-0"
+            >
+              <p className="label-grafik uppercase tracking-wide text-tinta-redup">
+                {t.dimensi} · {t.jenjang}
               </p>
+              <p className="mt-2 font-serif text-[2.75rem] font-semibold leading-none tracking-[-0.02em] text-tinta tabular-nums md:text-[3.25rem]">
+                {formatPersen(t.tertinggal, 1)}
+              </p>
+              <p className="mt-3 max-w-[40ch] text-base leading-relaxed text-tinta">{keteranganTemuan(t)}</p>
+              <Link
+                to={tautanKesenjangan({ tab: t.dimensi, tahun, jenjang: t.jenjang })}
+                aria-label={`Rincian di Kesenjangan: ${t.dimensi}, ${t.jenjang}`}
+                className="mt-auto inline-flex whitespace-nowrap min-h-11 items-center gap-1 self-start pt-2 text-sm font-semibold text-tinta underline decoration-garis underline-offset-4 hover:decoration-tinta"
+              >
+                Rincian di Kesenjangan<span aria-hidden="true">→</span>
+              </Link>
             </li>
           ))}
         </ul>
@@ -297,7 +314,6 @@ export default function Ringkasan() {
                   {formatJumlahOrang(dampakEko.estimasi)} usia {jenjang} berpotensi kembali bersekolah jika
                   kelompok termiskin setara kelompok terkaya.
                 </p>
-                <p className="teks-bantu mt-1">Selisih {formatAngka(dampakEko.gap, 1)} poin.</p>
               </li>
             )}
             {dampakGen && (
@@ -307,7 +323,6 @@ export default function Ringkasan() {
                   {formatJumlahOrang(dampakGen.estimasi)} {dampakGen.kelompok.toLowerCase()} usia {jenjang}{' '}
                   berpotensi kembali bersekolah jika setara kelompok pembanding.
                 </p>
-                <p className="teks-bantu mt-1">Selisih {formatAngka(dampakGen.gap, 2)} poin.</p>
               </li>
             )}
           </ul>

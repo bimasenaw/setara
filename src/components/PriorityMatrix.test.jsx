@@ -35,4 +35,17 @@ describe('Batang sebaran kuadran', () => {
       expect(container.querySelector(`#${id}`)).toBeTruthy()
     }
   })
+
+  it('daftar nama dilipat: hanya kuadran mendesak terbuka, dan segmen membuka kotaknya', () => {
+    const { container } = render(<PriorityMatrix data={data} tahun={2025} />, { wrapper: MemoryRouter })
+    expect(container.querySelector('#kuadran-mendesak')).toHaveAttribute('open')
+    const berhasil = container.querySelector('#kuadran-berhasil')
+    expect(berhasil).not.toHaveAttribute('open')
+    expect(within(berhasil.querySelector('summary')).getByText('4')).toBeInTheDocument()
+    const batang = screen.getByRole('group', { name: /^Sebaran/ })
+    within(batang)
+      .getByRole('link', { name: /Berhasil, pertahankan/ })
+      .click()
+    expect(berhasil).toHaveAttribute('open')
+  })
 })
