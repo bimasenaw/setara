@@ -106,12 +106,15 @@ describe('Panduan alur', () => {
 describe('Motto KUAT', () => {
   beforeEach(() => resetPanduan())
 
-  it('kartu panduan memuat motto KUAT di ikhtisar dan tur', async () => {
+  it('motto KUAT baru muncul setelah tur dimulai, dan hilang lagi saat kembali ke ikhtisar', async () => {
     tampilkan('/')
     const d = await kartu()
-    expect(within(d).getByText('Motto KUAT: Kenali, Ukur, Arahkan, Tindak.')).toBeInTheDocument()
+    const motto = 'Motto KUAT: Kenali, Ukur, Arahkan, Tindak.'
+    expect(within(d).queryByText(motto)).not.toBeInTheDocument()
     fireEvent.click(within(d).getByRole('button', { name: 'Mulai tur' }))
-    expect(within(d).getByText('Motto KUAT: Kenali, Ukur, Arahkan, Tindak.')).toBeInTheDocument()
+    expect(within(d).getByText(motto)).toBeInTheDocument()
+    fireEvent.click(within(d).getByRole('button', { name: 'Sebelumnya' }))
+    expect(within(d).queryByText(motto)).not.toBeInTheDocument()
   })
 
   it('setiap angka di penanda alur menyimpan huruf dan kata motto untuk hover dan fokus', () => {
@@ -150,15 +153,15 @@ describe('Tur panduan', () => {
     expect(sudahDilihat()).toBe(true)
   })
 
-  it('Kembali mundur satu halaman, dan di langkah 1 kembali ke ikhtisar', async () => {
+  it('Sebelumnya mundur satu halaman, dan di langkah 1 kembali ke ikhtisar', async () => {
     tampilkan('/')
     const d = await kartu()
     fireEvent.click(within(d).getByRole('button', { name: 'Mulai tur' }))
     fireEvent.click(within(d).getByRole('button', { name: 'Lanjut' }))
     await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent('/kesenjangan'))
-    fireEvent.click(within(d).getByRole('button', { name: 'Kembali' }))
+    fireEvent.click(within(d).getByRole('button', { name: 'Sebelumnya' }))
     await waitFor(() => expect(screen.getByTestId('lokasi')).toHaveTextContent(/^\/$/))
-    fireEvent.click(within(d).getByRole('button', { name: 'Kembali' }))
+    fireEvent.click(within(d).getByRole('button', { name: 'Sebelumnya' }))
     expect(within(d).getAllByRole('listitem')).toHaveLength(4)
   })
 

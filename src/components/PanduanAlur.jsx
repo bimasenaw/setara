@@ -313,7 +313,8 @@ export default function PanduanAlur({
         data-lebih={lebih ? 'ya' : undefined}
         className="panduan-gulir min-h-0 flex-1 overflow-y-auto overscroll-contain px-5"
       >
-        <MottoKuat aktif={sekarang?.id} tur={tur} />
+        {/* Motto KUAT baru muncul setelah tur dimulai, mengikuti langkah yang sedang dibuka. */}
+        {tur && <MottoKuat aktif={sekarang.id} tur />}
         {tur ? (
           <p
             key={kunci}
@@ -383,9 +384,23 @@ export default function PanduanAlur({
           <button
             type="button"
             onClick={() => (tur ? onKembali() : tutup('nanti'))}
-            className="flex min-h-11 grow items-center justify-center whitespace-nowrap rounded-full px-4 text-base text-tinta-redup transition-colors duration-150 hover:bg-kertas hover:text-tinta md:grow-0"
+            className="flex min-h-11 grow items-center justify-center gap-1 whitespace-nowrap rounded-full px-4 text-base text-tinta-redup transition-colors duration-150 hover:bg-kertas hover:text-tinta md:grow-0"
           >
-            {tur ? 'Kembali' : 'Nanti saja'}
+            {tur && (
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M10 3.5L5.5 8L10 12.5" />
+              </svg>
+            )}
+            {tur ? 'Sebelumnya' : 'Nanti saja'}
           </button>
         </div>
       </div>
