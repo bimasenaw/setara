@@ -202,7 +202,12 @@ export default function Metode() {
           </Bagian>
 
           <Bagian id="indikator" judul="Indikator yang dipakai">
-            <div className="mt-3 overflow-x-auto rounded-lg border border-garis bg-putih p-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta" tabIndex={0} role="region" aria-label="Tabel indikator">
+            <div
+              className="mt-3 overflow-x-auto rounded-lg border border-garis bg-putih p-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta"
+              tabIndex={0}
+              role="region"
+              aria-label="Tabel indikator"
+            >
               <table className="w-full min-w-[620px] border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-garis text-tinta-redup">
@@ -251,6 +256,61 @@ export default function Metode() {
                 </div>
               ))}
             </dl>
+
+            {/* Matematika indeks prioritas: bahasa awam dulu, notasi sesudahnya, lalu batasan yang diakui. */}
+            <div className="mt-8 max-w-[68ch] rounded-lg bg-putih p-5">
+              <h3 className="text-base font-semibold text-tinta">Indeks prioritas, langkah demi langkah</h3>
+              <ol className="mt-2 list-decimal space-y-1 pl-5 text-base leading-relaxed text-tinta">
+                <li>Untuk setiap indikator, urutkan 38 provinsi.</li>
+                <li>Beri skor 0–100 menurut posisinya; 100 berarti paling perlu didahulukan.</li>
+                <li>Bila nilai tinggi berarti baik (misalnya IPM), urutannya dibalik.</li>
+                <li>Skor indeks adalah rata-rata enam skor itu, dengan bobot sama.</li>
+              </ol>
+              <div className="mt-4 space-y-1 rounded-md border border-garis px-4 py-3 font-serif text-[1.0625rem] text-tinta">
+                <p>
+                  persentil = <i>r</i> ÷ (<i>n</i> − 1) × 100
+                </p>
+                <p>
+                  skor indeks = (<i>P</i>
+                  <sub>1</sub> + <i>P</i>
+                  <sub>2</sub> + … + <i>P</i>
+                  <sub>6</sub>) ÷ 6
+                </p>
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-tinta-redup">
+                <i>r</i> = posisi provinsi dalam urutan, mulai dari 0; <i>n</i> = jumlah provinsi yang punya
+                data (38).
+              </p>
+              <p className="mt-3 text-base leading-relaxed text-tinta">
+                Contoh, Papua Pegunungan: (97,3 + 100 + 100 + 97,3 + 100 + 100) ÷ 6 = 99,1.{' '}
+                <Link to="/provinsi/9700#perhitungan" className={TAUTAN}>
+                  Lihat rinciannya
+                </Link>
+                .
+              </p>
+              <p className="mt-3 text-base leading-relaxed text-tinta">
+                <span className="font-semibold">Kenapa persentil?</span> Persentil tahan terhadap nilai
+                ekstrem: APK PAUD 3,10% di Papua Pegunungan tidak menekan skor provinsi lain seperti pada
+                skala min–max. Kelemahannya, jarak antarnilai hilang; yang dipakai hanya urutan.
+              </p>
+              <p className="mt-3 text-base font-semibold text-tinta">Batasan yang diakui</p>
+              <ul className="mt-1 list-disc space-y-1 pl-5 text-base leading-relaxed text-tinta">
+                <li>
+                  Bobot keenam indikator sama. Uji kepekaan menunjukkan tiga teratas tidak berubah walau salah
+                  satu indikator dihapus, sedangkan peringkat 4–5 bergantung pada indikator yang dipakai.{' '}
+                  <Link to="/provinsi#kepekaan" className={TAUTAN}>
+                    Lihat uji kepekaan
+                  </Link>
+                  .
+                </li>
+                <li>
+                  Ada 8 pasang provinsi dengan nilai indikator yang sama persis. Rumus ini tetap memberi
+                  keduanya persentil berbeda menurut urutan data; pengaruhnya paling banyak sekitar 0,45 poin
+                  indeks, dan lima teratas tidak berubah.
+                </li>
+                <li>Provinsi dengan skor indeks yang sama diberi peringkat berurutan.</li>
+              </ul>
+            </div>
           </Bagian>
 
           <Bagian id="keterbatasan" judul="Keterbatasan">

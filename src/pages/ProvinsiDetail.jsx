@@ -13,6 +13,7 @@ import RekomendasiList from '../components/RekomendasiList'
 import SegmentedControl from '../components/SegmentedControl'
 import KepalaHalaman from '../components/KepalaHalaman'
 import CaraMembaca from '../components/CaraMembaca'
+import RincianSkor from '../components/RincianSkor'
 import AksiData from '../components/AksiData'
 import { aksiStandar } from '../components/aksiStandar'
 import Sumber from '../components/Sumber'
@@ -202,6 +203,8 @@ export default function ProvinsiDetail() {
           <p className="teks-bantu mt-2">Indikator yang tersedia untuk provinsi ini.</p>
         </div>
       </section>
+
+      <RincianSkor provinsi={skor} komponen={prioritas.komponen} jumlahProvinsi={prioritas.daftar.length} />
 
       <section className="mt-12">
         <div className="flex flex-wrap items-center gap-3">

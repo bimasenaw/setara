@@ -12,6 +12,7 @@ import DotPlotProvinsi from '../components/DotPlotProvinsi'
 import PriorityMatrix from '../components/PriorityMatrix'
 import BandingProvinsi from '../components/BandingProvinsi'
 import GrafikPrioritas from '../components/GrafikPrioritas'
+import UjiKepekaan from '../components/UjiKepekaan'
 import KepalaHalaman from '../components/KepalaHalaman'
 import KreditFoto from '../components/KreditFoto'
 import { muatAwalFoto } from '../components/muatFoto'
@@ -157,6 +158,7 @@ export default function Provinsi() {
               catatan="Indeks ini bukan penilaian resmi."
               sumber="BPS (Susenas dan indikator provinsi)"
             />
+            <UjiKepekaan daftar={prioritas.daftar} komponen={prioritas.komponen} />
             <CaraMembaca>
               <p>Skor menggabungkan {daftarNama(labelKomponen)}; setiap indikator diberi bobot sama.</p>
               <p>
