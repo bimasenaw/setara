@@ -189,8 +189,8 @@ export default function BatangBerdampingan({
         }))}
         kolom={[
           { key: 'label', label: baris === 'jenjang' ? 'Jenjang' : 'Dimensi' },
-          { key: 'tertinggal', label: tertinggalNama },
-          { key: 'pembanding', label: pembandingNama },
+          { key: 'tertinggal', label: `${tertinggalNama} (${satuan})` },
+          { key: 'pembanding', label: `${pembandingNama} (${satuan})` },
           { key: 'selisih', label: 'Selisih' },
         ]}
       />

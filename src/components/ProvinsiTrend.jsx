@@ -1,12 +1,4 @@
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { formatAngka } from '../lib/format'
 import DataTable from './DataTable'
 import { skalaRapi } from './skala'
@@ -99,8 +91,8 @@ export default function ProvinsiTrend({ data, namaProvinsi = 'Provinsi', label =
         }))}
         kolom={[
           { key: 'tahun', label: 'Tahun' },
-          { key: 'provinsi', label: namaProvinsi },
-          { key: 'nasional', label: 'Nasional' },
+          { key: 'provinsi', label: `${namaProvinsi}${satuan.trim() ? ` (${satuan.trim()})` : ''}` },
+          { key: 'nasional', label: `Nasional${satuan.trim() ? ` (${satuan.trim()})` : ''}` },
           { key: 'selisih', label: 'Selisih' },
         ]}
       />
