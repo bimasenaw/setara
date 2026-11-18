@@ -23,7 +23,10 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
   const labelW = 150
   const valueW = 56
   const rowH = 34
-  const headH = 26
+  // Kepala grafik punya dua baris sendiri: label nilai nasional, lalu angka sumbu.
+  // Baris provinsi pertama mulai di bawahnya, sehingga titiknya tidak menimpa angka sumbu.
+  const headH = 46
+  const ySumbu = 34
 
   const plotLeft = labelW
   const plotRight = Math.max(plotLeft + 60, width - valueW)
@@ -31,6 +34,8 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
   const height = headH + provinsi.length * rowH
 
   const x = (v) => plotLeft + ((v - MIN) / (MAX - MIN)) * plotWidth
+  // Area grafik sempit (HP): cukup tiga angka sumbu supaya tidak berdempetan.
+  const ticks = plotWidth < 240 ? [50, 75, 100] : [50, 60, 70, 80, 90, 100]
 
   return (
     <div ref={ref} className="w-full">
@@ -97,12 +102,12 @@ export default function DotPlotProvinsi({ provinsi, nilaiNasional }) {
 
           <line x1={plotLeft} y1={headH} x2={plotRight} y2={headH} stroke={GARIS} strokeWidth={1} />
 
-          {[50, 60, 70, 80, 90, 100].map((t) => (
+          {ticks.map((t) => (
             <g key={t}>
-              <line x1={x(t)} y1={headH} x2={x(t)} y2={headH + 4} stroke={GARIS} strokeWidth={1} />
+              <line x1={x(t)} y1={headH - 4} x2={x(t)} y2={headH} stroke={GARIS} strokeWidth={1} />
               <text
                 x={x(t)}
-                y={headH + 16}
+                y={ySumbu}
                 textAnchor={t === MIN ? 'start' : t === MAX ? 'end' : 'middle'}
                 fontSize="0.75rem"
                 fill={TINTA_REDUP}
