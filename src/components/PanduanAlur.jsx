@@ -35,8 +35,24 @@ function MottoKuat({ aktif, tur }) {
   )
 }
 
+// Bagian yang bisa menciut: tinggi beranimasi dari isi ke nol (grid 1fr → 0fr), lalu tidak bisa difokus.
+function Lipat({ buka, className = '', children }) {
+  return (
+    <div
+      inert={!buka}
+      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none ${
+        buka ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+      } ${className}`}
+    >
+      <div className="min-h-0 overflow-hidden">{children}</div>
+    </div>
+  )
+}
+
 // Kartu panduan alur: tumbuh dari penanda alur, menjelaskan arti angka 1–4.
-// Di HP, kartu bisa diusap ke bawah untuk ditutup (mengikuti jari, meneruskan kecepatan).
+// Kartu tidak tertutup saat halaman digulir: penjelasannya menciut sehingga yang tersisa hanya motto KUAT
+// dan tombol Sebelumnya/Lanjut. Gagang di atas kartu (ketuk, atau usap di HP) membuka dan menciutkannya.
+// Kartu hanya ditutup dengan sengaja: tombol ×, Selesai, Nanti saja, atau Esc.
 
 export default function PanduanAlur({
   id,
@@ -51,12 +67,21 @@ export default function PanduanAlur({
   tombolRef,
 }) {
   const [fase, setFase] = useState(buka ? 'masuk' : 'tutup')
+  const [ringkas, setRingkas] = useState(false)
   const kartuRef = useRef(null)
   const judulRef = useRef(null)
   const utamaRef = useRef(null)
   const seret = useRef(null)
+  const abaikanKlik = useRef(false)
   const gulirRef = useRef(null)
   const [lebih, setLebih] = useState(false)
+  // Bisa digulir: area daftar perlu bisa difokus keyboard supaya bisa digulir dengan tombol panah.
+  const [bisaGulir, setBisaGulir] = useState(false)
+
+  // Dua mode: ikhtisar (empat langkah sekaligus) dan tur (satu langkah per halaman).
+  const tur = mode === 'tur' && sekarang
+  const kunci = tur ? sekarang.id : 'ikhtisar'
+  const terakhir = tur && sekarang.langkah === ALUR.length
 
   // Tepi bawah daftar memudar hanya bila masih ada isi di bawahnya.
   function cekLebih() {
@@ -69,7 +94,10 @@ export default function PanduanAlur({
     if (!terpasang) return
     const el = gulirRef.current
     if (!el) return
-    const ukur = () => setLebih(el.scrollHeight - el.scrollTop - el.clientHeight > 4)
+    const ukur = () => {
+      setLebih(el.scrollHeight - el.scrollTop - el.clientHeight > 4)
+      setBisaGulir(el.scrollHeight - el.clientHeight > 4)
+    }
     const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(ukur) : null
     ro?.observe(el)
     window.addEventListener('resize', ukur)
@@ -81,16 +109,36 @@ export default function PanduanAlur({
 
   // buka/tutup dari induk → fase animasi. Membuka saat sedang menutup langsung berbalik.
   const [bukaTerakhir, setBukaTerakhir] = useState(buka)
-  const [sudahDiusap, setSudahDiusap] = useState(false)
   if (buka !== bukaTerakhir) {
     setBukaTerakhir(buka)
     if (buka) {
-      setSudahDiusap(false)
+      setRingkas(false)
       setFase(fase === 'tutup' ? 'masuk' : 'buka')
     } else {
-      setFase(fase === 'tutup' || sudahDiusap ? 'tutup' : 'keluar')
+      setFase(fase === 'tutup' ? 'tutup' : 'keluar')
     }
   }
+
+  // Pindah langkah: penjelasan langkah baru selalu terbuka.
+  const [kunciTerakhir, setKunciTerakhir] = useState(kunci)
+  if (kunci !== kunciTerakhir) {
+    setKunciTerakhir(kunci)
+    setRingkas(false)
+  }
+
+  // Menggulir halaman ke bawah menciutkan kartu; kembali ke atas halaman membukanya lagi.
+  useEffect(() => {
+    if (!buka) return
+    let akhir = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      if (y < 48) setRingkas(false)
+      else if (y - akhir > 8) setRingkas(true)
+      akhir = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [buka])
 
   // Bingkai pertama dilukis dalam keadaan awal, baru bergerak ke keadaan terbuka.
   useEffect(() => {
@@ -118,52 +166,37 @@ export default function PanduanAlur({
     onTutup(cara)
   }
 
-  // Esc dan sentuhan di luar kartu menutup.
+  // Esc menutup (untuk pengguna keyboard). Sentuhan di luar kartu dan menggulir tidak menutup.
   useEffect(() => {
     if (!buka) return
     const keyDown = (e) => {
       if (e.key === 'Escape') tutup('esc')
     }
-    const pointerDown = (e) => {
-      const t = e.target
-      if (kartuRef.current?.contains(t) || tombolRef.current?.contains(t)) return
-      onTutup('luar')
-    }
     document.addEventListener('keydown', keyDown)
-    document.addEventListener('pointerdown', pointerDown)
-    return () => {
-      document.removeEventListener('keydown', keyDown)
-      document.removeEventListener('pointerdown', pointerDown)
-    }
+    return () => document.removeEventListener('keydown', keyDown)
   })
 
   function onKeyDown(e) {
     if (e.key !== 'Tab' || otomatis) return
-    // Dibuka lewat tombol "?": Tab berputar di dalam kartu.
-    const item = [...kartuRef.current.querySelectorAll(FOKUSABEL)]
+    // Dibuka lewat tombol "?": Tab berputar di dalam kartu (bagian yang menciut dilewati).
+    const item = [...kartuRef.current.querySelectorAll(FOKUSABEL)].filter((el) => !el.closest('[inert]'))
     if (!item.length) return
     const pertama = item[0]
-    const terakhir = item[item.length - 1]
+    const akhir = item[item.length - 1]
     if (e.shiftKey && document.activeElement === pertama) {
       e.preventDefault()
-      terakhir.focus()
-    } else if (!e.shiftKey && document.activeElement === terakhir) {
+      akhir.focus()
+    } else if (!e.shiftKey && document.activeElement === akhir) {
       e.preventDefault()
       pertama.focus()
     }
   }
 
-  function onBlur(e) {
-    // Muncul otomatis: bila fokus keyboard meninggalkan kartu, kartu ikut menutup.
-    const ke = e.relatedTarget
-    if (!otomatis || !buka || !ke) return
-    if (kartuRef.current?.contains(ke) || tombolRef.current?.contains(ke)) return
-    onTutup('fokus')
-  }
-
-  // ---- Usap ke bawah untuk menutup (sentuh/pena saja) ----
+  // ---- Usap gagang: ke bawah menciutkan, ke atas membuka (sentuh/pena saja) ----
   function mulaiSeret(e) {
-    if (e.pointerType === 'mouse' || e.target.closest('button')) return
+    if (e.pointerType === 'mouse') return
+    const tombol = e.target.closest('button')
+    if (tombol && !tombol.hasAttribute('data-gagang')) return
     const el = kartuRef.current
     if (!el || !buka) return
     const awal = ySekarang(el)
@@ -171,6 +204,7 @@ export default function PanduanAlur({
     seret.current = {
       y0: e.clientY - awal,
       dy: awal,
+      jauh: 0,
       riwayat: [{ y: e.clientY, t: e.timeStamp }],
     }
     el.style.transition = 'none'
@@ -182,7 +216,9 @@ export default function PanduanAlur({
     const el = kartuRef.current
     if (!s || !el) return
     const mentah = e.clientY - s.y0
-    s.dy = mentah >= 0 ? mentah : -karet(-mentah, el.offsetHeight)
+    // Kartu tidak pernah dilempar keluar: kedua arah memakai karet.
+    s.dy = Math.sign(mentah) * karet(Math.abs(mentah), el.offsetHeight)
+    s.jauh = Math.max(s.jauh, Math.abs(mentah))
     s.riwayat.push({ y: e.clientY, t: e.timeStamp })
     while (s.riwayat.length > 2 && e.timeStamp - s.riwayat[0].t > 100) s.riwayat.shift()
     el.style.transform = `translateY(${s.dy}px)`
@@ -196,32 +232,28 @@ export default function PanduanAlur({
     const a = s.riwayat[0]
     const b = s.riwayat[s.riwayat.length - 1]
     const v = b.t > a.t ? ((b.y - a.y) / (b.t - a.t)) * 1000 : 0
-    const tinggi = el.offsetHeight
+    const tujuan = s.dy + proyeksi(v)
+    if (s.jauh > 6) abaikanKlik.current = true // seret, bukan ketukan: klik yang menyusul diabaikan
+    if (tujuan > 40) setRingkas(true)
+    else if (tujuan < -40) setRingkas(false)
+    // Kembali ke tempat, meneruskan kecepatan jari ke arah tujuan.
+    const jarak = Math.abs(s.dy)
+    const durasi = 0.3
+    const vKeTujuan = -v * Math.sign(s.dy || 1)
+    el.style.transition = `transform ${durasi}s ${kurvaLanjutan(vKeTujuan, jarak, durasi)}`
+    el.style.transform = 'translateY(0px)'
+  }
 
-    if (s.dy + proyeksi(v) > tinggi * 0.4) {
-      // Lempar keluar: lanjut ke bawah dengan kecepatan jari, menyelinap ke balik penanda alur.
-      const jarak = tinggi + 96 - s.dy
-      const durasi = 0.28
-      setSudahDiusap(true)
-      el.style.transition = `transform ${durasi}s ${kurvaLanjutan(v, jarak, durasi)}, opacity ${durasi}s ease-in`
-      el.style.transform = `translateY(${s.dy + jarak}px)`
-      el.style.opacity = '0'
-    } else {
-      // Kembali ke tempat, juga meneruskan kecepatan ke arah tujuan.
-      const jarak = Math.abs(s.dy)
-      const durasi = 0.3
-      const vKeTujuan = -v * Math.sign(s.dy || 1)
-      el.style.transition = `transform ${durasi}s ${kurvaLanjutan(vKeTujuan, jarak, durasi)}`
-      el.style.transform = 'translateY(0px)'
+  function klikGagang() {
+    if (abaikanKlik.current) {
+      abaikanKlik.current = false
+      return
     }
+    setRingkas((r) => !r)
   }
 
   function onTransitionEnd(e) {
     if (e.target !== kartuRef.current) return
-    if (sudahDiusap) {
-      if (e.propertyName === 'transform') onTutup('usap')
-      return
-    }
     if (fase === 'keluar') {
       setFase('tutup')
       return
@@ -234,10 +266,16 @@ export default function PanduanAlur({
 
   if (fase === 'tutup') return null
 
-  // Dua mode: ikhtisar (empat langkah sekaligus) dan tur (satu langkah per halaman).
-  const tur = mode === 'tur' && sekarang
-  const kunci = tur ? sekarang.id : 'ikhtisar'
-  const terakhir = tur && sekarang.langkah === ALUR.length
+  const judul = (
+    <p
+      id={`${id}-judul`}
+      ref={judulRef}
+      tabIndex={-1}
+      className="text-pretty font-serif text-[1.25rem] font-semibold leading-[1.2] tracking-[-0.01em] text-tinta focus:outline-none md:text-[1.375rem]"
+    >
+      {tur ? sekarang.pertanyaan : 'Satu cerita, empat langkah'}
+    </p>
+  )
 
   return (
     <div
@@ -247,8 +285,8 @@ export default function PanduanAlur({
       aria-modal="false"
       aria-labelledby={`${id}-judul`}
       data-fase={fase}
+      data-ringkas={ringkas ? 'ya' : undefined}
       onKeyDown={onKeyDown}
-      onBlur={onBlur}
       onTransitionEnd={onTransitionEnd}
       className="panduan-alur vt-panduan pointer-events-auto mb-3 flex max-h-[calc(100dvh-11.5rem)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-garis bg-putih shadow-[0_12px_40px_rgb(24_33_44/0.18)] md:max-h-[calc(100dvh-9rem)] print:hidden"
     >
@@ -263,27 +301,36 @@ export default function PanduanAlur({
         onPointerUp={lepasSeret}
         onPointerCancel={lepasSeret}
       >
-        <div aria-hidden="true" className="mx-auto mt-2 h-1 w-9 rounded-full bg-garis md:hidden" />
-        <div className="flex items-start gap-2 pl-5 pr-2 pt-3 md:pt-4">
-          <div key={kunci} className="min-w-0 flex-1 animate-[muncul_200ms_ease-out] pt-1">
-            {tur && (
-              <p className="teks-bantu mb-1">
-                Langkah {sekarang.langkah} dari {ALUR.length} ·{' '}
-                <span className="font-medium text-tinta">{sekarang.halaman}</span>
-              </p>
-            )}
-            <p
-              id={`${id}-judul`}
-              ref={judulRef}
-              tabIndex={-1}
-              className="text-pretty font-serif text-[1.25rem] font-semibold leading-[1.2] tracking-[-0.01em] text-tinta focus:outline-none md:text-[1.375rem]"
-            >
-              {tur ? sekarang.pertanyaan : 'Satu cerita, empat langkah'}
-            </p>
-            {!tur && (
-              <p className="teks-bantu mt-1 text-pretty">
-                Empat pertanyaan yang dibaca berurutan. Tur singkat memandu Anda dari halaman ke halaman.
-              </p>
+        <button
+          type="button"
+          data-gagang
+          onClick={klikGagang}
+          aria-expanded={!ringkas}
+          aria-label={ringkas ? 'Tampilkan penjelasan panduan' : 'Ringkas panduan'}
+          className="group mx-auto flex h-6 w-20 items-center justify-center rounded-full"
+        >
+          <span
+            aria-hidden="true"
+            className="h-1 w-9 rounded-full bg-garis transition-colors duration-150 group-hover:bg-tinta-redup"
+          />
+        </button>
+        <div className="flex items-start gap-2 pl-5 pr-2">
+          <div key={kunci} className="min-w-0 flex-1 animate-[muncul_200ms_ease-out]">
+            {tur ? (
+              <>
+                <Lipat buka={!ringkas}>
+                  <p className="teks-bantu mb-1 pt-1">
+                    Langkah {sekarang.langkah} dari {ALUR.length} ·{' '}
+                    <span className="font-medium text-tinta">{sekarang.halaman}</span>
+                  </p>
+                  {judul}
+                </Lipat>
+                <MottoKuat aktif={sekarang.id} tur />
+              </>
+            ) : (
+              <>
+                <div className="pt-1">{judul}</div>
+              </>
             )}
           </div>
           <button
@@ -308,53 +355,59 @@ export default function PanduanAlur({
       </div>
 
       <div
-        ref={gulirRef}
-        onScroll={cekLebih}
-        data-lebih={lebih ? 'ya' : undefined}
-        className="panduan-gulir min-h-0 flex-1 overflow-y-auto overscroll-contain px-5"
+        inert={ringkas}
+        className={`grid min-h-0 flex-1 transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none ${
+          ringkas ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr] opacity-100'
+        }`}
       >
-        {/* Motto KUAT baru muncul setelah tur dimulai, mengikuti langkah yang sedang dibuka. */}
-        {tur && <MottoKuat aktif={sekarang.id} tur />}
-        {tur ? (
-          <p
-            key={kunci}
-            className="animate-[muncul_200ms_ease-out] pb-4 pt-2 text-base leading-relaxed text-tinta"
-          >
-            {sekarang.panduan}
-          </p>
-        ) : (
-          <>
-            <ol className="py-1 md:py-2">
-              {ALUR.map((a) => {
-                const aktif = a.id === sekarang?.id
-                return (
-                  <li key={a.id} className="flex gap-3 py-2.5">
-                    <span
-                      aria-hidden="true"
-                      className={`mt-px flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none ${
-                        aktif ? 'bg-tinta text-putih' : 'bg-kertas text-tinta-redup'
-                      }`}
-                    >
-                      {a.langkah}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="subjudul text-tinta">{a.pertanyaan}</p>
-                      <p className="teks-bantu mt-0.5">
-                        <span className="font-medium text-tinta">{a.halaman}</span> · {a.isi}
-                      </p>
-                      {aktif && (
-                        <p className="label-grafik mt-1.5 inline-flex rounded-full bg-kertas px-2 py-0.5 text-tinta">
-                          Anda di sini
-                        </p>
-                      )}
-                    </div>
-                  </li>
-                )
-              })}
-            </ol>
-            <p className="teks-bantu pb-3 pt-1">Sumber, rumus, dan keterbatasan ada di menu Metode.</p>
-          </>
-        )}
+        <div
+          ref={gulirRef}
+          onScroll={cekLebih}
+          data-lebih={lebih ? 'ya' : undefined}
+          tabIndex={bisaGulir ? 0 : undefined}
+          role={bisaGulir ? 'region' : undefined}
+          aria-label={bisaGulir ? 'Isi panduan' : undefined}
+          className="panduan-gulir min-h-0 overflow-y-auto overscroll-contain px-5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-tinta"
+        >
+          {tur ? (
+            <p
+              key={kunci}
+              className="animate-[muncul_200ms_ease-out] pb-4 pt-2 text-base leading-relaxed text-tinta"
+            >
+              {sekarang.panduan}
+            </p>
+          ) : (
+            <>
+              <ol className="py-1 md:py-2">
+                {ALUR.map((a) => {
+                  const aktif = a.id === sekarang?.id
+                  return (
+                    <li key={a.id} className="flex gap-3 py-2.5">
+                      <span
+                        aria-hidden="true"
+                        className={`mt-px flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[0.9375rem] font-semibold leading-none ${
+                          aktif ? 'bg-tinta text-putih' : 'bg-kertas text-tinta-redup'
+                        }`}
+                      >
+                        {a.langkah}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="subjudul text-tinta">{a.pertanyaan}</p>
+                        <p className="teks-bantu mt-0.5">{a.halaman}</p>
+                        {aktif && (
+                          <p className="label-grafik mt-1.5 inline-flex rounded-full bg-kertas px-2 py-0.5 text-tinta">
+                            Anda di sini
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  )
+                })}
+              </ol>
+              <p className="teks-bantu pb-3 pt-1">Sumber, rumus, dan keterbatasan ada di menu Metode.</p>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="shrink-0 border-t border-garis px-4 py-3 md:px-5">

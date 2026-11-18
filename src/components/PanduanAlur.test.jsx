@@ -103,6 +103,54 @@ describe('Panduan alur', () => {
   })
 })
 
+function gulirKe(y) {
+  Object.defineProperty(window, 'scrollY', { value: y, configurable: true, writable: true })
+  fireEvent.scroll(window)
+}
+
+describe('Panduan saat halaman digulir', () => {
+  beforeEach(() => resetPanduan())
+  afterEach(() => gulirKe(0))
+
+  it('menggulir ke bawah menciutkan penjelasan tanpa menutup; KUAT dan Lanjut tetap ada', async () => {
+    tampilkan('/')
+    const d = await kartu()
+    fireEvent.click(within(d).getByRole('button', { name: 'Mulai tur' }))
+    const penjelasan = d.querySelector('[id$="-judul"]').closest('.grid')
+    gulirKe(20)
+    gulirKe(400)
+    await waitFor(() => expect(d).toHaveAttribute('data-ringkas', 'ya'))
+    expect(screen.getByRole('dialog')).toBe(d)
+    expect(penjelasan).toHaveAttribute('inert')
+    expect(within(d).getByText('Motto KUAT: Kenali, Ukur, Arahkan, Tindak.')).toBeInTheDocument()
+    expect(within(d).getByRole('button', { name: 'Lanjut' })).toBeInTheDocument()
+    expect(within(d).getByRole('button', { name: 'Tampilkan penjelasan panduan' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    )
+    gulirKe(0)
+    await waitFor(() => expect(d).not.toHaveAttribute('data-ringkas'))
+  })
+
+  it('ketukan di luar kartu tidak menutup panduan', async () => {
+    tampilkan('/')
+    const d = await kartu()
+    fireEvent.pointerDown(document.body)
+    fireEvent.mouseDown(document.body)
+    await new Promise((r) => setTimeout(r, 300))
+    expect(screen.getByRole('dialog')).toBe(d)
+  })
+
+  it('gagang di atas kartu menciutkan dan membuka penjelasan', async () => {
+    tampilkan('/')
+    const d = await kartu()
+    fireEvent.click(within(d).getByRole('button', { name: 'Ringkas panduan' }))
+    expect(d).toHaveAttribute('data-ringkas', 'ya')
+    fireEvent.click(within(d).getByRole('button', { name: 'Tampilkan penjelasan panduan' }))
+    expect(d).not.toHaveAttribute('data-ringkas')
+  })
+})
+
 describe('Motto KUAT', () => {
   beforeEach(() => resetPanduan())
 
