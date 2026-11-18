@@ -166,8 +166,8 @@ export const SUMBER = {
   },
   caniago2021: {
     jenis: 'Survei dan regresi',
-    lisensi: null,
-    pdf: null,
+    lisensi: CC_BY_3,
+    pdf: '/rujukan/caniago2021.pdf',
     baca: {
       label: 'Economics Development Analysis Journal',
       url: 'https://journal.unnes.ac.id/sju/index.php/edaj/article/download/43922/19041',
@@ -367,8 +367,8 @@ export const SUMBER = {
   },
   purnastuti2012: {
     jenis: 'Survei dan regresi',
-    lisensi: null,
-    pdf: null,
+    lisensi: CC_BY_SA_4,
+    pdf: '/rujukan/purnastuti2012.pdf',
     baca: { label: 'Jurnal Economia', url: 'https://doi.org/10.21831/jep.v3i1.636' },
     kutipan: {
       utama: {
@@ -484,8 +484,8 @@ export const SUMBER = {
   },
   sulistyaningrum2016: {
     jenis: 'Kuasi-eksperimen',
-    lisensi: null,
-    pdf: null,
+    lisensi: CC_BY_SA_4,
+    pdf: '/rujukan/sulistyaningrum2016.pdf',
     baca: { label: 'Journal of Indonesian Economy and Business', url: 'https://doi.org/10.22146/jieb.10319' },
     kutipan: {
       utama: {

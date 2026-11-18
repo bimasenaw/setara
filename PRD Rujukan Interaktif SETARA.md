@@ -34,6 +34,7 @@ Dasarnya pemeriksaan lisensi tanggal 15 November 2026 lewat Crossref, OpenAlex, 
 |---|---|---|
 | **A. Ditampilkan dan disorot** (lisensi CC terkonfirmasi) | harahap2020, hudang2024, islam2018, karimah2022, petrosino2012, pratiwi2021, samosir2021, setyadi2022, siddique2021, utomo2014 | Membuka penampil PDF SETARA di halaman yang dikutip, dengan paragrafnya disorot |
 | **B. Menunggu konfirmasi lisensi** | caniago2021, kartasasmita2021, purnastuti2012, sulistyaningrum2016 | Diperlakukan seperti kelompok C sampai pengguna mengonfirmasi logo CC di halaman jurnalnya. Setelah dikonfirmasi, cukup ubah satu nilai (`lisensi`) agar pindah ke kelompok A |
+| *Pembaruan 18 November 2026* | caniago2021 (CC BY 3.0), purnastuti2012 (CC BY-SA 4.0), sulistyaningrum2016 (CC BY-SA 4.0) pindah ke kelompok A. kartasasmita2021 tetap seperti kelompok C karena jurnalnya tidak mencantumkan lisensi CC | Lihat `PRD Fase 8 SETARA.md`, bagian 2 |
 | **C. Tautan saja** | asadullah2018, behrman1991, brinkman2017, cahyadi2020, duflo2001, himaz2021, purnastuti2015, sugiharti2017 | Menampilkan keterangan hak cipta, lalu membuka PDF lengkap gratis yang sah di situs aslinya (tabel 3.1) |
 
 Keterangan untuk kelompok B dan C:

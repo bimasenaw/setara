@@ -359,7 +359,13 @@ export default function BacaRujukan() {
           </a>
         </p>
       ) : (
-        <div ref={daftarRef} className="mt-6 flex flex-col gap-4" aria-busy={pdf.status !== 'siap'}>
+        // Tinggi minimal dipesan sejak awal: halaman langsung digulir ke kutipan, dan footer tidak boleh
+        // sempat terlihat lalu terdorong saat halaman-halaman PDF mendapat tingginya.
+        <div
+          ref={daftarRef}
+          className="mt-6 flex min-h-[150dvh] flex-col gap-4"
+          aria-busy={pdf.status !== 'siap'}
+        >
           {pdf.status === 'muat' && <p className="teks-bantu">Memuat PDF…</p>}
           {pdf.status === 'siap' &&
             lebar > 0 &&
