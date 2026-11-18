@@ -59,7 +59,7 @@ describe('App', () => {
         <App />
       </MemoryRouter>,
     )
-    const pilih = await screen.findByRole('tablist', { name: 'Bentuk grafik' })
+    const pilih = await screen.findByRole('tablist', { name: 'Bentuk grafik' }, { timeout: 5000 })
     expect(within(pilih).getByRole('tab', { name: 'Titik dan garis' })).toHaveAttribute(
       'aria-selected',
       'true',
@@ -70,6 +70,17 @@ describe('App', () => {
     expect(screen.getByText(/batang atas/)).toBeInTheDocument()
     fireEvent.click(within(pilih).getByRole('tab', { name: 'Titik dan garis' }))
     expect(screen.queryByText(/batang atas/)).not.toBeInTheDocument()
+  })
+
+  it('Kesenjangan juga bisa berganti ke batang berdampingan, dan pilihannya tersimpan di alamat', async () => {
+    render(
+      <MemoryRouter initialEntries={['/kesenjangan?grafik=batang']}>
+        <App />
+      </MemoryRouter>,
+    )
+    const pilih = await screen.findByRole('tablist', { name: 'Bentuk grafik' }, { timeout: 5000 })
+    expect(within(pilih).getByRole('tab', { name: 'Batang' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByText(/batang atas/)).toBeInTheDocument()
   })
 
   it('menampilkan halaman provinsi dengan pencarian', async () => {
@@ -115,7 +126,12 @@ describe('App', () => {
       },
       { timeout: 10000 },
     )
-    const daftar = screen.getByRole('list', { name: /Indeks prioritas per provinsi/ })
+    // Isi di bawah kepala halaman digambar sebagai render latar, jadi ditunggu.
+    const daftar = await screen.findByRole(
+      'list',
+      { name: /Indeks prioritas per provinsi/ },
+      { timeout: 5000 },
+    )
     expect(within(daftar).getAllByRole('listitem')).toHaveLength(10)
     fireEvent.click(screen.getByRole('button', { name: /Tampilkan semua provinsi/ }))
     expect(within(daftar).getAllByRole('listitem').length).toBeGreaterThan(30)

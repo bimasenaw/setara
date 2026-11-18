@@ -1,11 +1,25 @@
+import { UKURAN_HERO } from './muatFoto'
+
 // Hero berfoto. Lapisan gelap hanya ada di belakang teks dan mengikuti tingginya: pekat di area teks,
 // lalu memudar dalam 4–5rem di atasnya. Bagian foto di atas teks tetap terang.
 // Kontras teks putih dijaga minimal 4,5:1 di titik terterang (PRD v2, bagian 16.1).
-export default function HeroBanner({ judul, deskripsi, gambar, alt = '', ramping = false }) {
-  return (
+// `kredit` (opsional) tampil kecil di bawah hero: wajib untuk foto berlisensi CC BY / CC BY-SA.
+export default function HeroBanner({
+  judul,
+  deskripsi,
+  gambar,
+  srcSet,
+  sizes,
+  alt = '',
+  ramping = false,
+  kredit,
+}) {
+  const hero = (
     <section className="relative overflow-hidden rounded-lg border border-garis bg-tinta">
       <img
         src={gambar}
+        srcSet={srcSet}
+        sizes={srcSet ? sizes || UKURAN_HERO : undefined}
         alt={alt}
         className="absolute inset-0 h-full w-full object-cover"
         loading="eager"
@@ -31,5 +45,12 @@ export default function HeroBanner({ judul, deskripsi, gambar, alt = '', ramping
         </div>
       </div>
     </section>
+  )
+  if (!kredit) return hero
+  return (
+    <figure>
+      {hero}
+      <figcaption className="mt-1.5 text-xs leading-snug text-tinta-redup">{kredit}</figcaption>
+    </figure>
   )
 }

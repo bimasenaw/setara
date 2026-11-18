@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useData } from '../lib/data'
 import { JENJANG, PAIRS, perbandingan } from '../lib/metrik'
@@ -12,9 +13,12 @@ import TabBar from '../components/TabBar'
 import TahunSelect from '../components/TahunSelect'
 import SegmentedControl from '../components/SegmentedControl'
 import Dumbbell from '../components/Dumbbell'
-import TrenMultiGaris from '../components/TrenMultiGaris'
+import BatangBerdampingan from '../components/BatangBerdampingan'
+import { BENTUK_GRAFIK, bentukDariParam, nilaiParamBentuk } from '../components/bentukGrafik'
 import KonteksNasional from '../components/KonteksNasional'
 import KepalaHalaman from '../components/KepalaHalaman'
+import KreditFoto from '../components/KreditFoto'
+import { muatAwalFoto } from '../components/muatFoto'
 import CaraMembaca from '../components/CaraMembaca'
 import AksiData from '../components/AksiData'
 import { aksiStandar } from '../components/aksiStandar'
@@ -33,13 +37,21 @@ const WARNA_JENJANG = {
 }
 const POLA_JENJANG = { SD: '6 4', SMP: '2 3', SMA: undefined }
 
+// Grafik tren memakai pustaka grafik (sekitar 340 KB). Dimuat terpisah supaya kepala halaman dan fotonya
+// tidak menunggu pustaka itu. Tempatnya dipesan setinggi grafik + keterangan + tabel, supaya isi tidak bergeser.
+const TrenMultiGaris = lazy(() => import('../components/TrenMultiGaris'))
+const tempatTren = <div aria-hidden="true" className="h-[386px]" />
+
 export default function Kesenjangan() {
   const { status, tidakSekolah, indikator, error, reload } = useData()
   const [params, setParams] = useSearchParams()
 
   const dim = validDim(params.get('tab'))
+  const bentuk = bentukDariParam(params)
   const kategori = validJenjang(params.get('jenjang'), JENJANG_KATEGORI, 'Umum')
   const jenjang = kategori === 'Umum' ? null : kategori
+  const foto = fotoJenjang(kategori)
+  muatAwalFoto(foto)
   const tahunTersedia = [...new Set(tidakSekolah.map((d) => d.tahun))].sort((a, b) => a - b)
   const tahun = validTahun(params.get('tahun'), tahunTersedia, tahunTersedia[tahunTersedia.length - 1])
 
@@ -94,6 +106,7 @@ export default function Kesenjangan() {
     pembanding: p.pembanding,
     tertinggal: p.tertinggal,
   }))
+  const adaDumbbell = items.some((it) => it.pembanding !== null || it.tertinggal !== null)
 
   const trendUmum = tahunTersedia
     .map((t) => {
@@ -162,7 +175,6 @@ export default function Kesenjangan() {
           : null
 
   const solusiList = (SOLUSI_MATRIX[dim]?.[kategori] || []).slice(0, 2)
-  const foto = fotoJenjang(kategori)
 
   // Rasio terbesar bisa ada di jenjang yang berbeda dari selisih terbesar: itu inti perbedaan keduanya.
   const rasioMaks = perJenjang
@@ -180,7 +192,9 @@ export default function Kesenjangan() {
         judul={judulUtama || `Kesenjangan ${dimLabel}`}
         konteks={konteks}
         gambar={foto.src}
+        srcSet={foto.srcSet}
         alt={foto.alt}
+        kredit={<KreditFoto foto={foto} />}
       />
 
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -209,18 +223,38 @@ export default function Kesenjangan() {
       </p>
 
       <section className="mt-6 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="subjudul text-tinta">
-          {pairLabel.tertinggal} dan {pairLabel.pembanding.toLowerCase()} per jenjang · {tahun}
-        </h2>
-        {items.some((it) => it.pembanding !== null || it.tertinggal !== null) ? (
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+          <h2 className="subjudul text-tinta">
+            {pairLabel.tertinggal} dan {pairLabel.pembanding.toLowerCase()} per jenjang · {tahun}
+          </h2>
+          {adaDumbbell && (
+            <SegmentedControl
+              options={BENTUK_GRAFIK}
+              value={bentuk}
+              onChange={(v) => tulisParam(params, setParams, 'grafik', nilaiParamBentuk(v))}
+              label="Bentuk grafik"
+            />
+          )}
+        </div>
+        {adaDumbbell ? (
           <>
             <div className="mt-4">
-              <Dumbbell
-                items={items}
-                pembandingNama={pairLabel.pembanding}
-                tertinggalNama={pairLabel.tertinggal}
-                ringkasan={judulUtama || undefined}
-              />
+              {bentuk === 'batang' ? (
+                <BatangBerdampingan
+                  items={items}
+                  pembandingNama={pairLabel.pembanding}
+                  tertinggalNama={pairLabel.tertinggal}
+                  ringkasan={judulUtama || undefined}
+                  baris="jenjang"
+                />
+              ) : (
+                <Dumbbell
+                  items={items}
+                  pembandingNama={pairLabel.pembanding}
+                  tertinggalNama={pairLabel.tertinggal}
+                  ringkasan={judulUtama || undefined}
+                />
+              )}
             </div>
             {catatanAwam && <p className="teks-bantu mt-3">{catatanAwam}</p>}
           </>
@@ -234,15 +268,18 @@ export default function Kesenjangan() {
           <p>
             Setiap baris membandingkan {pairLabel.tertinggal} dengan {pairLabel.pembanding} pada satu jenjang:
             persen anak yang tidak sekolah.
+            {bentuk === 'batang'
+              ? ' Batang merah di atas untuk kelompok yang lebih tertinggal, batang biru di bawahnya untuk pembanding.'
+              : ''}
           </p>
           <p>
             {terbesar && rasioMaks
-              ? `Garis yang lebih panjang berarti jarak yang lebih jauh; pada ${tahun} jarak terbesar ada di ${terbesar.jenjang} (${formatPoin(terbesar.selisih, 1)}). Rasio menunjukkan berapa kali lipat: ${
+              ? `${bentuk === 'batang' ? 'Beda panjang kedua batang yang lebih besar' : 'Garis yang lebih panjang'} berarti jarak yang lebih jauh; pada ${tahun} jarak terbesar ada di ${terbesar.jenjang} (${formatPoin(terbesar.selisih, 1)}). Rasio menunjukkan berapa kali lipat: ${
                   rasioMaks.jenjang === terbesar.jenjang
                     ? `${rasioMaks.jenjang} juga paling timpang menurut rasio, ${formatAngka(rasioMaks.rasio, 1)}×.`
                     : `selisih di ${rasioMaks.jenjang} lebih kecil tetapi rasionya terbesar, ${formatAngka(rasioMaks.rasio, 1)}×, sehingga kelompok tertinggal berlipat-lipat lebih banyak.`
                 }`
-              : 'Garis yang lebih panjang berarti jarak yang lebih jauh.'}
+              : `${bentuk === 'batang' ? 'Beda panjang kedua batang yang lebih besar' : 'Garis yang lebih panjang'} berarti jarak yang lebih jauh.`}
           </p>
           <p>Angka berasal dari survei sampel dan menunjukkan perbedaan, bukan sebab-akibat.</p>
         </CaraMembaca>
@@ -275,13 +312,15 @@ export default function Kesenjangan() {
         )}
         <div className="mt-4">
           {trendData.length > 0 ? (
-            <TrenMultiGaris
-              data={trendData}
-              lines={trendLines}
-              satuan={jenjang ? 'persen' : 'poin persentase'}
-              ringkasan={trendInsight || undefined}
-              namaFile={`setara-tren-${dim}-${kategori}.csv`}
-            />
+            <Suspense fallback={tempatTren}>
+              <TrenMultiGaris
+                data={trendData}
+                lines={trendLines}
+                satuan={jenjang ? 'persen' : 'poin persentase'}
+                ringkasan={trendInsight || undefined}
+                namaFile={`setara-tren-${dim}-${kategori}.csv`}
+              />
+            </Suspense>
           ) : (
             <BelumTersedia alasan="tidak ada data tren" />
           )}

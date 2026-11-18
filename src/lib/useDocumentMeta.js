@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+const GAMBAR_PRATINJAU = 'https://setara-web.vercel.app/og.png'
+
 function setMeta(attr, key, value) {
   if (typeof document === 'undefined' || !value) return
   let el = document.head.querySelector(`meta[${attr}="${key}"]`)
@@ -20,7 +22,8 @@ export default function useDocumentMeta({ judul, deskripsi }) {
       setMeta('property', 'og:description', deskripsi)
     }
     if (judul) setMeta('property', 'og:title', judul)
-    const origin = typeof window !== 'undefined' ? window.location.origin : ''
-    setMeta('property', 'og:image', `${origin}/og.svg`)
+    // Sama dengan index.html: PNG beralamat lengkap, karena SVG tidak ditampilkan WhatsApp dan media sosial.
+    setMeta('property', 'og:image', GAMBAR_PRATINJAU)
+    setMeta('name', 'twitter:image', GAMBAR_PRATINJAU)
   }, [judul, deskripsi])
 }

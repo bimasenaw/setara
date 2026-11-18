@@ -19,6 +19,8 @@ import Sumber from '../components/Sumber'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 import { fotoProvinsi } from '../content/fotoProvinsi'
+import { fotoJenjang } from '../lib/foto'
+import KreditFoto from '../components/KreditFoto'
 
 const TREN_OPTIONS = [
   { value: 'aps', label: 'Partisipasi SMA' },
@@ -111,33 +113,8 @@ export default function ProvinsiDetail() {
   const dampak = dampakTerbaru(indikator, kode)
   const konteks = konteksItems(indikator, kode)
   // Foto ikon daerah dari Wikimedia Commons; foto umum bila provinsi belum punya foto sendiri.
-  const foto = fotoProvinsi(kode) || {
-    src: '/images/foto-umum.jpeg',
-    alt: 'Foto suasana pendidikan di Indonesia',
-  }
-  const kreditFoto = foto.artis ? (
-    <>
-      Foto: {foto.alt}.{' '}
-      <a
-        href={foto.sumber}
-        target="_blank"
-        rel="noreferrer"
-        className="underline decoration-garis underline-offset-2 hover:text-tinta"
-      >
-        {foto.artis}
-      </a>
-      ,{' '}
-      <a
-        href={foto.lisensiUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="underline decoration-garis underline-offset-2 hover:text-tinta"
-      >
-        {foto.lisensi}
-      </a>
-      , via Wikimedia Commons. Diperkecil.
-    </>
-  ) : null
+  const foto = fotoProvinsi(kode) || fotoJenjang('Umum')
+  const kreditFoto = <KreditFoto foto={foto} />
 
   const trend =
     mode === 'aps'
@@ -187,6 +164,7 @@ export default function ProvinsiDetail() {
         judul={provinsi.provinsi}
         konteks={konteksPeringkat}
         gambar={foto.src}
+        srcSet={foto.srcSet}
         alt={foto.alt}
         kredit={kreditFoto}
       />

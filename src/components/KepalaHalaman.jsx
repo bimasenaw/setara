@@ -1,14 +1,19 @@
+import { UKURAN_KEPALA } from './muatFoto'
+
 // Kepala halaman v2: judul berupa kalimat temuan, satu kalimat konteks, foto opsional.
 // Foto tampil apa adanya (tanpa lapisan gelap) di samping teks, atau di bawahnya pada HP.
 // `kredit` (opsional) tampil di bawah foto: wajib untuk foto berlisensi CC BY / CC BY-SA.
-export default function KepalaHalaman({ judul, konteks, gambar, alt = '', kredit, children }) {
+export default function KepalaHalaman({ judul, konteks, gambar, srcSet, alt = '', kredit, children }) {
   const adaGambar = Boolean(gambar)
   const foto = (
     <img
       src={gambar}
+      srcSet={srcSet}
+      sizes={srcSet ? UKURAN_KEPALA : undefined}
       alt={alt}
       loading="eager"
       decoding="async"
+      fetchPriority="high"
       className="aspect-video max-h-[11.25rem] w-full rounded-lg bg-garis object-cover md:aspect-[4/3] md:max-h-none"
     />
   )

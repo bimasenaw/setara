@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { DaftarRujukan } from '../components/TombolRujukan'
 import { REKOMENDASI_UTAMA, tautanDataRekomendasi } from '../content/rekomendasi'
 import KepalaHalaman from '../components/KepalaHalaman'
+import KreditFoto from '../components/KreditFoto'
 import AksiData from '../components/AksiData'
 import { aksiStandar } from '../components/aksiStandar'
 import Sumber from '../components/Sumber'
@@ -85,7 +86,9 @@ export default function Rekomendasi() {
         judul={JUDUL}
         konteks="Setiap langkah berangkat dari temuan di halaman sebelumnya dan didukung studi yang dapat diperiksa lewat DOI."
         gambar={foto.src}
+        srcSet={foto.srcSet}
         alt={foto.alt}
+        kredit={<KreditFoto foto={foto} />}
       />
 
       {status === 'error' && (

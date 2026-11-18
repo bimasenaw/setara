@@ -11,20 +11,16 @@ import SegmentedControl from '../components/SegmentedControl'
 import StatRow from '../components/StatRow'
 import Dumbbell from '../components/Dumbbell'
 import BatangBerdampingan from '../components/BatangBerdampingan'
+import { BENTUK_GRAFIK, bentukDariParam, nilaiParamBentuk } from '../components/bentukGrafik'
 import CaraMembaca from '../components/CaraMembaca'
 import AksiData from '../components/AksiData'
 import { aksiStandar } from '../components/aksiStandar'
 import Sumber from '../components/Sumber'
 import LangkahBerikutnya from '../components/LangkahBerikutnya'
 import HeroBanner from '../components/HeroBanner'
+import KreditFoto from '../components/KreditFoto'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
-
-// Dua cara melihat data yang sama; tanpa parameter, tampilan bawaan tetap dumbbell.
-const BENTUK_GRAFIK = [
-  { value: 'titik', label: 'Titik dan garis' },
-  { value: 'batang', label: 'Batang' },
-]
 
 const DIMENSI = [
   { key: 'wilayah', label: 'Wilayah' },
@@ -43,7 +39,7 @@ export default function Ringkasan() {
     tahunTersedia[tahunTersedia.length - 1] || tahunTerakhir(tidakSekolah),
   )
   const jenjang = validJenjang(params.get('jenjang'), JENJANG)
-  const bentuk = params.get('grafik') === 'batang' ? 'batang' : 'titik'
+  const bentuk = bentukDariParam(params)
 
   useDocumentMeta({
     judul: 'Ringkasan kesenjangan pendidikan | SETARA',
@@ -66,7 +62,9 @@ export default function Ringkasan() {
         </>
       }
       gambar={foto.src}
+      srcSet={foto.srcSet}
       alt={foto.alt}
+      kredit={<KreditFoto foto={foto} />}
     />
   )
 
@@ -153,7 +151,7 @@ export default function Ringkasan() {
             <SegmentedControl
               options={BENTUK_GRAFIK}
               value={bentuk}
-              onChange={(v) => tulisParam(params, setParams, 'grafik', v === 'batang' ? v : null)}
+              onChange={(v) => tulisParam(params, setParams, 'grafik', nilaiParamBentuk(v))}
               label="Bentuk grafik"
             />
           )}

@@ -1,6 +1,6 @@
 # PRD: Pilihan tampilan batang berdampingan di Ringkasan
 
-Status: kode selesai (18 November 2026); pemeriksaan tampilan di browser belum dilakukan; belum di-commit
+Status: selesai (18 November 2026)
 Cabang: `v2-tampilan`
 Terkait: `PRD SETARA v2.md` (bagian 17, Ringkasan)
 
@@ -56,5 +56,4 @@ Sudah:
 - Tes baru: `src/components/BatangBerdampingan.test.jsx` (2 tes: dua batang per baris, merah di atas dan lebih panjang bila nilainya lebih besar, nilai kosong dilewati, label nilai dan selisih) dan satu tes halaman di `src/App.test.jsx` (pemilih mengganti grafik bolak-balik).
 - Semua tes: 108 lolos, 1 dilewati. Lint bersih, build lolos.
 
-Belum:
-- Tangkapan layar, axe, overflow, dan CLS di browser (langkah 3–4). Server dev dihentikan sistem karena memori laptop hampir habis, dan tidak dinyalakan ulang tanpa izin pengguna.
+Pemeriksaan browser (18 November 2026, build produksi): tampilan batang di Ringkasan dan Kesenjangan pada HP 360 px, HP 390 px, dan desktop 1280 px. CLS 0, tanpa gulir horizontal, axe 0 pelanggaran. Pilihan yang sama kemudian ditambahkan ke Kesenjangan (lihat `PRD Fase 8 SETARA.md`).

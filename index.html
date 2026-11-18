@@ -31,7 +31,22 @@
     <link rel="preload" href="/data/indikator.json" as="fetch" crossorigin="anonymous" />
     <link rel="preload" href="/data/meta.json" as="fetch" crossorigin="anonymous" />
     <!-- Foto hero halaman pertama (Ringkasan, jenjang SMA bawaan) dimuat sebelum JavaScript berjalan. -->
-    <link rel="preload" href="/images/foto-sma.jpeg" as="image" fetchpriority="high" />
+    <!-- Foto hero Ringkasan (SMA) hanya dimuat awal di halaman Ringkasan, supaya halaman lain tidak ikut mengunduhnya. -->
+    <script>
+      (function () {
+        var q = new URLSearchParams(location.search).get('jenjang')
+        if (location.pathname !== '/' || (q && q !== 'SMA')) return
+        var l = document.createElement('link')
+        var j = '/images/jenjang/sma-'
+        l.rel = 'preload'
+        l.as = 'image'
+        l.href = j + '800.jpg'
+        l.setAttribute('fetchpriority', 'high')
+        l.setAttribute('imagesrcset', j + '640.jpg 640w, ' + j + '800.jpg 800w, ' + j + '1200.jpg 1200w, ' + j + '1600.jpg 1600w')
+        l.setAttribute('imagesizes', '(min-width: 1080px) 1048px, 100vw')
+        document.head.appendChild(l)
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

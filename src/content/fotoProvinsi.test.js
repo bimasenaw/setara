@@ -14,6 +14,10 @@ describe('Foto provinsi', () => {
       const f = fotoProvinsi(k)
       expect(f, k).toBeTruthy()
       expect(existsSync(`public${f.src}`), f.src).toBe(true)
+      for (const bagian of f.srcSet.split(', ')) {
+        const jalur = bagian.split(' ')[0]
+        expect(existsSync(`public${jalur}`), jalur).toBe(true)
+      }
     }
   })
 

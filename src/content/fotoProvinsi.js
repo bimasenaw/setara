@@ -277,5 +277,7 @@ export const FOTO_PROVINSI = {
 
 export function fotoProvinsi(kode) {
   const f = FOTO_PROVINSI[kode]
-  return f ? { src: `/images/provinsi/${kode}.jpg`, ...f } : null
+  if (!f) return null
+  const src = `/images/provinsi/${kode}.jpg`
+  return { src, srcSet: `/images/provinsi/${kode}-640.jpg 640w, ${src} 960w`, ...f }
 }

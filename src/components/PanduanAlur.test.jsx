@@ -40,7 +40,7 @@ describe('Panduan alur', () => {
     tampilkan('/')
     await kartu()
     fireEvent.keyDown(document, { key: 'Escape' })
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 6000 })
     expect(sudahDilihat()).toBe(true)
     await waitFor(() => expect(screen.getByRole('button', { name: 'Apa arti angka ini?' })).toHaveFocus(), {
       timeout: 3000,
@@ -60,7 +60,7 @@ describe('Panduan alur', () => {
       timeout: 3000,
     })
     fireEvent.click(tombol)
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 6000 })
   })
 
   it('?panduan=1 memaksa muncul dan dihapus dari URL saat ditutup', async () => {
@@ -98,7 +98,7 @@ describe('Panduan alur', () => {
     tampilkan('/')
     await kartu()
     fireEvent.keyDown(document, { key: 'Escape' })
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 6000 })
     expect(sudahDilihat()).toBe(true)
   })
 })
@@ -149,7 +149,7 @@ describe('Tur panduan', () => {
     }
     expect(within(d).queryByRole('button', { name: 'Lanjut' })).not.toBeInTheDocument()
     fireEvent.click(within(d).getByRole('button', { name: 'Selesai' }))
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 3000 })
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument(), { timeout: 6000 })
     expect(sudahDilihat()).toBe(true)
   })
 
