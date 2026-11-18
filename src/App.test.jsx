@@ -53,6 +53,25 @@ describe('App', () => {
     expect(screen.getByRole('navigation', { name: 'Langkah berikutnya' })).toBeInTheDocument()
   })
 
+  it('Ringkasan bisa berganti antara dumbbell dan batang berdampingan', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>,
+    )
+    const pilih = await screen.findByRole('tablist', { name: 'Bentuk grafik' })
+    expect(within(pilih).getByRole('tab', { name: 'Titik dan garis' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    )
+    expect(screen.queryByText(/batang atas/)).not.toBeInTheDocument()
+    fireEvent.click(within(pilih).getByRole('tab', { name: 'Batang' }))
+    expect(within(pilih).getByRole('tab', { name: 'Batang' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByText(/batang atas/)).toBeInTheDocument()
+    fireEvent.click(within(pilih).getByRole('tab', { name: 'Titik dan garis' }))
+    expect(screen.queryByText(/batang atas/)).not.toBeInTheDocument()
+  })
+
   it('menampilkan halaman provinsi dengan pencarian', async () => {
     render(
       <MemoryRouter initialEntries={['/provinsi']}>

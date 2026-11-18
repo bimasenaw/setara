@@ -10,6 +10,7 @@ import TahunSelect from '../components/TahunSelect'
 import SegmentedControl from '../components/SegmentedControl'
 import StatRow from '../components/StatRow'
 import Dumbbell from '../components/Dumbbell'
+import BatangBerdampingan from '../components/BatangBerdampingan'
 import CaraMembaca from '../components/CaraMembaca'
 import AksiData from '../components/AksiData'
 import { aksiStandar } from '../components/aksiStandar'
@@ -18,6 +19,12 @@ import LangkahBerikutnya from '../components/LangkahBerikutnya'
 import HeroBanner from '../components/HeroBanner'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
+
+// Dua cara melihat data yang sama; tanpa parameter, tampilan bawaan tetap dumbbell.
+const BENTUK_GRAFIK = [
+  { value: 'titik', label: 'Titik dan garis' },
+  { value: 'batang', label: 'Batang' },
+]
 
 const DIMENSI = [
   { key: 'wilayah', label: 'Wilayah' },
@@ -36,6 +43,7 @@ export default function Ringkasan() {
     tahunTersedia[tahunTersedia.length - 1] || tahunTerakhir(tidakSekolah),
   )
   const jenjang = validJenjang(params.get('jenjang'), JENJANG)
+  const bentuk = params.get('grafik') === 'batang' ? 'batang' : 'titik'
 
   useDocumentMeta({
     judul: 'Ringkasan kesenjangan pendidikan | SETARA',
@@ -137,33 +145,67 @@ export default function Ringkasan() {
       </div>
 
       <section className="mt-6 rounded-lg border border-garis bg-putih p-5">
-        <h2 className="subjudul text-tinta">
-          Tiga jarak antarkelompok · {jenjang} {tahun}
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+          <h2 className="subjudul text-tinta">
+            Tiga jarak antarkelompok · {jenjang} {tahun}
+          </h2>
+          {adaGrafik && (
+            <SegmentedControl
+              options={BENTUK_GRAFIK}
+              value={bentuk}
+              onChange={(v) => tulisParam(params, setParams, 'grafik', v === 'batang' ? v : null)}
+              label="Bentuk grafik"
+            />
+          )}
+        </div>
         {adaGrafik ? (
           <div className="mt-4">
-            <Dumbbell
-              items={items}
-              pembandingNama={namaPembanding}
-              tertinggalNama={namaTertinggal}
-              ringkasan={kalimatUtama}
-              baris="dimensi"
-              labelLebar={84}
-            />
+            {bentuk === 'batang' ? (
+              <BatangBerdampingan
+                items={items}
+                pembandingNama={namaPembanding}
+                tertinggalNama={namaTertinggal}
+                ringkasan={kalimatUtama}
+                baris="dimensi"
+              />
+            ) : (
+              <Dumbbell
+                items={items}
+                pembandingNama={namaPembanding}
+                tertinggalNama={namaTertinggal}
+                ringkasan={kalimatUtama}
+                baris="dimensi"
+                labelLebar={84}
+              />
+            )}
           </div>
         ) : (
           <p className="teks-bantu mt-3">Data belum tersedia untuk tahun {tahun}.</p>
         )}
         <Sumber tahun={tahun} selisih />
         <CaraMembaca>
+          {bentuk === 'batang' ? (
+            <p>
+              Setiap baris membandingkan dua kelompok anak yang tidak sekolah pada {jenjang} {tahun}: batang
+              merah di atas untuk kelompok yang lebih tertinggal, batang biru di bawahnya untuk kelompok
+              pembanding. Keduanya berawal dari garis yang sama.
+            </p>
+          ) : (
+            <p>
+              Setiap baris membandingkan dua kelompok anak yang tidak sekolah pada {jenjang} {tahun}:
+              lingkaran biru untuk kelompok pembanding, persegi merah untuk kelompok yang lebih tertinggal.
+            </p>
+          )}
           <p>
-            Setiap baris membandingkan dua kelompok anak yang tidak sekolah pada {jenjang} {tahun}: lingkaran
-            biru untuk kelompok pembanding, persegi merah untuk kelompok yang lebih tertinggal.
-          </p>
-          <p>
-            {terbesar
-              ? `Garis yang lebih panjang berarti jarak yang lebih jauh. Pada ${jenjang}, jarak terbesar ada pada ${terbesar.label.toLowerCase()}, yaitu ${formatPoin(terbesar.selisih, 1)}.`
-              : 'Garis yang lebih panjang berarti jarak yang lebih jauh.'}
+            {(() => {
+              const dasar =
+                bentuk === 'batang'
+                  ? 'Makin besar beda panjang kedua batang, makin jauh jaraknya.'
+                  : 'Garis yang lebih panjang berarti jarak yang lebih jauh.'
+              return terbesar
+                ? `${dasar} Pada ${jenjang}, jarak terbesar ada pada ${terbesar.label.toLowerCase()}, yaitu ${formatPoin(terbesar.selisih, 1)}.`
+                : dasar
+            })()}
           </p>
           <p>Angka ini adalah persentase anak, bukan jumlah anak, dan berasal dari survei sampel.</p>
         </CaraMembaca>
