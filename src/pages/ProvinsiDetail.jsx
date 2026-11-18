@@ -18,6 +18,7 @@ import { aksiStandar } from '../components/aksiStandar'
 import Sumber from '../components/Sumber'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
+import { fotoProvinsi } from '../content/fotoProvinsi'
 
 const TREN_OPTIONS = [
   { value: 'aps', label: 'Partisipasi SMA' },
@@ -109,9 +110,34 @@ export default function ProvinsiDetail() {
   const rekomendasi = rekomendasiProvinsi(indikator, kode)
   const dampak = dampakTerbaru(indikator, kode)
   const konteks = konteksItems(indikator, kode)
-  const foto = provinsi.provinsi.includes('Papua')
-    ? { src: '/images/foto-papua.jpg', alt: 'Suasana kelas di Papua' }
-    : { src: '/images/foto-umum.jpeg', alt: 'Foto suasana pendidikan di Indonesia' }
+  // Foto ikon daerah dari Wikimedia Commons; foto umum bila provinsi belum punya foto sendiri.
+  const foto = fotoProvinsi(kode) || {
+    src: '/images/foto-umum.jpeg',
+    alt: 'Foto suasana pendidikan di Indonesia',
+  }
+  const kreditFoto = foto.artis ? (
+    <>
+      Foto: {foto.alt}.{' '}
+      <a
+        href={foto.sumber}
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-garis underline-offset-2 hover:text-tinta"
+      >
+        {foto.artis}
+      </a>
+      ,{' '}
+      <a
+        href={foto.lisensiUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-garis underline-offset-2 hover:text-tinta"
+      >
+        {foto.lisensi}
+      </a>
+      , via Wikimedia Commons. Diperkecil.
+    </>
+  ) : null
 
   const trend =
     mode === 'aps'
@@ -157,7 +183,13 @@ export default function ProvinsiDetail() {
         </ol>
       </nav>
 
-      <KepalaHalaman judul={provinsi.provinsi} konteks={konteksPeringkat} gambar={foto.src} alt={foto.alt} />
+      <KepalaHalaman
+        judul={provinsi.provinsi}
+        konteks={konteksPeringkat}
+        gambar={foto.src}
+        alt={foto.alt}
+        kredit={kreditFoto}
+      />
 
       <section
         aria-label="Tiga angka utama"
