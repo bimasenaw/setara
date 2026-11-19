@@ -266,7 +266,7 @@ export const SUMBER = {
         teks: 'Our analysis confirms a pro-male bias in textbooks: the aggregate female share is 40.4% in textual and pictorial indicators combined.',
         sorot: ['a pro-male bias in textbooks'],
         mendukung:
-          'Buku teks bahasa Inggris SMP dan SMA di empat negara, termasuk Indonesia, masih bias laki-laki. Tokoh perempuan hanya 40,4%.',
+          'Buku teks bahasa Inggris SMP dan SMA di empat negara, termasuk Indonesia, masih bias laki-laki. Porsi perempuan dalam teks dan gambar hanya 40,4%.',
       },
     },
   },
@@ -359,7 +359,7 @@ export const SUMBER = {
     jenis: 'Survei dan regresi',
     lisensi: CC_BY_SA_4,
     pdf: '/rujukan/purnastuti2012.pdf',
-    baca: { label: 'Jurnal Economia', url: 'https://doi.org/10.21831/jep.v3i1.636' },
+    baca: { label: 'Jurnal Ekonomi dan Pendidikan', url: 'https://doi.org/10.21831/jep.v3i1.636' },
     kutipan: {
       utama: {
         halaman: '63 (abstrak)',
@@ -367,7 +367,7 @@ export const SUMBER = {
         teks: 'Household income matters only for girls; it implies that girls belonging to poor families are less likely to go to school, and education is a luxury good for these girls.',
         sorot: ['girls belonging to poor families are less likely to go to school'],
         mendukung:
-          'Kondisi ekonomi rumah tangga menentukan sekolah anak: anak perempuan dari keluarga miskin lebih kecil peluangnya bersekolah (data 1993).',
+          'Pendapatan rumah tangga hanya berpengaruh pada anak perempuan: anak perempuan dari keluarga miskin lebih kecil peluangnya bersekolah (data 1993).',
       },
     },
   },
@@ -387,6 +387,22 @@ export const SUMBER = {
         sorot: ['the returns to schooling in Indonesia are 4.72 per cent for the combined sample'],
         mendukung:
           'Setiap tambahan tahun sekolah dikaitkan dengan upah sekitar 4,7% lebih tinggi. Estimasi IV-nya tidak signifikan, jadi angka ini bukan bukti sebab-akibat.',
+      },
+    },
+  },
+  roodman2022: {
+    jenis: 'Analisis ulang',
+    lisensi: null,
+    pdf: null,
+    baca: { label: 'arXiv (2207.09036)', url: 'https://arxiv.org/abs/2207.09036' },
+    kutipan: {
+      utama: {
+        halaman: '4',
+        halamanPdf: 4,
+        teks: 'Surprisingly, it does not strongly confirm an impact of Inpres on schooling attainment, though it does more firmly support an impact on primary school completion and a (reduced-form) impact on hourly wages of wage workers in 1995. The wage impacts do not persist reliably in the later follow-ups, however.',
+        sorot: ['more firmly support an impact on primary school completion'],
+        mendukung:
+          'Analisis ulang atas data Duflo (2001): bukti paling kuat adalah kenaikan jumlah anak yang menamatkan SD, sedangkan efek pada lama sekolah total dan upah tidak kokoh.',
       },
     },
   },
@@ -468,7 +484,7 @@ export const SUMBER = {
         teks: 'Probability of male to attend the school was less than female in both junior school and senior school. It indicated that there was a trade-off between schooling and other activities such as working particularly for boys.',
         sorot: ['a trade-off between schooling and other activities such as working particularly for boys'],
         mendukung:
-          'Di Indonesia, peluang anak laki-laki bersekolah di SMP dan SMA lebih kecil, karena mereka menghadapi tarik-menarik antara sekolah dan bekerja.',
+          'Di Indonesia, peluang anak laki-laki bersekolah di SMP dan SMA lebih kecil, yang menurut penulis menandakan tarik-menarik antara sekolah dan bekerja.',
       },
     },
   },
@@ -487,7 +503,7 @@ export const SUMBER = {
           'The remainder of the education expenditures must be covered by the household',
         ],
         mendukung:
-          'Subsidi BOS baru menutup biaya sekolah. Biaya pendidikan lainnya, seperti transportasi, buku, dan seragam, masih ditanggung rumah tangga.',
+          'Subsidi BOS baru cukup untuk biaya sekolah, di kota bahkan hanya uang sekolah. Sisa biaya pendidikan masih ditanggung rumah tangga.',
       },
     },
   },
@@ -503,7 +519,7 @@ export const SUMBER = {
         teks: 'Less than a quarter of early school-leavers worked in the immediate year following school exit. Instead about 30% neither worked nor studied between the ages of 12-18.',
         sorot: ['about 30% neither worked nor studied between the ages of 12-18'],
         mendukung:
-          'Di Jabodetabek, sekitar 30% remaja yang putus sekolah sebelum usia 16 tidak bekerja maupun belajar pada usia 12–18.',
+          'Di Jabodetabek, sekitar 30% remaja yang putus sekolah paling lambat usia 16 tidak bekerja maupun belajar pada usia 12–18.',
       },
     },
   },

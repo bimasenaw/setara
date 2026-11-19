@@ -83,6 +83,7 @@ const BERKAS = {
   pratiwi2021: 'Pratiwi',
   purnastuti2012: 'Purnastuti, L. (2012)',
   purnastuti2015: 'Purnastuti, L., Salim',
+  roodman2022: 'Roodman',
   samosir2021: 'Samosir',
   setyadi2022: 'anzaralfat',
   siddique2021: 'Siddique',

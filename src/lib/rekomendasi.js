@@ -36,7 +36,7 @@ export function rekomendasiProvinsi(rows, kode) {
       prioritas: 'Tinggi',
       judul: 'Perkuat bantuan tunai bersyarat dan beasiswa',
       solusi:
-        'Perluas dan pertajam PKH serta beasiswa bagi rumah tangga termiskin. Uji acak menunjukkan PKH memangkas separuh anak di bawah 15 tahun yang tidak sekolah, dan bantuan PIP menaikkan peluang masuk SMA; ketepatan sasaran tetap perlu dipantau.',
+        'Perluas dan pertajam PKH serta beasiswa bagi rumah tangga termiskin. Uji acak menunjukkan PKH memangkas separuh anak di bawah 15 tahun yang tidak sekolah, dan bantuan PIP dikaitkan dengan peluang masuk SMA yang lebih tinggi; ketepatan sasaran tetap perlu dipantau.',
       dasar: `Kemiskinan ${formatAngka(miskin.nilai, 2)}%, lebih tinggi dari nasional (${formatAngka(miskinNasional.nilai, 2)}%).`,
       sumber: ['cahyadi2020', 'hudang2024', 'caniago2021'],
     })
@@ -49,7 +49,7 @@ export function rekomendasiProvinsi(rows, kode) {
       prioritas: 'Tinggi',
       judul: 'Amankan transisi dan kelanjutan SMA',
       solusi:
-        'Perkuat BOS dan bantuan biaya di jenjang SMA. BOS di tingkat sekolah menaikkan enrolmen rumah tangga, dan bantuan tunai pendidikan menaikkan angka masuk SMA.',
+        'Perkuat BOS dan bantuan biaya di jenjang SMA. BOS di tingkat sekolah dikaitkan dengan peluang lebih besar melanjutkan ke SMA, begitu pula bantuan PIP.',
       dasar: `Partisipasi usia SMA ${formatAngka(aps.nilai, 2)}%, ${formatPoin(apsNasional.nilai - aps.nilai, 2)} di bawah nasional (${formatAngka(apsNasional.nilai, 2)}%).`,
       sumber: ['kartasasmita2021', 'caniago2021'],
     })
@@ -74,7 +74,7 @@ export function rekomendasiProvinsi(rows, kode) {
       prioritas: 'Menengah',
       judul: 'Perkuat literasi dan pendidikan kesetaraan',
       solusi:
-        'Pertahankan jalur pendidikan kesetaraan (Paket A, B, C) sebagai kesempatan kedua bagi remaja yang putus sekolah, dan pantau hasilnya karena bukti dampaknya masih terbatas pada evaluasi deskriptif. Remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar, dan tambahan tahun sekolah masih memberi imbal hasil upah yang positif.',
+        'Pertahankan jalur pendidikan kesetaraan (Paket A, B, C) sebagai kesempatan kedua bagi remaja yang putus sekolah, dan pantau hasilnya karena bukti dampaknya masih terbatas pada evaluasi deskriptif. Remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar, dan tambahan tahun sekolah dikaitkan dengan upah yang lebih tinggi.',
       dasar: `Rata-rata lama sekolah ${formatAngka(lama.nilai, 2)} tahun, di bawah nasional (${formatAngka(lamaNasional.nilai, 2)} tahun).`,
       sumber: ['utomo2014', 'purnastuti2015'],
     })

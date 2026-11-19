@@ -45,7 +45,7 @@ export const REFERENSI = [
     id: 'harahap2020',
     sitasi: '(Harahap et al., 2020)',
     referensi:
-      'Harahap, E. S., Maipita, I., & Rahmadana, M. F. (2020). Determinant analysis of education inequalities in Indonesia. Budapest International Research and Critics Institute-Journal (BIRCI-Journal), 3(2), 1067–1082.',
+      'Harahap, E. S., Maipita, I., & Rahmadana, M. F. (2020). Determinant analysis of education inequalities in Indonesia. Budapest International Research and Critics Institute-Journal (BIRCI-Journal): Humanities and Social Sciences, 3(2), 1067–1082.',
     url: 'https://doi.org/10.33258/birci.v3i2.937',
   },
   {
@@ -59,7 +59,7 @@ export const REFERENSI = [
     id: 'hudang2024',
     sitasi: '(Hudang et al., 2024)',
     referensi:
-      'Hudang, A. K., Haryanto, T., & Handoyo, R. D. (2024). Does conditional cash transfer deliver? The Indonesian evidence on PKH. Business: Theory and Practice, 25(2), 447–457.',
+      'Hudang, A. K., Hariyanto, T., & Handoyo, R. D. (2024). Does conditional cash transfer deliver? The Indonesian evidence on PKH. Business: Theory and Practice, 25(2), 447–457.',
     url: 'https://doi.org/10.3846/btp.2024.13865',
   },
   {
@@ -87,7 +87,7 @@ export const REFERENSI = [
     id: 'kartasasmita2021',
     sitasi: '(Kartasasmita & Sulistyaningrum, 2021)',
     referensi:
-      'Kartasasmita, F. P., & Sulistyaningrum, E. (2021). The impact of School Operational Assistance program implementation at school level on senior secondary education enrollment by households: Evidence from Indonesia in 2007 and 2014. Jurnal Ekonomi dan Keuangan Indonesia, 67(2).',
+      'Kartasasmita, F. P., & Sulistyaningrum, E. (2021). The impact of School Operational Assistance program implementation at school level on senior secondary education enrollment by households: Evidence from Indonesia in 2007 and 2014. Economics and Finance in Indonesia, 67(2), 163–182.',
     url: 'https://doi.org/10.47291/efi.v67i2.846',
   },
   {
@@ -106,9 +106,9 @@ export const REFERENSI = [
   },
   {
     id: 'purnastuti2012',
-    sitasi: '(Purnastuti, 2012)',
+    sitasi: '(Purnastuti, 2006)',
     referensi:
-      'Purnastuti, L. (2012). Determinant of child schooling in Indonesia. Jurnal Economia, 3(1).',
+      'Purnastuti, L. (2006). Determinant of child schooling in Indonesia. Jurnal Ekonomi dan Pendidikan, 3(1), 63–79.',
     url: 'https://doi.org/10.21831/jep.v3i1.636',
   },
   {
@@ -117,6 +117,13 @@ export const REFERENSI = [
     referensi:
       'Purnastuti, L., Salim, R., & Joarder, M. A. M. (2015). The returns to education in Indonesia: Post reform estimates. Journal of Developing Areas, 49(3), 183–204.',
     url: 'https://doi.org/10.1353/jda.2015.0174',
+  },
+  {
+    id: 'roodman2022',
+    sitasi: '(Roodman, 2022)',
+    referensi:
+      'Roodman, D. (2022). Schooling and labor market consequences of school construction in Indonesia: Comment (arXiv:2207.09036). arXiv.',
+    url: 'https://doi.org/10.48550/arXiv.2207.09036',
   },
   {
     id: 'samosir2021',
@@ -129,7 +136,7 @@ export const REFERENSI = [
     id: 'setyadi2022',
     sitasi: '(Setyadi, 2022)',
     referensi:
-      'Setyadi, S. (2022). Inequality of education in Indonesia by gender, socioeconomic background and government expenditure. Eko-Regional: Jurnal Pembangunan Ekonomi Wilayah, 17(1).',
+      'Setyadi, S. (2022). Inequality of education in Indonesia by gender, socioeconomic background and government expenditure. Eko-Regional: Jurnal Pembangunan Ekonomi Wilayah, 17(1), 27–36.',
     url: 'https://doi.org/10.32424/1.erjpe.2022.17.1.2895',
   },
   {
@@ -150,14 +157,14 @@ export const REFERENSI = [
     id: 'sugiharti2017',
     sitasi: '(Sugiharti, 2017)',
     referensi:
-      'Sugiharti, L. (2017). Education performance and the determinants of secondary school enrolment in Indonesia. Global Journal of Business and Social Science Review, 5(3), 33–42.',
+      'Sugiharti, L. (2017). Education performance and the determinants of secondary school enrolment in Indonesia. GATR Global Journal of Business and Social Science Review, 5(3), 33–42.',
     url: 'https://doi.org/10.35609/gjbssr.2017.5.3(5)',
   },
   {
     id: 'sulistyaningrum2016',
     sitasi: '(Sulistyaningrum, 2016)',
     referensi:
-      'Sulistyaningrum, E. (2016). Impact evaluation of the School Operational Assistance program (BOS) using the matching method. Journal of Indonesian Economy and Business, 31(1).',
+      'Sulistyaningrum, E. (2016). Impact evaluation of the School Operational Assistance program (BOS) using the matching method. Journal of Indonesian Economy and Business, 31(1), 33–62.',
     url: 'https://doi.org/10.22146/jieb.10319',
   },
   {
@@ -171,7 +178,7 @@ export const REFERENSI = [
     id: 'utomo2014',
     sitasi: '(Utomo et al., 2014)',
     referensi:
-      'Utomo, A., Reimondos, A., Utomo, I. D., McDonald, P., & Hull, T. H. (2014). What happens after you drop out? Transition to adulthood among early school-leavers in urban Indonesia. Demographic Research, 30(41), 1189–1218.',
+      'Utomo, A., Reimondos, A., Utomo, I. D., McDonald, P., & Hull, T. H. (2014). What happens after you drop out? Transition to adulthood among early school-leavers in urban Indonesia. Demographic Research, 30, Article 41, 1189–1218.',
     url: 'https://doi.org/10.4054/demres.2014.30.41',
   },
 ]
@@ -207,7 +214,7 @@ export const SOLUSI_MATRIX = {
         temuan: 'Selisih desa-kota melebar dari 0,80 poin (SD) menjadi 7,56 poin (SMA).',
         solusi:
           'Perluas ketersediaan sekolah di perdesaan. Dalam ulasan lintas negara, pembangunan sekolah baru dan infrastruktur memberi efek terbesar pada partisipasi; di Indonesia, pembangunan SD INPRES menaikkan jumlah anak yang menamatkan SD.',
-        sumber: ['petrosino2012', 'duflo2001'],
+        sumber: ['petrosino2012', 'duflo2001', 'roodman2022'],
       },
       {
         temuan: 'Partisipasi sekolah sangat dipengaruhi karakteristik rumah tangga dan lokasi.',
@@ -221,7 +228,7 @@ export const SOLUSI_MATRIX = {
         temuan: 'Desa 1,12% vs kota 0,32%, selisih sudah muncul sejak SD.',
         solusi:
           'Pastikan keterjangkauan SD di perdesaan. Pembangunan SD INPRES menaikkan jumlah anak yang menamatkan SD, dan secara nasional angka mengulang kelas lebih tinggi ketika pertumbuhan penduduk tidak diimbangi fasilitas dan guru.',
-        sumber: ['duflo2001', 'samosir2021'],
+        sumber: ['duflo2001', 'roodman2022', 'samosir2021'],
       },
       {
         temuan: 'Akses PAUD di perdesaan ikut menentukan bekal anak sebelum masuk SD.',
@@ -254,7 +261,7 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Putus sekolah lebih awal berdampak panjang pada transisi menuju dewasa.',
         solusi:
-          'Tahan anak desa tetap sekolah di SMA. Tambahan tahun sekolah masih memberi imbal hasil upah yang positif, dan remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar.',
+          'Tahan anak desa tetap sekolah di SMA. Tambahan tahun sekolah dikaitkan dengan upah yang lebih tinggi, dan remaja yang putus sekolah lebih awal banyak yang tidak bekerja maupun belajar.',
         sumber: ['purnastuti2015', 'utomo2014'],
       },
     ],
@@ -278,7 +285,7 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Kelompok termiskin (1,15%) vs kelompok terkaya (0,38%), tiga kali lipat sejak SD.',
         solusi:
-          'Berikan bantuan tunai sejak dini agar keluarga termiskin tidak melepas anak dari SD; kondisi rumah tangga menentukan partisipasi sekolah anak.',
+          'Berikan bantuan tunai sejak dini agar keluarga termiskin tidak melepas anak dari SD; pendapatan rumah tangga memengaruhi peluang bersekolah, terutama anak perempuan.',
         sumber: ['cahyadi2020', 'purnastuti2012'],
       },
       {
@@ -298,7 +305,7 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Transisi SD→SMP sangat dipengaruhi kemampuan rumah tangga membayar biaya.',
         solusi:
-          'Perkuat BOS dan bantuan tunai sekaligus. Subsidi BOS selama ini baru menutup biaya sekolah, belum ongkos transportasi, buku, dan seragam yang ditanggung rumah tangga.',
+          'Perkuat BOS dan bantuan tunai sekaligus. Subsidi BOS selama ini baru menutup biaya sekolah; sisa biaya pendidikan masih ditanggung rumah tangga.',
         sumber: ['sulistyaningrum2016', 'sugiharti2017'],
       },
     ],
@@ -306,11 +313,11 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Kelompok termiskin (30,66%) vs kelompok terkaya (14,67%), biaya kesempatan bekerja tertinggi di SMA.',
         solusi:
-          'Perluas beasiswa dan bantuan tunai bagi kelompok termiskin; bantuan tunai pendidikan terbukti menaikkan angka masuk SMA.',
+          'Perluas beasiswa dan bantuan tunai bagi kelompok termiskin; bantuan tunai pendidikan dikaitkan dengan peluang masuk SMA yang lebih tinggi.',
         sumber: ['cahyadi2020', 'caniago2021'],
       },
       {
-        temuan: 'BOS di tingkat sekolah menaikkan enrolmen SMA rumah tangga.',
+        temuan: 'BOS di tingkat sekolah dikaitkan dengan peluang lebih besar anak melanjutkan ke SMA.',
         solusi:
           'Perkuat BOS jenjang SMA agar beban biaya rumah tangga termiskin berkurang.',
         sumber: ['kartasasmita2021', 'sulistyaningrum2016'],
@@ -342,7 +349,7 @@ export const SOLUSI_MATRIX = {
       {
         temuan: 'Paritas gender di SD perlu dijaga agar tidak membesar di jenjang atas.',
         solusi:
-          'Jaga paritas gender sejak SD, karena ketimpangan gender dalam pendidikan berdampak pada pertumbuhan ekonomi daerah.',
+          'Jaga paritas gender sejak SD, karena ketimpangan gender dalam pendidikan berkaitan dengan pertumbuhan ekonomi daerah.',
         sumber: ['karimah2022'],
       },
     ],
@@ -368,10 +375,10 @@ export const SOLUSI_MATRIX = {
         sumber: ['himaz2021', 'utomo2014'],
       },
       {
-        temuan: 'Ketimpangan gender dalam pendidikan berdampak pada pertumbuhan ekonomi daerah.',
+        temuan: 'Ketimpangan gender dalam pendidikan berkaitan dengan pertumbuhan ekonomi daerah.',
         solusi:
           'Tutup celah gender sebagai bagian kebijakan pembangunan daerah.',
-        sumber: ['karimah2022', 'setyadi2022'],
+        sumber: ['karimah2022'],
       },
     ],
   },

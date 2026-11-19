@@ -377,7 +377,9 @@ export default function Kesenjangan() {
 
       <section className="mt-12 border-t border-garis pt-6">
         <h2 className="subjudul text-tinta">Apa yang bisa dilakukan</h2>
-        <p className="teks-bantu mt-1">Solusi berbasis studi untuk kategori {kategori}.</p>
+        <p className="teks-bantu mt-1">
+          Solusi berbasis studi untuk kategori {kategori}. Angka temuan memakai data 2023.
+        </p>
         {solusiList.length > 0 ? (
           <ol className="mt-2">
             {solusiList.map((s, i) => (
