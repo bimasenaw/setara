@@ -123,3 +123,16 @@ Ini **rencana awal**, belum desain akhir. Yang perlu ditinjau pengguna:
 - Push, cek preview Vercel, merge ke `main`, dan deploy (menunggu pengguna).
 - Commit perubahan Fase "Matematika Indeks" (menunggu pengguna).
 - ~~Video demo cadangan~~ **selesai (2026-11-19):** `Presentasi/Video/demo-cadangan.webm`, 59 detik, 1280×720, tanpa suara. Urutannya: Ringkasan (tiga temuan), Kesenjangan (batang desa-kota), Provinsi (uji kepekaan, kuadran), profil Papua Pegunungan (#perhitungan), Rekomendasi, lalu kutipan Caniago yang disorot. Bisa diputar di Edge atau disisipkan ke slide 12. Rekam ulang dari situs lokal: `Presentasi/sumber-deck/rekam-demo.cjs`. Saat pindah ke profil ada kerangka muat sekitar 1 detik (dari server dev).
+
+## 9. Deck fokus demo (19 November 2026)
+
+Pengguna memilih demo langsung sebagai inti presentasi. File: `Presentasi/SETARA-Final-Demo.pptx`, dibuat oleh `Presentasi/sumber-deck/buat-demo.js` (jalankan `npm install` lalu `NODE_PATH=./node_modules node buat-demo.js` dari folder itu). Deck lama `SETARA-Final-Rencana.pptx` tetap disimpan sebagai cadangan.
+
+| Waktu | Bagian | Isi |
+|---|---|---|
+| 0:00–4:00 | Slide 1–7 | Judul; 21,6% (1 dari 5); tiga hal tersembunyi (2,1×, lonjakan jenjang, laki-laki); KUAT = 4 halaman; tiga alat matematika (selisih/rasio, persentil, uji kepekaan); "Mari kita buka SETARA" + pratinjau situs (demo dibuka sendiri oleh presenter); **slide 7 "Demo langsung: empat perhentian"** (tangkapan layar + waktu tiap halaman, naskah demo di catatannya) |
+| 4:00–9:00 | Demo langsung, satu blok | Ringkasan → Kesenjangan → `/provinsi#kepekaan` → `/provinsi/9700#perhitungan` → Rekomendasi (Caniago tersorot) |
+| 9:00–10:00 | Slide 8–9 | ≈424 ribu anak + tiga hal yang dijaga; terima kasih + QR |
+| Cadangan | Slide 10–12 | Video demo (`Presentasi/Video/demo-cadangan.mp4`, tertanam); jawaban matematika; urutan tab dan rencana darurat |
+
+**Bagian situs yang dulu dihindari saat demo** sudah diperbaiki (19 November 2026, lihat `PRD Perbaikan Demo SETARA.md`): perkiraan anak PAUD per provinsi tidak lagi separuh, dan teks kuadran di Metode sudah sesuai cara hitung. Naskah dan catatan deck tidak lagi memuat peringatan "HINDARI".
