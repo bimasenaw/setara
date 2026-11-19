@@ -114,16 +114,6 @@ export const SUMBER = {
       },
     },
   },
-  behrman1991: {
-    jenis: 'Survei dan regresi',
-    lisensi: null,
-    pdf: null,
-    baca: {
-      label: 'Wiley (PDF gratis)',
-      url: 'https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1468-0084.1991.mp53004007.x',
-    },
-    kutipan: {},
-  },
   brinkman2017: {
     jenis: 'Kuasi-eksperimen',
     lisensi: null,

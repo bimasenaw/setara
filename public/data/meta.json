@@ -2,7 +2,7 @@
   "generatedAt": "2026-10-30T07:08:20.238Z",
   "source": "BPS WebAPI",
   "domain": "0000",
-  "catatan": "Angka anak tidak sekolah (var 1984/1986/1988) dan partisipasi pembelajaran satu tahun sebelum SD (var 1990) tetap memakai data 2015-2023. Indikator baru memakai tahun terbaru yang tersedia di API.",
+  "catatan": "Angka anak tidak sekolah (var 1984/1986/1988) memakai data 2019-2023, dan partisipasi pembelajaran satu tahun sebelum SD (var 1990) memakai data 2015-2023. Indikator baru memakai tahun terbaru yang tersedia di API.",
   "indikator": [
     {
       "indikator": "aps",

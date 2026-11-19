@@ -578,7 +578,7 @@ async function main() {
     source: 'BPS WebAPI',
     domain: DOMAIN,
     catatan:
-      'Angka anak tidak sekolah (var 1984/1986/1988) dan partisipasi pembelajaran satu tahun sebelum SD (var 1990) tetap memakai data 2015-2023. Indikator baru memakai tahun terbaru yang tersedia di API.',
+      'Angka anak tidak sekolah (var 1984/1986/1988) memakai data 2019-2023, dan partisipasi pembelajaran satu tahun sebelum SD (var 1990) memakai data 2015-2023. Indikator baru memakai tahun terbaru yang tersedia di API.',
     indikator: metaIndicators,
     keterbatasan: [
       'Data berasal dari survei sampel (Susenas); selisih kecil perlu ditafsirkan hati-hati.',

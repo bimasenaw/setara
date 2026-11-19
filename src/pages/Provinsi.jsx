@@ -24,6 +24,7 @@ import Sumber from '../components/Sumber'
 import LangkahBerikutnya from '../components/LangkahBerikutnya'
 import AnalisisLanjutan from '../components/AnalisisLanjutan'
 import { Muat, Gagal } from '../components/StatusBox'
+import { CATATAN_PEMEKARAN_UMUM, jenisPemekaran } from '../components/pemekaran'
 import useDocumentMeta from '../lib/useDocumentMeta'
 
 // Kepala halaman: Lembah Baliem, Papua Pegunungan (dari set foto provinsi, berlisensi bebas).
@@ -374,6 +375,8 @@ function MatriksPrioritas({ indikator }) {
 function PalingBerubah({ indikator }) {
   const berubah = useMemo(() => provinsiPalingBerubah(indikator, 'aps', { jenjang: 'SMA' }), [indikator])
   if (!berubah.membaik.length) return null
+  const tandai = (p) => jenisPemekaran(p.kode, p.awal.tahun)
+  const adaPemekaran = [...berubah.membaik, ...berubah.memburuk].some(tandai)
   return (
     <section className="mt-8">
       <h2 className="subjudul text-tinta">Provinsi paling berubah · partisipasi SMA</h2>
@@ -388,6 +391,7 @@ function PalingBerubah({ indikator }) {
             {berubah.membaik.map((p) => (
               <li key={p.kode}>
                 {p.provinsi}: {formatPoin(p.delta, 2)} ({p.awal.tahun}–{p.akhir.tahun})
+                {tandai(p) && <span aria-hidden="true">*</span>}
               </li>
             ))}
           </ul>
@@ -398,11 +402,18 @@ function PalingBerubah({ indikator }) {
             {berubah.memburuk.map((p) => (
               <li key={p.kode}>
                 {p.provinsi}: {formatPoin(p.delta, 2)} ({p.awal.tahun}–{p.akhir.tahun})
+                {tandai(p) && <span aria-hidden="true">*</span>}
               </li>
             ))}
           </ul>
         </div>
       </div>
+      {adaPemekaran && (
+        <p className="teks-bantu mt-3 max-w-[68ch]">
+          <span aria-hidden="true">* </span>
+          {CATATAN_PEMEKARAN_UMUM}
+        </p>
+      )}
     </section>
   )
 }

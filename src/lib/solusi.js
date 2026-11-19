@@ -7,13 +7,6 @@ export const REFERENSI = [
     url: 'https://doi.org/10.1016/j.ijedudev.2018.02.006',
   },
   {
-    id: 'behrman1991',
-    sitasi: '(Behrman & Deolalikar, 1991)',
-    referensi:
-      'Behrman, J. R., & Deolalikar, A. B. (1991). School repetition, dropouts, and the rates of return to schooling: The case of Indonesia. Oxford Bulletin of Economics and Statistics, 53(4), 467–480.',
-    url: 'https://doi.org/10.1111/j.1468-0084.1991.mp53004007.x',
-  },
-  {
     id: 'brinkman2017',
     sitasi: '(Brinkman et al., 2017)',
     referensi:
@@ -211,7 +204,7 @@ export const SOLUSI_MATRIX = {
   wilayah: {
     Umum: [
       {
-        temuan: 'Selisih desa-kota melebar dari 0,80% (SD) menjadi 7,56% (SMA).',
+        temuan: 'Selisih desa-kota melebar dari 0,80 poin (SD) menjadi 7,56 poin (SMA).',
         solusi:
           'Perluas ketersediaan sekolah di perdesaan. Dalam ulasan lintas negara, pembangunan sekolah baru dan infrastruktur memberi efek terbesar pada partisipasi; di Indonesia, pembangunan SD INPRES menaikkan jumlah anak yang menamatkan SD.',
         sumber: ['petrosino2012', 'duflo2001'],

@@ -17,6 +17,7 @@ import RincianSkor from '../components/RincianSkor'
 import AksiData from '../components/AksiData'
 import { aksiStandar } from '../components/aksiStandar'
 import Sumber from '../components/Sumber'
+import { catatanPemekaran } from '../components/pemekaran'
 import { Muat, Gagal } from '../components/StatusBox'
 import useDocumentMeta from '../lib/useDocumentMeta'
 import { fotoProvinsi } from '../content/fotoProvinsi'
@@ -137,6 +138,16 @@ export default function ProvinsiDetail() {
     awal && akhir && typeof awal.provinsi === 'number' && typeof akhir.provinsi === 'number'
       ? akhir.provinsi - awal.provinsi
       : null
+  // Tahun pertama yang punya angka provinsi (provinsi hasil pemekaran baru punya data sejak 2024).
+  const awalProvinsi = trend.find((d) => typeof d.provinsi === 'number')
+  const catatanTren =
+    provinsi && awalProvinsi && akhir
+      ? catatanPemekaran(provinsi.provinsi, kode, awalProvinsi.tahun, akhir.tahun)
+      : null
+  const catatanKuadran =
+    provinsi && kategori
+      ? catatanPemekaran(provinsi.provinsi, kode, kategori.tahunAwal, kategori.tahunAkhir)
+      : null
 
   const konteksPeringkat = skor
     ? `Peringkat ${skor.peringkat} dari ${prioritas.daftar.length} pada indeks prioritas.`
@@ -191,9 +202,10 @@ export default function ProvinsiDetail() {
           </p>
           <p className="teks-bantu mt-2">
             {kategori
-              ? `${labelKategori(kategori.kategori)}. Level ${formatAngka(kategori.level, 1)}% · tren ${formatPoin(kategori.tren, 1)}`
+              ? `${labelKategori(kategori.kategori)}. Level ${formatAngka(kategori.level, 1)}% · tren ${formatPoin(kategori.tren, 1)} (${kategori.tahunAwal}–${kategori.tahunAkhir})`
               : 'Belum tersedia'}
           </p>
+          {catatanKuadran && <p className="teks-bantu mt-1">{catatanKuadran}</p>}
         </div>
         <div>
           <p className="teks-bantu">Cakupan indikator</p>
@@ -231,6 +243,7 @@ export default function ProvinsiDetail() {
                   </>
                 )}
               </p>
+              {catatanTren && <p className="teks-bantu mt-1">{catatanTren}</p>}
               <div className="mt-3">
                 <ProvinsiTrend
                   data={trend}

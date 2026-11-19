@@ -45,9 +45,14 @@ describe('App', () => {
         <App />
       </MemoryRouter>,
     )
-    await waitFor(() => {
-      expect(screen.getByText('Tiga temuan utama (2023)')).toBeInTheDocument()
-    })
+    // Halaman dimuat malas: beri waktu yang sama dengan tes lain di berkas ini, supaya tidak gagal
+    // hanya karena mesin sedang sibuk menjalankan seluruh rangkaian tes.
+    await waitFor(
+      () => {
+        expect(screen.getByText('Tiga temuan utama (2023)')).toBeInTheDocument()
+      },
+      { timeout: 5000 },
+    )
     expect(screen.getByRole('heading', { name: 'SETARA' })).toBeInTheDocument()
     expect(screen.getByText('Lihat angka lengkap · SMA 2023')).toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: 'Langkah berikutnya' })).toBeInTheDocument()

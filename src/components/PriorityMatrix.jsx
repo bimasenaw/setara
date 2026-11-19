@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { formatAngka, formatPoin } from '../lib/format'
 import { labelKategori } from '../lib/prioritas'
 import { tautanProvinsi } from '../lib/params'
+import { CATATAN_PEMEKARAN_UMUM, jenisPemekaran, tahunAwalUmum } from './pemekaran'
 
 const URUTAN = ['Mendesak', 'Membaik', 'Pantau', 'Berhasil']
 
@@ -74,13 +75,15 @@ export function SebaranKuadran({ data }) {
 
 export default function PriorityMatrix({ data, tahun }) {
   if (!data || !data.length) return null
+  const tahunAwal = tahunAwalUmum(data) ?? 2019
+  const adaPemekaran = data.some((d) => jenisPemekaran(d.kode, d.tahunAwal))
   return (
     <section className="mt-12 border-t border-garis pt-6">
       <h2 className="subjudul text-tinta">Tertinggal dan memburuk, atau tertinggal tetapi membaik?</h2>
       <p className="mt-1 max-w-[68ch] text-base leading-relaxed text-tinta">
         Dari {data.length} provinsi, {data.filter((d) => d.kategori === 'Mendesak').length} berada di kuadran
-        mendesak: partisipasi SMA-nya di bawah nilai tengah dan tidak membaik sejak{' '}
-        {data[0]?.tahunAwal ?? 2019}.
+        mendesak: partisipasi SMA-nya di bawah nilai tengah dan tidak membaik sejak {tahunAwal}
+        {adaPemekaran ? ' (provinsi hasil pemekaran: sejak data pertamanya)' : ''}.
       </p>
       <SebaranKuadran data={data} />
       <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -125,6 +128,12 @@ export default function PriorityMatrix({ data, tahun }) {
                       </Link>
                       <span className="text-tinta-redup">
                         {formatAngka(d.level, 1)}% · {formatPoin(d.tren, 1)}
+                        {jenisPemekaran(d.kode, d.tahunAwal) && (
+                          <>
+                            {' '}
+                            ({d.tahunAwal}–{d.tahunAkhir})<span aria-hidden="true">*</span>
+                          </>
+                        )}
                       </span>
                     </li>
                   ))}
@@ -137,9 +146,15 @@ export default function PriorityMatrix({ data, tahun }) {
         })}
       </div>
       <p className="teks-bantu mt-3 max-w-[68ch]">
-        Kuadran: partisipasi SMA terbaru dan perubahannya sejak {data[0]?.tahunAwal ?? 2019}. Alat bantu,
-        bukan penilaian resmi.
+        Kuadran: partisipasi SMA terbaru dan perubahannya sejak {tahunAwal}. Alat bantu, bukan penilaian
+        resmi.
       </p>
+      {adaPemekaran && (
+        <p className="teks-bantu mt-1 max-w-[68ch]">
+          <span aria-hidden="true">* </span>
+          {CATATAN_PEMEKARAN_UMUM}
+        </p>
+      )}
     </section>
   )
 }
