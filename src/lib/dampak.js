@@ -48,7 +48,11 @@ export function populasiUsiaProvinsi(rows, kode, awal, akhir) {
   )
   if (!ageRows.length) return null
   const dasar2020 = ageRows.reduce((sum, r) => sum + (r.nilai || 0) * porsi(r.kelompok, awal, akhir), 0)
-  const total2020 = ageRows.reduce((sum, r) => sum + (r.nilai || 0), 0)
+  // Baris kelompok "Jumlah" (per gender) adalah total dari kelompok umur di atasnya: jangan ikut dijumlah,
+  // atau total 2020 terhitung dua kali dan perkiraan anak hanya separuhnya.
+  const total2020 = ageRows
+    .filter((r) => String(r.kelompok).toLowerCase() !== 'jumlah')
+    .reduce((sum, r) => sum + (r.nilai || 0), 0)
   const total2025 = nilaiPada(rows, {
     indikator: 'populasi_provinsi',
     kode,

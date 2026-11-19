@@ -30,7 +30,7 @@ const RUMUS = [
   },
   {
     judul: 'Kuadran prioritas',
-    teks: 'Membandingkan level partisipasi terbaru dengan perubahan sejak 2019. Garis pembagi memakai median provinsi. Kuadran adalah alat bantu, bukan penilaian kinerja resmi.',
+    teks: 'Membandingkan level partisipasi terbaru dengan perubahan sejak 2019. Level dibagi di median 38 provinsi; perubahan dibagi di 0, yaitu naik atau tidak naik. Kuadran adalah alat bantu, bukan penilaian kinerja resmi.',
   },
 ]
 
