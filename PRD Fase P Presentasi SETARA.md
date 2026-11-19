@@ -81,7 +81,7 @@ Patokan: sekitar 1 menit per slide. Kalau waktu menipis, slide 7 dipersingkat me
 9. **Kenapa ada dua angka PAUD Papua (62,98% dan 21,71%)?** Indikatornya berbeda: partisipasi pembelajaran setahun sebelum SD (2023) dan APK PAUD 3–6 tahun (2025). Kini keduanya disebut namanya di situs.
 
 **Rujukan dan klaim:**
-10. **Hudang (2024) bilang PKH tidak berpengaruh. Kenapa tetap direkomendasikan?** Bukti terkuat adalah uji acak Cahyadi et al. (2020): anak tidak sekolah turun separuh. Hudang menjadi alasan kata "pertajam": sasarannya harus dipantau.
+10. **Hudang (2024) bilang PKH tidak berpengaruh. Kenapa tetap direkomendasikan?** Bukti terkuat adalah uji acak Cahyadi et al. (2020): anak di bawah 15 tahun yang tidak sekolah turun separuh. Hudang menjadi alasan kata "pertajam": sasarannya harus dipantau.
 11. **DOI Setyadi di esai tidak bisa dibuka?** Ada salah ketik awalan (`20884` seharusnya `32424`). Sudah diperbaiki di situs. Akui sejak awal di slide 9.
 12. **Apakah rekomendasi ini sebab-akibat?** Tidak semuanya. Uji acak (Cahyadi) dan ulasan sistematis (Petrosino) adalah bukti terkuat; sisanya korelasional. Jenis studinya tertera di setiap kutipan.
 13. **Kenapa anak laki-laki lebih tertinggal?** Datanya menunjukkan begitu di tingkat nasional. Penyebabnya di Indonesia belum dibuktikan kuat, jadi SETARA tidak mengklaim penyebabnya. Bank Dunia (2020) menunjukkan arahnya berbeda antardaerah, maka dukungan diarahkan menurut daerah.
@@ -133,6 +133,6 @@ Pengguna memilih demo langsung sebagai inti presentasi. File: `Presentasi/SETARA
 | 0:00–4:00 | Slide 1–7 | Judul; 21,6% (1 dari 5); tiga hal tersembunyi (2,1×, lonjakan jenjang, laki-laki); KUAT = 4 halaman; tiga alat matematika (selisih/rasio, persentil, uji kepekaan); "Mari kita buka SETARA" + pratinjau situs (demo dibuka sendiri oleh presenter); **slide 7 "Demo langsung: empat perhentian"** (tangkapan layar + waktu tiap halaman, naskah demo di catatannya) |
 | 4:00–9:00 | Demo langsung, satu blok | Ringkasan → Kesenjangan → `/provinsi#kepekaan` → `/provinsi/9700#perhitungan` → Rekomendasi (Caniago tersorot) |
 | 9:00–10:00 | Slide 8–9 | ≈424 ribu anak + tiga hal yang dijaga; terima kasih + QR |
-| Cadangan | Slide 10–12 | Video demo (`Presentasi/Video/demo-cadangan.mp4`, tertanam); jawaban matematika; urutan tab dan rencana darurat |
+| Cadangan | Slide 10–11 | Jawaban matematika; urutan tab dan rencana darurat. Video demo tidak dipakai lagi (direkam sebelum perbaikan 19 November, jadi isinya sudah tidak sama dengan situs); bila laptop bermasalah, demo dijelaskan memakai tangkapan layar di slide 7 |
 
 **Bagian situs yang dulu dihindari saat demo** sudah diperbaiki (19 November 2026, lihat `PRD Perbaikan Demo SETARA.md`): perkiraan anak PAUD per provinsi tidak lagi separuh, dan teks kuadran di Metode sudah sesuai cara hitung. Naskah dan catatan deck tidak lagi memuat peringatan "HINDARI".

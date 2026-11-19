@@ -62,3 +62,40 @@ Disetujui pengguna ("iya lanjut kerjain semua"). Audit memeriksa logika `src/lib
 Penjelasan ini dimasukkan ke naskah (Lampiran 3 dan 4).
 
 **Rujukan yang tidak dipakai, dikeluarkan (disetujui pengguna):** Behrman & Deolalikar (1991) ada di esai, tetapi tidak mendukung klaim mana pun. Entri ini dihapus dari `REFERENSI` di `src/lib/solusi.js` dan dari `src/content/kutipan.js`. Situs kini memuat 25 rujukan (22 + 4 − 1), dan 14 di antaranya bisa dibaca langsung. Deck slide 4, naskah, dan *Narasi Lengkap* sudah disesuaikan menjadi 25, dan naskah mendapat jawaban untuk pertanyaan "kenapa 25?".
+
+## Audit ketiga: data, ambiguitas, dan pengutipan (19 November 2026)
+
+Disetujui pengguna lewat rencana, dengan dua keputusan: Purnastuti mengikuti terbitan asli (2006), dan Roodman (2022) masuk daftar rujukan.
+
+**Aman:**
+- Semua angka temuan yang ditulis manual di `solusi.js` cocok dengan data 2023.
+- 31 kutipan cocok kata per kata dengan PDF (tes otomatis). Kutipan Duflo cocok dengan abstrak NBER.
+- Semua DOI bisa dibuka. PDF Setyadi yang tampil di situs adalah artikel yang benar.
+- Detail di kalimat "Mendukung" dicek ke PDF: 310 desa, 33 provinsi, 73 studi, enam lembaga PAUD, data kabupaten/kota, Greater Jakarta.
+
+**Metadata rujukan dibetulkan** (dicek ke PDF, Crossref, dan halaman jurnal):
+- Purnastuti → (2006), *Jurnal Ekonomi dan Pendidikan*, 3(1), 63–79. 2012 adalah tanggal unggah online.
+- Hudang → rekan penulis bernama Hariyanto.
+- Kartasasmita → *Economics and Finance in Indonesia*, 67(2), 163–182.
+- Ditambah halaman: Setyadi (27–36) dan Sulistyaningrum (33–62).
+- Ditambah nama lengkap jurnal: Harahap dan Sugiharti. Format Utomo kini "30, Article 41".
+- **Roodman (2022)** ditambahkan (arXiv:2207.09036, tautan saja), dengan kutipan hlm. 4 yang dicek kata per kata. Rujukan kini **26**, dan 14 di antaranya bisa dibaca langsung.
+
+**Klaim dilunakkan supaya tidak melebihi isi studi:**
+- Sulistyaningrum: rincian "transportasi, buku, seragam" dibuang.
+- Dua klaim "terbukti" atau "menaikkan" untuk bantuan tunai dan BOS menjadi "dikaitkan dengan".
+- Karimah: "berdampak pada" menjadi "berkaitan dengan". Setyadi dikeluarkan dari sumber klaim pertumbuhan ekonomi.
+- Purnastuti (2015): "imbal hasil upah" menjadi "dikaitkan dengan upah lebih tinggi". Berlaku di solusi dan di rekomendasi profil.
+- Purnastuti (2006): "pendapatan hanya berpengaruh pada anak perempuan".
+- Sugiharti: "menurut penulis menandakan tarik-menarik".
+- Utomo: "paling lambat usia 16".
+- Islam: "porsi perempuan dalam teks dan gambar".
+
+**Ambiguitas diperbaiki:** angka temuan solusi di Kesenjangan selalu 2023. Kini ditandai "Angka temuan memakai data 2023", dan `SolusiBlock` menampilkan "Temuan utama (2023)".
+
+**Dokumen:**
+- Deck slide 4, naskah, dan Narasi kini menulis 26 rujukan.
+- Jawaban Cahyadi kini "anak di bawah 15 tahun".
+- Jawaban baru: "Ada salah tulis di daftar pustaka esai?".
+
+**Tidak diubah:** file lokal `rujukan/Setyadi, S. (2022)….pdf` berisi artikel lain (*Gorontalo Development Review*), tetapi tidak dipakai.
